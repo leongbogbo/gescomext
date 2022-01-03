@@ -14,6 +14,8 @@
 	<name>gescomext</name>
 	<description>Systeme de Gestion des Document du Commerce Extérieur</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<mainClass>com.mincom.gescomext.GescomextApplication</mainClass>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
