@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templateAccueil">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <div class="main_content_iner overly_inner ">
+        <div class="container-fluid p-0 ">
+            <!-- ZONE DE TITRE  -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h3 class="f_s_25 f_w_700 dark_text">Liste des rubriques</h3>
+                            <ol class="breadcrumb page_bradcam mb-0">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
+                                <li class="breadcrumb-item active">Analytic</li>
+                            </ol>
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button">
+                                August 1, 2020 - August 31, 2020
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN ZONE DE TITRE  -->
+            <!-- CORPS PAGE  -->
+            <div class="row ">
+                <div class="col-12">
+                    <div class="white_card mb_30 ">
+                        <div class="white_card_header"></div>
+                        <div class="white_card_body">
+                           
+                            <div class="devices_btn justify-content-start">
+                                <a class="color_button color_button2" href="CodeImportExport/Liste">CODE IMPORT EXPORT</a>
+                                <a class="color_button" href="CodeOccasionnel/Liste">CODE OCCASIONNEL</a>
+                                <a class="color_button color_button3" href="LeveeDeGage/Liste">LEVEE DE GAGE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN CORPS PAGE  -->
+        </div>
+    </div>
+</div>
+</body>

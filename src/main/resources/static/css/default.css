@@ -1,0 +1,368 @@
+/* GENERAL */
+div.ageVehicule{
+  text-align:center;
+}
+div.ageVehicule #anLGage, div.ageVehicule #moisLGage, div.ageVehicule #joursLGage{
+  padding: 0;
+  margin:0;
+  font-weight: bolder;
+  color: #82000a;
+  text-align:center;
+}
+
+#stepByStep #stepByStep h1, #stepByStep h2, #stepByStep h3, #stepByStep h4, #stepByStep h5, #stepByStep h6 {
+  color: #00011c;
+}
+#stepByStep p {
+  margin-bottom: 24px;
+  line-height: 1.9;
+}
+#stepByStep label {
+  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #00011c;
+}
+
+/* TITLE */
+#stepByStep #title-container {
+  min-height: 460px;
+  height: 100%;
+  color: #fff;
+  background-color: #706566;
+  text-align: center;
+  padding: 105px 28px 28px 28px;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+  -webkit-box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+  -moz-box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+}
+#stepByStep #title-container h2 {
+  font-size: 35px;
+  font-weight: 800;
+  color: #fff;
+  padding: 0;
+  margin-bottom: 0px;
+}
+#stepByStep #title-container h3 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #82000a;
+  padding: 0;
+}
+#stepByStep #title-container p {
+  font-size: 13px;
+  padding: 0 25px;
+  line-height: 20px;
+}
+.covid-image {
+  width: 214px;
+  margin-bottom: 15px;
+}
+
+/* FORMS */
+#stepByStep #qbox-container {
+  background: url(../img/corona.png);
+  background-repeat: repeat;
+  position: relative;
+  padding: 62px;
+  min-height: 630px;
+  box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+  -webkit-box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+  -moz-box-shadow: 10px 8px 21px 0px rgba(204, 204, 204, 0.75);
+}
+#stepByStep #steps-container {
+  margin: auto;
+  width: 500px;
+  min-height: 420px;
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+}
+.step {
+  display: none;
+}
+#stepByStep .step h4 {
+  margin: 0 0 26px 0;
+  padding: 0;
+  position: relative;
+  font-weight: 500;
+  font-size: 23px;
+  font-size: 1.4375rem;
+  line-height: 1.6;
+}
+#stepByStep button#prev-btn, #stepByStep button#next-btn, #stepByStep button#submit-btn {
+  font-size: 17px;
+  font-weight: bold;
+  position: relative;
+  width: 130px;
+  height: 50px;
+  background: #706566;
+  margin: 0 auto;
+  margin-top: 40px;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  transition: color .3s;
+  text-align: center;
+  color: #fff;
+  border: 0;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#stepByStep button#prev-btn:after, #stepByStep button#next-btn:after, #stepByStep button#submit-btn:after {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #625859;
+  content: "";
+  z-index: -2;
+  transition: transform .3s;
+}
+#stepByStep button#prev-btn:hover::after, #stepByStep button#next-btn:hover::after, #stepByStep button#submit-btn:hover::after {
+  transform: translateY(-80%);
+  transition: transform .3s;
+}
+#stepByStep .progress {
+  border-radius: 0px !important;
+}
+#stepByStep .q__question {
+  position: relative;
+}
+.q__question:not(:last-child) {
+  margin-bottom: 10px;
+}
+#stepByStep .question__input {
+  position: absolute;
+  left: -9999px;
+}
+#stepByStep .question__label {
+  position: relative;
+  display: block;
+  line-height: 40px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 5px 20px 5px 50px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+#stepByStep .question__label:hover {
+  border-color: #625859;
+}
+#stepByStep .question__label:before, #stepByStep .question__label:after {
+  position: absolute;
+  content: "";
+}
+#stepByStep .question__label:before {
+  top: 12px;
+  left: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 1px #ced4da;
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+#stepByStep .question__input:checked+.question__label:before {
+  background-color: #625859;
+  box-shadow: 0 0 0 0;
+}
+#stepByStep .question__input:checked+.question__label:after {
+  top: 22px;
+  left: 18px;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+#stepByStep .form-check-input:checked, #stepByStep .form-check-input:focus {
+  background-color: #625859 !important;
+  outline: none !important;
+  border: none !important;
+}
+#stepByStep input:focus {
+  outline: none;
+}
+#stepByStep #input-container {
+  display: inline-block;
+  box-shadow: none !important;
+  margin-top: 36px !important;
+}
+#stepByStep label.form-check-label.radio-lb {
+  margin-right: 15px;
+}
+#q-box__buttons {
+  text-align: center;
+}
+#stepByStep input[type="text"], #stepByStep input[type="email"] {
+  padding: 8px 14px;
+}
+#stepByStep input[type="text"]:focus, #stepByStep input[type="email"]:focus {
+  border: 1px solid #625859;
+  border-radius: 5px;
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+#stepByStep .form-check-input:checked[type=radio],
+#stepByStep .form-check-input:checked[type=radio]:hover,
+#stepByStep .form-check-input:checked[type=radio]:focus,
+#stepByStep .form-check-input:checked[type=radio]:active {
+  border: none !important;
+  -webkit-outline: 0px !important;
+  box-shadow: none !important;
+}
+#stepByStep .form-check-input:focus,
+#stepByStep input[type="radio"]:hover {
+  box-shadow: none;
+  cursor: pointer !important;
+}
+#stepByStep #success {
+  display: none;
+}
+#stepByStep #success h4 {
+  color: #625859;
+}
+#stepByStep .back-link {
+  font-weight: 700;
+  color: #625859;
+  text-decoration: none;
+  font-size: 18px;
+}
+#stepByStep .back-link:hover {
+  color: #625859;
+}
+
+/* PRELOADER */
+#stepByStep #preloader-wrapper {
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#stepByStep #preloader {
+  background-image: url('../img/preloader.png');
+  width: 120px;
+  height: 119px;
+  border-top-color: #fff;
+  border-radius: 100%;
+  display: block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin: -75px 0 0 -75px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  z-index: 1001;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+#stepByStep #preloader-wrapper .preloader-section {
+  width: 51%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  background: #F7F9FF;
+  z-index: 1000;
+}
+#stepByStep #preloader-wrapper .preloader-section.section-left {
+  left: 0
+}
+#stepByStep #preloader-wrapper .preloader-section.section-right {
+  right: 0;
+}
+#stepByStep .loaded #preloader-wrapper .preloader-section.section-left {
+  transform: translateX(-100%);
+  transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+#stepByStep .loaded #preloader-wrapper .preloader-section.section-right {
+  transform: translateX(100%);
+  transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+#stepByStep .loaded #preloader {
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+#stepByStep .loaded #preloader-wrapper {
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: all 0.3s 1s ease-out;
+}
+
+/* MEDIA QUERIES */
+@media (min-width: 990px) and (max-width: 1199px) {
+  #stepByStep #title-container {
+    padding: 80px 28px 28px 28px;
+  }
+  #stepByStep #steps-container {
+    width: 85%;
+  }
+}
+@media (max-width: 991px) {
+  #stepByStep #title-container {
+    padding: 30px;
+    min-height: inherit;
+  }
+}
+@media (max-width: 767px) {
+  #stepByStep #qbox-container {
+    padding: 30px;
+  }
+  #stepByStep #steps-container {
+    width: 100%;
+    min-height: 400px;
+  }
+  #stepByStep #title-container {
+    padding-top: 50px;
+  }
+}
+@media (max-width: 560px) {
+  #stepByStep #qbox-container {
+    padding: 40px;
+  }
+  #stepByStep #title-container {
+    padding-top: 45px;
+  }
+}

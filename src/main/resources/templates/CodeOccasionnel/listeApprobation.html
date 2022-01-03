@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template2">
+<head>
+<meta charset="utf-8">
+<title>Approbation</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0"></div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>APPROBATION</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            <div class="search_inner">
+                                                <form th:action="@{Approbation}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text"name="numDoc" placeholder="N° Dossier">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ZONE DES TABLEAUX ET FACTURATION -->
+              <div class="col-lg-6">
+                <div class="white_card card_height_100 mb_30">
+                    <div class="white_card_header">
+                        <div class="box_header m-0">
+                            <div class="main-title">
+                                <h3 class="m-0">DOSSIERS A APPROUVER</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Code Occasionnel</th>
+                                        <th scope="col">Date Création</th>
+                                        <th scope="col">Demandeur</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='inactif'}">
+                                        <th scope="row" th:text="${infofisc.numDocOp}"></th>
+                                        <td ><a th:href="@{'Approbation?numDoc='+${infofisc.numDocOp}}" th:text="${infofisc.CodeImportation.numOcca}"></a ></td >
+                                        <td th:text="${infofisc.dateOp}"><a href="" ></a ></td >
+                                        <td th:switch="${infofisc.CodeImportation.statutDemandeurCodeImp}">
+                                            <span th:case="oui" th:text="${infofisc.CodeImportation.Entreprise.nomEntr}"></span  >
+                                            <span th:case="*" th:text="${infofisc.CodeImportation.Demandeur.nomDem}"></span  >
+                                        </td >
+                                    </tr >
+                                </tbody>
+                            </table>
+                        </div>
+                
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="white_card card_height_100 mb_30">
+                    <div class="white_card_header">
+                        <div class="box_header m-0">
+                            <div class="main-title">
+                                <h3 class="m-0">APPROBATION DU DOSSIER</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="payment-title">CODE OCCASIONNEL</td>
+                                    <td th:text="${infoCodefics.CodeImportation.numOcca}"></td >
+                                </tr>
+                                <tr>
+                                    <td class="payment-title" >PARTIE VERSANTE</td>
+                                    <td>
+                                        <ul class="list-unstyled mb-0">
+                                            <li th:switch="${infoCodefics.CodeImportation.statutDemandeurCodeImp}">
+	                                            <strong th:case="oui" th:text="${infoCodefics.CodeImportation.Entreprise.nomEntr}"></strong  >
+	                                            <strong th:case="*" th:text="${infoCodefics.CodeImportation.Demandeur.nomDem}"></strong  >
+                                            </li >
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="payment-title">NATURE DE LA RECETTE</td>
+                                    <td class="text-dark"><strong th:text="${infoCodefics.typeOp}"></strong ></td>
+                                </tr>
+                                <tr>
+                                    <td class="payment-title">MONTANT ENT CHIFFRE</td>
+                                    <td class="text-dark"><strong th:text="${infoCodefics.montantOp}+' XOF'"></strong ></td>
+                                </tr>
+                                <tr>
+                                    <td class="payment-title">DRE LE</td>
+                                    <td class="text-dark"><strong th:text="${infoCodefics.dateOp}"></strong ></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" th:switch="${infoCodefics.activeApprobationOp}">
+                                    	<a href="#" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="actif">
+                                    		<span >SIGNATURE</span >
+                                    	</a>
+                                    	<a th:href="@{'Approuver?numDoc='+${infoCodefics.numDocOp}}" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="*">
+                                    		<span >APPROUVER</span >
+                                    	</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                                    
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="white_card card_height_100 mb_30">
+                    <div class="white_card_header">
+                        <div class="box_header m-0">
+                            <div class="main-title">
+                                <h3 class="m-0">DERNIERS DOSSIERS TRAITES</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                      <div class="table-responsive m-b-30">
+                          <table class="table">
+                              <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Code Occasionnel</th>
+                                        <th scope="col">Date Création</th>
+                                        <th scope="col">Demandeur</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="infofisco : ${listeCodes}" th:if="${infofisco.activePaimentOp==1 AND infofisco.activeApprobationOp=='actif' }">
+                                        <th scope="row" th:text="${infofisco.numDocOp}"></th>
+                                        <td ><a th:href="@{'Approbation?numDoc='+${infofisco.numDocOp}}" th:text="${infofisco.CodeImportation.numOcca}"></a ></td >
+                                        <td th:text="${infofisco.dateOp}"><a href="" ></a ></td >
+                                        <td th:switch="${infofisco.CodeImportation.statutDemandeurCodeImp}">
+                                            <span th:case="oui" th:text="${infofisco.CodeImportation.Entreprise.nomEntr}"></span  >
+                                            <span th:case="*" th:text="${infofisco.CodeImportation.Demandeur.nomDem}"></span  >
+                                        </td >
+                                    </tr >
+                                </tbody>                                  
+                          </table>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                
+              </div>
+              
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+    <!-- MODAL  -->
+    
+     <!-- FIN MODAL  -->
+</div>
+</body>

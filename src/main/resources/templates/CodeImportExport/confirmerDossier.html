@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head>
+<meta charset="utf-8">
+<title>Crearion du dossier</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0 sm_padding_15px">
+        <div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h3 class="f_s_25 f_w_700 dark_text" >Resumé des informations <span th:text="${numDossiers}"></span ></h3>
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button" th:text="${dateDuJour}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">INFORMATION SUR L'ENTREPRISE</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <form th:action="@{ajoutDossier}" method="POST">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Raison sociale*</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="nomEntr" class="form-control" id="input" th:value="${verifEntreprise.nomEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Sigle</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="sigleEntr" class="form-control" id="input" th:value="${verifEntreprise.sigleEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Type Structure*</label>
+                                    <div class="col-sm-8">
+                                        <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntreprise.TypeStructure.idStruc}">
+                                            <th:block th:each="struc : ${listetypeStructure}">
+				                            	<option th:value="${struc.idStruc}" th:text="${struc.titreStruc}" ></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">N° IDU </label>
+                                    <div class="col-sm-8">
+                                        <input name="numIduEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.numIduEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Exonérer RCCM</label>
+                                    <div class="col-sm-8">
+                                        <select name="exoregcomEntr" id="inputState" class="form-control" th:field="*{verifEntreprise.exoregcomEntr}">
+                                            <option value="non">NON</option>
+                                            <option value="oui">OUI</option >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">N° RCCM</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="regcommerceEntr" class="form-control" id="inputEmail3" th:value="${verifEntreprise.regcommerceEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Ville*</label>
+                                    <div class="col-sm-8">
+                                        <select name="villeEntr" id="inputState" class="form-control">
+                                           <th:block th:each="vil : ${listeVilles}">
+				                            	<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label  class="col-sm-4 col-form-label" for="inputState">Commune*</label >
+                                    <div class="col-sm-8">
+                                        <select name="commune" id="inputState" class="form-control" th:field="*{verifEntreprise.Commune.idCommune}">
+                                            <th:block th:each="com : ${listeCommunes}">
+				                            	<option th:text="${com.nomCommune}" th:value="${com.idCommune}"></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Adresse postale</label>
+                                    <div class="col-sm-8">
+                                        <input name="postaleEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.postaleEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Téléphone</label>
+                                    <div class="col-sm-8">
+                                        <input name="telEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.telEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">E-Mail*</label>
+                                    <div class="col-sm-8">
+                                        <input name="emailEntr" type="email" class="form-control" id="inputPassword3" th:value="${verifEntreprise.emailEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Forme juridique*</label>
+                                    <div class="col-sm-8">
+                                        <select name="formeJuridique" id="inputState" class="form-control" th:field="*{verifEntreprise.FormeJuridique.idJury}">
+                                            <th:block th:each="jury : ${listeFormjury}">
+				                            	<option th:text="${jury.titreJury}" th:value="${jury.idJury}"></option >
+				                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Domaine Activité*</label>
+                                    <div class="col-sm-8">
+                                        <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntreprise.DomaineActivite.idDomAct}">
+                                            <th:block th:each="dom : ${listedomaineActivite}">
+				                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Compte contribuable* </label>
+                                    <div class="col-sm-8">
+                                        <input name="contribuableEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.contribuableEntr}">
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">INFORMATION SUR LE REPRESENTANT</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Civilité*</label>
+                                    <div class="col-sm-8">
+                                        <select name="sexeProp" id="inputState" class="form-control" th:field="*{verifProprietaire.sexeProp}">
+                                            <option value="monsieur">Monsieur</option>
+                                            <option value="madame">Madame</option >
+                                            <option value="mademoiselle">Mademoiselle</option >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Nom*</label>
+                                    <div class="col-sm-8">
+                                        <input name="nomProp" type="text" class="form-control" id="inputPassword3" th:value="${verifProprietaire.nomProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Prénom*</label>
+                                    <div class="col-sm-8">
+                                        <input name="prenomsProp" type="text" class="form-control" id="inputEmail3" th:value="${verifProprietaire.prenomsProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Type pièces*</label>
+                                    <div class="col-sm-8">
+                                        <select name="typePieceIdentite" id="inputState" class="form-control" th:field="*{verifProprietaire.TypePieceIdentite.idTyp}">
+            								<th:block th:each="typiec : ${listetypePieceIdentite}">
+				                            	<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+				                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">N° de la pièce*</label>
+                                    <div class="col-sm-8">
+                                        <input name="numpieceProp" type="text" class="form-control" id="inputPassword3" th:value="${verifProprietaire.numpieceProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Date validité *</label>
+                                    <div class="col-sm-8">
+                                        <input type="Date" name="validitePieceProp" class="form-control" id="inputPassword3" th:value="${verifProprietaire.validitePieceProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Nationalité*</label>
+                                    <div class="col-sm-8">
+                                        <select name="nationalite" id="inputState" class="form-control" th:field="*{verifProprietaire.Nationalite.idNat}">
+                                            <th:block th:each="nat : ${listeNationalites}">
+				                            	<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+				                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">N° Tel *</label>
+                                    <div class="col-sm-8">
+                                        <input name="telProp" type="text" class="form-control" id="inputPassword3" th:value="${verifProprietaire.telProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">E-Mail</label>
+                                    <div class="col-sm-8">
+                                        <input name="emailProp" type="email" class="form-control" id="inputPassword3" th:value="${verifProprietaire.emailProp}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+</div>
+</body>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template" xml:lang="">
+<head>
+<meta charset="utf-8">
+<title>Crearion du dossier</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0 sm_padding_15px">
+        	<div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h5 class="f_s_25 f_w_700 dark_text" >Dossier N° : <span th:text="${numDossiers}"></span ></h5>
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button" th:text="${dateDuJour}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" id="stepByStep">
+            	<!-- CONTAINER -->
+			    <div class="container d-flex align-items-center min-vh-100 white_card card_height_100 mb_30">
+			        <div class="row g-0 justify-content-center">
+			            <!-- TITLE -->
+			            <div class="col-lg-4 offset-lg-1 mx-0 px-0">
+			                <div id="title-container">
+			                    <img class="covid-image" src="../images/iec.png">
+			                    <h2>CODE IMPORT EXPORT</h2>
+			                    <h3>ATTRIBUTION</h3>
+			                </div>
+			            </div>
+			            <!-- FORMS -->
+			            <div class="col-lg-7 mx-0 px-0">
+			                <div class="progress">
+			                    <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 0%"></div>
+			                </div>
+			                <div id="qbox-container">
+			                    <form class="needs-validation" id="form-wrapper" th:action="@{confirmationDossier}" name="form-wrapper" method="POST" novalidate="">
+			                        <div id="steps-container">
+			                        	<div class="step d-block">
+			                                <h4>INFORMATION SUR LA STRUCTURE</h4>
+											<div class="mt-2">                                           
+			                                	<label for="typeStructure" class="form-label" >Type Structure</label>						                                    
+			                                    <select name="typeStructure" id="typeStructure" class="form-control" required>
+			                                    	<option value="">Veuillez selectionner</option>
+			                                        <th:block th:each="struc : ${listetypeStructure}">
+						                            	<option th:value="${struc.idStruc}" th:if="${struc.idStruc==7}" th:text="${struc.titreStruc}" ></option >
+						                            </th:block>
+			                                    </select>
+			                                </div>
+										</div>
+										<div class="step">
+											<h4>INFORMATION SUR LA STRUCTURE</h4>
+			                                <div class="mt-1">
+			                                 	<label for="inputEmail3" class="form-label">Raison sociale*</label>						                                   
+			                                    <input type="text" name="nomEntr" pattern="[0-9]{3}" class="form-control" id="input" required>
+			                                </div>
+			                             	<div class="mt-2">
+			                                	<label for="inputPassword3" class="form-label">Sigle</label>						                                   
+			                                    <input type="text" name="sigleEntr" class="form-control" id="input">
+			                                </div>
+			                                
+											<div class="mt-2" id="departementBody">                                           
+			                                	<label class="form-label" for="inputState">Département</label>						                                    
+			                                    <select name="departement" id="departement" class="form-control">
+			                                    <option value="">Veuillez selectionner</option>
+			                                        <th:block th:each="Dep : ${listedepartement}">
+						                            	<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
+						                            </th:block>
+			                                    </select>
+			                                </div>
+			                                <div class="mt-2" id="numIduBody">
+			                                	<label for="inputPassword3" class="form-label">N° IDU </label>
+			                                    <input name="numIduEntr" type="text" class="form-control" id="numIduEntr">
+			                                </div>
+			                                <div class="mt-2">
+			                                	<label for="inputPassword3" class="form-label">Compte contribuable* </label>
+			                                    <input name="contribuableEntr" type="text" class="form-control" id="inputPassword3">
+			                                </div>
+			                                <div class="mt-2" id="exoregcomBody">                                          
+			                                	<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
+			                                    <select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
+			                                    <option value="">Veuillez selectionner</option>
+			                                        <option value="non">NON</option>
+			                                        <option value="oui">OUI</option >
+			                                    </select>
+			                                </div>
+			                            	<div class="mt-2" id="regcommerceBody">
+			                                <label for="inputEmail3" class="form-label">N° RCCM</label>						                                    
+			                                    <input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr">
+			                                </div>
+			                            </div>
+			                            <div class="step">
+			                              <h4>INFORMATION SUR LA STRUCTURE</h4>
+			                                <div class="mt-2">                                           
+			                                	<label class="form-label" for="inputState">Forme juridique*</label>						                                    
+			                                    <select name="formeJuridique" id="inputState" class="form-control">
+			                                    <option value="">Veuillez selectionner une forme juridique</option>
+			                                        <th:block th:each="jury : ${listeFormjury}">
+						                            	<option th:text="${jury.titreJury}" th:value="${jury.idJury}"></option >
+						                            </th:block>
+			                                    </select>
+			                                </div>
+			                                <div class="mt-2">                                           
+			                                	<label class="form-label" for="inputState">Domaine Activité*</label>						                                    
+			                                    <select name="domaineActivite" id="inputState" class="form-control">
+			                                    <option value="">Veuillez selectionner</option>
+			                                        <th:block th:each="dom : ${listedomaineActivite}">
+						                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
+						                            </th:block>
+			                                    </select>
+			                                </div>
+			                                <div class="mt-2">                                          
+			                                <label class="form-label" for="inputState">Ville*</label>						                                    
+			                                    <select name="ville" id="inputState" class="form-control">
+			                                    <option value="">Veuillez selectionner</option>
+			                                       <th:block th:each="vil : ${listeVilles}">
+						                            	<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
+						                            </th:block>
+			                                    </select >
+			                                </div>
+			                                 <div class="mt-2">                                       
+			                                <label  class="form-label" for="inputState">Commune*</label >						                                   
+			                                    <select name="commune" id="inputState" class="form-control">
+			                                    <option value="">Veuillez selectionner</option>
+			                                        <th:block th:each="com : ${listeCommunes}">
+						                            	<option th:text="${com.nomCommune}" th:value="${com.idCommune}"></option >
+						                            </th:block>
+			                                    </select >
+			                                </div>
+										</div>
+										<div class="step">
+											<h4>INFORMATION SUR LA STRUCTURE</h4>
+			                            	<div class="mt-2">
+			                                <label for="inputPassword3" class="col-form-label">Adresse postale</label>
+			                                
+			                                    <input name="postaleEntr" type="text" class="form-control" id="inputPassword3">
+			                                </div>
+			                            	<div class="mt-2">
+			                                <label for="inputPassword3" class="form-label">Téléphone</label>						                                    
+			                                    <input name="telEntr" type="text" class="form-control" id="inputPassword3">
+			                                </div>
+			                            	<div class="mt-2">
+			                                	<label for="inputPassword3" class="form-label">E-Mail*</label>						                                    
+			                                    <input name="emailEntr" type="email" class="form-control" id="inputPassword3">
+			                                </div>
+			                            </div>
+			                        	<div class="step">
+			                                <h4>INFORMATION SUR LE REPRESENTANT</h4>
+				                                <div class="mt-1">                                          
+				                                	<label class="form-label" for="inputState">Civilité*</label>						                                    
+				                                    <select name="sexeProp" id="inputState" class="form-control">
+			                                            <option value="monsieur">Monsieur</option>
+			                                            <option value="madame">Madame</option >
+			                                            <option value="mademoiselle">Mademoiselle</option >
+			                                        </select>
+				                                </div>
+				                                <div class="mt-2">
+			                                		<label for="inputPassword3" class="form-label">Nom*</label>			                                   
+			                                        <input name="nomProp" type="text" class="form-control" id="inputPassword3">
+			                                	</div>
+			                                	<div class="mt-2">
+				                                	<label for="inputEmail3" class="form-label">Prénom*</label>                              
+	                                        		<input name="prenomsProp" type="text" class="form-control" id="inputEmail3">
+			                                	</div>
+												<div class="mt-2">
+				                                	<label class="form-label" for="inputState">Fonction*</label>
+			                                        <select name="fonction" id="inputState" class="form-control">
+			                                        	<option value="">Veuillez selectionner</option>
+			                                            <th:block th:each="Fonc : ${listefonction}">
+							                            	<option th:text="${Fonc.titreFonc}" th:value="${Fonc.idFonc}"></option >
+							                            </th:block>
+			                                        </select>
+			                                	</div>
+			                                	<div class="mt-2">
+				                                	<label class="form-label" for="inputState">Nationalité*</label>
+			                                        <select name="nationalite" id="inputState" class="form-control">
+			                                        	<option value="">Veuillez selectionner</option>
+			                                            <th:block th:each="nat : ${listeNationalites}">
+							                            	<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+							                            </th:block>
+			                                        </select>
+			                                	</div>
+											</div>
+											<div class="step">
+												<h4>INFORMATION SUR LE REPRESENTANT</h4>
+												<div class="mt-2">
+			                                		<label class="form-label" for="inputState">Type pièces*</label>
+			                                        <select name="typePieceIdentite" id="inputState" class="form-control">
+			                                        	<option value="">Veuillez selectionner</option>
+			            								<th:block th:each="typiec : ${listetypePieceIdentite}">
+							                            	<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+							                            </th:block>
+			                                        </select>
+			                                	</div>
+			                                	<div class="mt-2">
+			                                		<label for="inputPassword3" class="form-label">N° de la pièce*</label>
+                                        			<input name="numpieceProp" type="text" class="form-control" id="inputPassword3">
+			                                	</div>
+			                                	<div class="mt-2">
+			                                		<label for="inputPassword3" class="form-label">Date validité</label>
+                                        			<input type="date" name="validitePieceProp" class="form-control" id="inputPassword3">
+			                                	</div>
+			                                	<div class="mt-2">
+			                                		<label for="inputPassword3" class="form-label">N° Tel *</label>
+                                        			<input name="telProp" type="text" class="form-control" id="inputPassword3">
+			                                	</div>
+			                                	<div class="mt-2">
+			                                		<label for="inputPassword3" class="form-label">E-Mail</label>
+                                        			<input name="emailProp" type="email" class="form-control" id="inputPassword3">
+			                                	</div>
+			                            </div>
+			                       
+			                        </div>
+			                        <div id="q-box__buttons">
+			                            <button id="prev-btn" type="button" class="d-none">Precedent</button> 
+			                            <button id="next-btn" type="button" class="d-inline-block">Suivant</button> 
+			                            <button id="submit-btn" type="submit" class="d-none">Enregistrer</button>
+			                        </div>
+			                    </form>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <!-- PRELOADER -->
+			    <div id="preloader-wrapper">
+			        <div id="preloader"></div>
+			        <div class="preloader-section section-left"></div>
+			        <div class="preloader-section section-right"></div>
+			    </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- FIN DU CORPS  -->
+</div>
+</body>

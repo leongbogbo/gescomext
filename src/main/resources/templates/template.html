@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tags -->    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GESCOMEXT</title>
+
+    <link rel="icon" href="../images/mini_logo1.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- themefy CSS -->
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <!-- select2 CSS -->
+    <link rel="stylesheet" href="../css/nice-select.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="../css/owl.carousel.css">
+    <!-- gijgo css -->
+    <link rel="stylesheet" href="../css/gijgo.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/tagsinput.css">
+
+    <!-- date picker -->
+     <link rel="stylesheet" href="../css/date-picker.css">
+
+     <link rel="stylesheet" href="../css/vectormap-2.0.2.css">
+     
+     <!-- scrollabe  -->
+     <link rel="stylesheet" href="../css/scrollable.css">
+    <!-- datatable CSS -->
+    <link rel="stylesheet" href="../css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="../css/buttons.dataTables.min.css">
+    <!-- text editor css -->
+    <link rel="stylesheet" href="../css/summernote-bs4.css">
+    <!-- morris css -->
+    <link rel="stylesheet" href="../css/morris.css">
+    <!-- metarial icon css -->
+    <link rel="stylesheet" href="../css/material-icons.css">
+
+    <!-- menu css  -->
+    <link rel="stylesheet" href="../css/metisMenu.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/default.css" id="colorSkinCSS">
+
+<body class="crm_body_bg">
+<!-- MENU GAUCHE -->
+<nav class="sidebar">
+    <div class="logo d-flex justify-content-between">
+        <a class="large_logo" href="../"><img src="../images/logo.jpg" alt=""></a>
+        <a class="small_logo" href="../"><img src="../images/mini_logo.jpg" alt=""></a>
+        <div class="sidebar_close_icon d-lg-none">
+            <i class="ti-close"></i>
+        </div>
+    </div>
+    <ul id="sidebar_menu" class="metismenu">
+        <li class="mm-active">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Dossiers </span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show">
+            	<li><a th:href="@{Liste}">Liste</a></li>
+              	<li><a th:href="@{CreationDossier}">creation</a></li>
+              	<li><a th:href="@{Renouvellement}">Renouvellement</a></li>
+              	<li><a th:href="@{Duplicata}">Duplicata</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="Paiement" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/3.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Paiement </span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{Approbation}" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/3.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Approbation </span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="EditionFiches" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/2.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Editer Fiche </span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="listeEtatCodes" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/3.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Etats des codes </span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/3.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span>Statistiques </span>
+                </div>
+            </a>
+        </li>
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Opeartion sur dossiers</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a href="#">modification</a></li>
+              <li><a href="#">Suppression</a></li>
+            </ul>
+        </li>
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Paramétrage</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{listeVilles}">Liste villes</a></li>
+              <li><a th:href="@{listeCommune}">Liste communes</a></li>
+              <li><a th:href="@{listeNationalites}">Liste nationalites</a></li>
+              <li><a th:href="@{listeFormeJuridiques}">Formes juriques</a></li>
+            </ul>
+        </li>
+      </ul>
+</nav>
+ <!--/ MENU GAUCHE  -->
+<section class="main_content dashboard_part large_header_bg">
+
+<!-- menu HAUT -->
+ <div class="container-fluid no-gutters">
+    <div class="row">
+        <div class="col-lg-12 p-0 ">
+            <!-- BARRE DE CONNEXION HAUT -->
+            <div class="header_iner d-flex justify-content-between align-items-center">
+                <div class="sidebar_icon d-lg-none">
+                    <i class="ti-menu"></i>
+                </div>
+                <label class="switch_toggle d-none d-lg-block" for="checkbox">
+                    <input type="checkbox" id="checkbox">
+                    <div class="slider round open_miniSide"></div>
+                </label>
+                <h3>CODE IMPORT EXPORT</h3>
+                <div class="header_right d-flex justify-content-between align-items-center">
+                    <div class="header_notification_warp d-flex align-items-center">
+                        <li>
+                            <div class="serach_button">
+                                <i class="ti-search"></i>
+                                <div class="serach_field-area d-flex align-items-center">
+                                    <div class="search_inner">
+                                        <form action="#">
+                                            <div class="search_field">
+                                                <input type="text" placeholder="Search here...">
+                                            </div>
+                                            <button class="close_search"> <i class="ti-search"></i> </button>
+                                        </form>
+                                    </div>
+                                    <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="bell_notification_clicker" href="#"> <img src="../bell.svg" alt="">
+                                <span>9</span>
+                            </a>
+                            <!-- Menu_NOtification_Wrap  -->
+                        <div class="Menu_NOtification_Wrap">
+                            <div class="notification_Header">
+                                <h4>Notifications</h4>
+                            </div>
+                            <div class="Notification_body">
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../2.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>Cool Marketing </h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../4.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>Awesome packages</h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../3.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>what a packages</h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../2.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>Cool Marketing </h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../4.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>Awesome packages</h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- single_notify  -->
+                                <div class="single_notify d-flex align-items-center">
+                                    <div class="notify_thumb">
+                                        <a href="#"><img src="../3.png" alt=""></a>
+                                    </div>
+                                    <div class="notify_content">
+                                        <a href="#"><h5>what a packages</h5></a>
+                                        <p>Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nofity_footer">
+                                <div class="submit_button text-center pt_20">
+                                    <a href="#" class="btn_1">See More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/ Menu_NOtification_Wrap  -->
+                        </li>
+                        <li>
+                            <a class="CHATBOX_open" href="#"> <img src="../images/msg.svg" alt=""> <span>7</span>  </a>
+                        </li>
+                    </div>
+                    <div class="profile_info">
+                        <img src="../images/client_img.png" alt="#">
+                        <div class="profile_info_iner">
+                            <div class="profile_author_name">
+                                <p>Neurologist </p>
+                                <h5 sec:authentication="name"></h5>
+                            </div>
+                            <div class="profile_info_details">
+                                <a href="#">My Profile </a>
+                                <a href="#">Settings</a>
+                                <a href="/gescomext/logout">Log Out </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN BARRE DE CONNEXION HAUT -->
+        </div>
+    </div>
+</div>
+<!--/ FIN menu HAUT -->
+
+<!-- LE CORPS ICI -->
+<section layout:fragment="MyContent" ></section>
+<!-- FIN CORPS -->
+<!-- footer part -->
+<div class="footer_part">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer_iner text-center">
+                    <p>2021 © Système de Gestion des Document du Commerce Extérieur (GESCOMEXT) / <a href="#"> Ministère du commerce</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- main content part end -->
+
+
+<!-- footer  -->
+<script src="../js/jquery-3.4.1.min.js"></script>
+<!-- popper js -->
+<script src="../js/popper.min.js"></script>
+<!-- bootstarp js -->
+<script src="../js/bootstrap.min.js"></script>
+<!-- sidebar menu  -->
+<script src="../js/metisMenu.js"></script>
+<!-- waypoints js -->
+<script src="../js/jquery.waypoints.min.js"></script>
+<!-- waypoints js -->
+<script src="../js/Chart.min.js"></script>
+<!-- counterup js -->
+<script src="../js/jquery.counterup.min.js"></script>
+
+<!-- nice select -->
+<script src="../js/jquery.nice-select.min.js"></script>
+<!-- owl carousel -->
+<script src="../js/owl.carousel.min.js"></script>
+
+<!-- responsive table -->
+<script src="../js/jquery.dataTables.min.js"></script>
+<script src="../js/dataTables.responsive.min.js"></script>
+<script src="../js/dataTables.buttons.min.js"></script>
+<script src="../js/buttons.flash.min.js"></script>
+<script src="../js/jszip.min.js"></script>
+<script src="../js/pdfmake.min.js"></script>
+<script src="../js/vfs_fonts.js"></script>
+<script src="../js/buttons.html5.min.js"></script>
+<script src="../js/buttons.print.min.js"></script>
+
+<!-- datepicker  -->
+<script src="../js/datepicker.js"></script>
+<script src="../js/datepicker.en.js"></script>
+<script src="../js/datepicker.custom.js"></script>
+
+<script src="../js/Chart.min (2).js"></script>
+<script src="../js/roundedBar.min.js"></script>
+
+<!-- progressbar js -->
+<script src="../js/jquery.barfiller.js"></script>
+<!-- tag input -->
+<script src="../js/tagsinput.js"></script>
+<!-- text editor js -->
+<script src="../js/summernote-bs4.js"></script>
+<script src="../js/custom.js"></script>
+<script src="../js/stepByStep.js"></script>
+<script src="../js/static-forms.js"></script>
+</body>
+</html>

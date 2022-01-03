@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template3">
+<head>
+<meta charset="utf-8">
+<title>Liste Genre Marque</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+        <!-- ZONE DE TITRE  -->
+			<div class="row">
+			    <div class="col-12">
+			        <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+			            <div class="page_title_left">
+			                <h3 class="f_s_25 f_w_700 dark_text"></h3>
+			            </div>
+			            <div class="page_title_right">
+			                <div class="page_date_button" data-toggle="modal" data-target="#exampleModalCenter">
+			                    Nouvelle Genre Marque
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- FIN ZONE DE TITRE  -->
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>LISTE GENRE MARQUE</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            <div class="search_inner">
+                                                <form active="#">
+                                                    <div class="search_field">
+                                                        <input type="text" placeholder="Search content here...">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="QA_table mb_30">
+                                    <!-- table-responsive -->
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                    	<table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1302px;">
+	                                        <thead>
+	                                            <tr role="row">
+	                                            	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-sort="ascending" aria-label="title: activate to sort column descending">N°</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 297px;" aria-label="Category: activate to sort column ascending">MARQUE</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 51px;" aria-label="Status: activate to sort column ascending">Options</th>
+	                                            </tr>
+	                                        </thead>
+                                        	<tbody>
+	                                            <tr role="row" class="odd" th:each="v:${genreMarques}">
+	                                                <td th:text="${v.idGen}"></td >
+	                                                <td th:text="${v.nomGen}"></td >
+	                                                <td><a href="#" class="status_btn">Modifier</a></td>nomuser
+	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>
+	                                            </tr>
+                                           </tbody>
+                                    	</table>
+                                    	
+                                    	<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+	                                    	
+                                    	</div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+    <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un genre</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{GenreMarqueNew}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body">
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">Genre</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="nomGen" class="form-control" id="inputEmail3" placeholder="Genre">
+	                    </div>
+	                </div>
+		         </div>
+        	</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Enregistrer</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+</div>
+</body>
