@@ -1,8 +1,9 @@
 const months = [31,28,31,30,31,30,31,31,30,31,30,31];
 function ageCalculate(){  
+    //let today = new Date("2022/12/04");
     let today = new Date();
     let inputDate = new Date(document.getElementById("dateMiseCirculationGag").value);
-    let birthMonth,birthDate,birthYear;
+    let birthMonth,birthDate=0,birthYear;
     let birthDetails = {
         date:inputDate.getDate(),
         month:inputDate.getMonth()+1,
@@ -19,8 +20,9 @@ function ageCalculate(){
         ( birthDetails.month > currentMonth && birthDetails.year == currentYear) || 
         (birthDetails.date > currentDate && birthDetails.month == currentMonth && birthDetails.year == currentYear)
     ){
-        alert("Not Born Yet");
+        alert("Date invalide");
         displayResult("-","-","-");
+        document.getElementById("dateMiseCirculationGag").value="0/0/0";
         return;
     }
 
@@ -33,31 +35,26 @@ function ageCalculate(){
         birthYear--;
         birthMonth = 12 + currentMonth - birthDetails.month;
     }
-
     if(currentDate >= birthDetails.date){
         birthDate = currentDate - birthDetails.date;
     }
     else{
         birthMonth--;
-        let days = months[currentMonth - 2];
+        let days = months[currentMonth - 1];
         birthDate = days + currentDate - birthDetails.date;
         if(birthMonth < 0){
             birthMonth = 11;
             birthYear--;
         }
     }
-    displayResult(birthDate,birthMonth,birthYear);
     
+    displayResult(birthDate,birthMonth,birthYear);
 }
 
 function displayResult(bDate,bMonth,bYear){
-    document.getElementById("anLGage").value = bYear;
-    document.getElementById("moisLGage").value = bMonth;
     document.getElementById("joursLGage").value = bDate;
-    
-    document.getElementById("anLGage1").value = bYear;
-    document.getElementById("moisLGage1").value = bMonth;
-    document.getElementById("joursLGage1").value = bDate;
+    document.getElementById("moisLGage").value = bMonth;
+    document.getElementById("anLGage").value = bYear;
 }
 
 function leapChecker(year){

@@ -1,6 +1,9 @@
 package com.mincom.gescomext.config;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -130,6 +133,7 @@ public class CalculeCodesExportation {
     }
     
     public static String getLeveeGage(String usage, String chassis, String typeGage, Integer numOrdre) {
+    	
         List<TableauCodeTypeStructure> tableauCodeTypeStructure = TableauCodeTypeStructure.getCodeTypeStructures();
 
         SimpleDateFormat dateAn = new SimpleDateFormat("yyyy");
@@ -146,7 +150,7 @@ public class CalculeCodesExportation {
         String lettreT = chassis.substring(0,3);
         StringBuilder strb = new StringBuilder(lettreT);
         lettreT = strb.reverse().toString();
-
+	
         char lettreQ=' ';
         if(typeGage.equals("ordinaire")){
             lettreQ='R';

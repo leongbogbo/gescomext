@@ -4,11 +4,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -118,17 +122,17 @@ public class CodeImportationController {
 
 		
 		
-		Date aujourdhui = new Date();
-		SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
-		String dateDuJour = formater.format(aujourdhui);
+	Date aujourdhui = new Date();
+	SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
+	String dateDuJour = formater.format(aujourdhui);
 	
-		@RequestMapping("/{category}/Liste")
-		public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap)
-		{
-			List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
-			modelMap.addAttribute("listeCode", codfs);			
-			return "./"+category+"/listeDossier";
-		}
+	@RequestMapping("/{category}/Liste")
+	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap)
+	{
+		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+		modelMap.addAttribute("listeCode", codfs);		
+		return "./"+category+"/listeDossier";
+	}
 	
 	@RequestMapping("//{category}/RechercherDossier")
 	public String rechercheDossier(Integer numDocCodFic, ModelMap modelMap)
@@ -296,27 +300,32 @@ public class CodeImportationController {
 			}
 			
 		}if(category.equals("CodeOccasionnel")) {
-			// typeStructure typeStructures = typeStructureService.
-			// String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
-
+			
+			String codeStruc ="";
 			
 			if(demandeur.getNomDem() != null) {
 				Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
 				codeImportation.setDemandeur(saveDemandeur);
+				codeStruc = "42000A";
 			}
 			
 			if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
-			Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);	
-			
+			TypeStructure typeStructures = typeStructureService.getTypeStructureById(entreprise.getTypeStructure().getIdStruc());
+			codeStruc = typeStructures.getCodeStruc();
+			Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);				
 			entreprise.setProprietaires(saveProprietaire);		
 			entreprise.setDateEntr(date);
 			
 			Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
 			codeImportation.setEntreprise(saveEntreprise);
 			codeImportation.setStatutDemandeurCodeImp("oui");
+			
 			}
 			
-			codeImportation.setNumOcca("NUM-CODE-ACCO-"+numDossier);
+			
+			String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
+			
+			codeImportation.setNumOcca(codesOccasionnel);
 			CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 			
 			opCodeImportation.setMontantOp("50000");
@@ -324,31 +333,55 @@ public class CodeImportationController {
 			
 			
 		}if(category.equals("LeveeDeGage")) {
+			
+			String dategag = codeImportation.getDateGag();
+			
+			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDuJours = formatGag.format(new Date());
+			LocalDate dates = LocalDate.parse(dategag, DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+			
+			Period diffDate = Period.between(dJour, dates);
+			int years = Math.abs(diffDate.getYears());
+			int mois = Math.abs(diffDate.getMonths());
+			
+			String typeGage="";
+			
+			if((years == 2 && mois > 0) || (years > 2 )) {
+				typeGage = "ordinaire";
+			}else if((years == 2 && mois == 0) || (years < 2 )) {
+				typeGage = "exceptionnel";
+			}
 
-			String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(), codeImportation.getNumChassisGag(), "exceptionnel", numDossier);
-			
-			if(demandeur.getNomDem() != null) {
-				Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
-				codeImportation.setDemandeur(saveDemandeur);
-			}
-			
-			if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
-				Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);	
+			String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(), codeImportation.getNumChassisGag(), typeGage, numDossier);
+			if(!codesLege.isEmpty()) {
+				if(demandeur.getNomDem() != null) {
+					Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
+					codeImportation.setDemandeur(saveDemandeur);
+				}
 				
-				entreprise.setProprietaires(saveProprietaire);		
-				entreprise.setDateEntr(date);
+				if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
+					Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);	
+					
+					entreprise.setProprietaires(saveProprietaire);		
+					entreprise.setDateEntr(date);
+					
+					Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
+					codeImportation.setEntreprise(saveEntreprise);
+					codeImportation.setStatutDemandeurCodeImp("oui");
+				}
 				
-				Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
-				codeImportation.setEntreprise(saveEntreprise);
-				codeImportation.setStatutDemandeurCodeImp("oui");
+				codeImportation.setNumGag(codesLege);
+				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+				
+				if(typeGage.equals("ordinaire")) {
+					opCodeImportation.setMontantOp("40000");
+				}else if(typeGage.equals("exceptionnel")) {
+					opCodeImportation.setMontantOp("50000");
+				}
+				
+				opCodeImportation.setCodeImportation(codeImportationSave);
 			}
-			
-			codeImportation.setNumGag("NUM-CODE-GAGE-"+numDossier);
-			CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
-			
-			opCodeImportation.setMontantOp("50000");
-			opCodeImportation.setCodeImportation(codeImportationSave);
-			
 			
 		}
 		

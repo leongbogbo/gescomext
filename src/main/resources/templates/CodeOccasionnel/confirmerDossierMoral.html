@@ -28,6 +28,7 @@ layout:decorator="template2" xml:lang="">
                         <div class="white_card_body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade active show" id="Themes" role="tabpanel" aria-labelledby="Themes-tab">
+                                <form th:action="@{ajoutDossier}" method="POST">
                                     <div class="row justify-content-center">
 						                <div class="col-lg-12">
 						                    <div class="white_card card_height_100 mb_30">
@@ -39,7 +40,6 @@ layout:decorator="template2" xml:lang="">
 						                            </div>
 						                        </div>
                                                 <div class="white_card_body">
-                                                    <form th:action="@{ajoutDossier}" method="POST">
                                                         <div class="form-row">
                                                             <div class="col-sm-4">
                                                                 <label for="inputEmail3" class="col-form-label">Raison sociale*</label>

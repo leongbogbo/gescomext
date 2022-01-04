@@ -19,13 +19,10 @@ layout:decorator="template3" xml:lang>
                             <div class="bulder_tab_wrapper">
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                      <a class="nav-link" id="page-tab" href="DemandeurPhysique" >DEMANDEUR PHYSIQUE</a>
-                                    </li>
-                                    <li class="nav-item">
                                       <a class="nav-link  active" id="Themes-tab" href="DemandeurMoral">DEMANDEUR MORALE</a>
                                     </li>
                                     <li class="nav-item">
-                                     <h4> <strong> <a class="nav-link" aria-selected="false" th:text="${'DOSSIER N° : '+numDossiers}"></a></strong></h4>
+                                      <a class="nav-link" id="page-tab" href="DemandeurPhysique" >DEMANDEUR PHYSIQUE</a>
                                     </li>
                                   </ul>                                  
                             	</div>
@@ -52,7 +49,7 @@ layout:decorator="template3" xml:lang>
 															<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 0%"></div>
 														</div>
 														<div id="qbox-container">
-															<form class="needs-validation" id="form-wrapper" th:action="@{confirmationDossier}" name="form-wrapper" method="POST" novalidate="">
+															<form th:action="@{confirmationDossier}" class="needs-validation" id="form-wrapper" name="form-wrapper" method="POST" novalidate="">
 																<div id="steps-container">
 																	<div class="step d-block">
 																		<h4>SELECTIONNER LE TYPE D'USAGE</h4>
@@ -76,7 +73,7 @@ layout:decorator="template3" xml:lang>
 																			<select name="typeStructure" id="typeStructure" class="form-control" required>
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="struc : ${listetypeStructure}">
-																					<option th:value="${struc.idStruc}" th:text="${struc.titreStruc}" ></option >
+																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc!=1}" th:text="${struc.titreStruc}" ></option >
 																				</th:block>
 																			</select>
 																		</div>
@@ -95,7 +92,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2" id="departementBody">                                           
 																			<label class="form-label" for="inputState">Département</label>						                                    
 																			<select name="departement" id="departement" class="form-control">
-																			<option >Veuillez selectionner</option>
+																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="Dep : ${listedepartement}">
 																					<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
 																				</th:block>
@@ -112,7 +109,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2" id="exoregcomBody">                                          
 																			<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
 																			<select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
-																			<option >Veuillez selectionner une reponse</option>
+																				<option value="">Veuillez selectionner</option>
 																				<option value="non">NON</option>
 																				<option value="oui">OUI</option >
 																			</select>
@@ -127,7 +124,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2">                                           
 																			<label class="form-label" for="inputState">Forme juridique*</label>						                                    
 																			<select name="formeJuridique" id="inputState" class="form-control">
-																			<option >Veuillez selectionner une forme juridique</option>
+																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="jury : ${listeFormjury}">
 																					<option th:text="${jury.titreJury}" th:value="${jury.idJury}"></option >
 																				</th:block>
@@ -136,7 +133,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2">                                           
 																			<label class="form-label" for="inputState">Domaine Activité*</label>						                                    
 																			<select name="domaineActivite" id="inputState" class="form-control">
-																			<option >Veuillez selectionner</option>
+																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="dom : ${listedomaineActivite}">
 																					<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
 																				</th:block>
@@ -145,7 +142,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2">                                          
 																		<label class="form-label" for="inputState">Ville*</label>						                                    
 																			<select name="ville" id="inputState" class="form-control">
-																			<option >Veuillez selectionner</option>
+																				<option value="">Veuillez selectionner</option>
 																			   <th:block th:each="vil : ${listeVilles}">
 																					<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
 																				</th:block>
@@ -154,7 +151,7 @@ layout:decorator="template3" xml:lang>
 																		 <div class="mt-2">                                       
 																		<label  class="form-label" for="inputState">Commune*</label >						                                   
 																			<select name="commune" id="inputState" class="form-control">
-																			<option >Veuillez selectionner</option>
+																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="com : ${listeCommunes}">
 																					<option th:text="${com.nomCommune}" th:value="${com.idCommune}"></option >
 																				</th:block>
@@ -182,6 +179,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-1">                                          
 																				<label class="form-label" for="inputState">Civilité*</label>						                                    
 																				<select name="sexeProp" id="inputState" class="form-control">
+																					<option value="">Veuillez selectionner</option>
 																					<option value="monsieur">Monsieur</option>
 																					<option value="madame">Madame</option >
 																					<option value="mademoiselle">Mademoiselle</option >
@@ -198,7 +196,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Fonction*</label>
 																				<select name="fonction" id="inputState" class="form-control">
-																					<option >Veuillez selectionner</option>
+																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="Fonc : ${listefonction}">
 																						<option th:text="${Fonc.titreFonc}" th:value="${Fonc.idFonc}"></option >
 																					</th:block>
@@ -207,7 +205,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Nationalité*</label>
 																				<select name="nationalite" id="inputState" class="form-control">
-																					<option >Veuillez selectionner</option>
+																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="nat : ${listeNationalites}">
 																						<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
 																					</th:block>
@@ -219,6 +217,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Type pièces*</label>
 																				<select name="typePieceIdentite" id="inputState" class="form-control">
+																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="typiec : ${listetypePieceIdentite}">
 																						<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
 																					</th:block>

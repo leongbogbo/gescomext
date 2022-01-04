@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,8 +35,7 @@ public class CodeImportation {
 	private String dateEmisOcca;
 	private String declarationOcca;
 	private String objetOcca;
-	private String typeCodeOcca;
-	
+	private String typeCodeOcca;	
 	
 	private String numGag;
 	private String dateGag;

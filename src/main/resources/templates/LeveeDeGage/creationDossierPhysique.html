@@ -24,9 +24,6 @@ layout:decorator="template3" xml:lang>
                                     <li class="nav-item">
                                       <a class="nav-link" id="Themes-tab" href="DemandeurMoral">DEMANDEUR MORALE</a>
                                     </li>
-                                    <li class="nav-item">
-                                     <h4> <strong> <a class="nav-link" aria-selected="false" th:text="${'DOSSIER N° : '+numDossiers}"></a></strong></h4>
-                                    </li>
                                   </ul>                                  
                             	</div>
                         	</div>
@@ -74,6 +71,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-2">                                          
 																				<label class="form-label" for="inputState">Civilité*</label>						                                    
 																				<select name="sexeDem" id="inputState" class="form-control">
+																					<option value="">Veuillez selectionner</option>
 																					<option value="monsieur">Monsieur</option>
 																					<option value="madame">Madame</option >
 																					<option value="mademoiselle">Mademoiselle</option >
