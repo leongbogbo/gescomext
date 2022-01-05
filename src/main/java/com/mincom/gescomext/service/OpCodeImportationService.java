@@ -20,5 +20,6 @@ public interface OpCodeImportationService {
 	List<OpCodeImportation> findAllCodeImportationByCodeImportExport (String code);
 	List<OpCodeImportation> findCodeImportationByTypecodeAndByCodeRccmOrCc (String code, String typecode);
 	List<OpCodeImportation> findBynumDocOpPdf (Integer code);
+	List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage (String code);
 }
 

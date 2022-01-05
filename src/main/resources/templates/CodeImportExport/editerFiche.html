@@ -54,7 +54,7 @@ layout:decorator="template">
 	                                            </tr>
 	                                        </thead>
 	                                        <tbody>
-	                                           <tr role="row" class="odd" th:each="elmt:${listecodes}" th:if="${elmt.statutTrait=='approbation' AND elmt.OpCodeImportation.activeApprobationOp=='actif'}">
+	                                           <tr role="row" class="odd" th:each="elmt:${listecodes}" th:if="${elmt.statutTrait=='signature' AND elmt.OpCodeImportation.activeSignatureOp=='oui'}">
 	                                            	<td th:text="${elmt.OpCodeImportation.numDocOp}"></td >
 	                                                <td>
 	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr}"></span  >

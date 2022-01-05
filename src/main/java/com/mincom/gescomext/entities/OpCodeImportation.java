@@ -27,6 +27,8 @@ public class OpCodeImportation {
 	private String montantOp;
 	private Date dateOp;
 	private Integer activePaimentOp;
+	private String activeSignatureOp;
+	private String typeSignatureOp;
 	private String activeApprobationOp;
 	private String typeCodeOp;
 	

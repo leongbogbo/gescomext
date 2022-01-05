@@ -402,7 +402,7 @@ public class CodeImportationController {
 	
 	
 	//ZONE RENOUVELLEMENT
-	@RequestMapping("/{category}/Renouvellement")
+	@RequestMapping(value={"/{category}/Renouvellement"})
 	public String renouvellementCode(@PathVariable("category") String category,
 												String codeImportExportEntr,
 													ModelMap modelMap){
@@ -422,6 +422,8 @@ public class CodeImportationController {
 											@ModelAttribute("codeImportation") CodeImportation codeImportation, 
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													ModelMap modelMap) {
+		String codesFiscals="";
+		Date date = new Date();
 		//User connecté
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
@@ -432,24 +434,31 @@ public class CodeImportationController {
 		if(elmt != null) {
 			numDossier = 1 + elmt.getNumDocOp();
 		}
-		
-		Date date = new Date();
 		Entreprise entreprise = entrepriseService.getEntrepriseById(idEntr);
-		codeImportation.setEntreprise(entreprise);
-		codeImportation.setNumCodFic("NUM-CODE-FISCAL-RENOUV-"+numDossier);
-		CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 		
-		opCodeImportation.setMontantOp("30000");
-		opCodeImportation.setTypeOp("Renouvellement");
-		opCodeImportation.setActiveApprobationOp("inactif");
-		opCodeImportation.setTypeCodeOp(category);
-		opCodeImportation.setNumDocOp(numDossier);
-		opCodeImportation.setDateOp(date);
-		opCodeImportation.setUser(user);
-		opCodeImportation.setCodeImportation(codeImportationSave);
-		opCodeImportationService.saveOpCodeImportation(opCodeImportation);
+		if(entreprise.getExoregcomEntr().equals("non") && !entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){			
+			codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
+		}else if(entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){			
+			codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+		}
 		
-		return "./"+category+"/renouvellementDossier";
+		
+		if(!codesFiscals.isEmpty()){
+			codeImportation.setEntreprise(entreprise);
+			codeImportation.setNumCodFic(codesFiscals);
+			CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+			
+			opCodeImportation.setMontantOp("30000");
+			opCodeImportation.setTypeOp("Renouvellement");
+			opCodeImportation.setActiveApprobationOp("inactif");
+			opCodeImportation.setTypeCodeOp(category);
+			opCodeImportation.setNumDocOp(numDossier);
+			opCodeImportation.setDateOp(date);
+			opCodeImportation.setUser(user);
+			opCodeImportation.setCodeImportation(codeImportationSave);
+			opCodeImportationService.saveOpCodeImportation(opCodeImportation);
+		}
+		return "redirect:../../"+category+"/Liste";
 	}
 	
 	//ZONE DUPLICATA
@@ -457,16 +466,23 @@ public class CodeImportationController {
 		public String duplicataCode(@PathVariable("category") String category, String codeImportExportEntr, ModelMap modelMap)
 		{
 			if(codeImportExportEntr!=null){
-				Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
-				if(entr != null) {
-					Proprietaire props = entr.getProprietaires();
-					List<OpCodeImportation> fgg = opCodeImportationService.findCodeImportationByTypecodeAndByCodeRccmOrCc(codeImportExportEntr,category);
-					modelMap.addAttribute("infoEntreprise",entr); 
-					modelMap.addAttribute("infoProprietaire", props);
+				if(category.equals("CodeImportExport")) {
+					Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
+					if(entr != null) {
+						Proprietaire props = entr.getProprietaires();
+						List<OpCodeImportation> fgg = opCodeImportationService.findCodeImportationByTypecodeAndByCodeRccmOrCc(codeImportExportEntr,category);
+						modelMap.addAttribute("infoEntreprise",entr); 
+						modelMap.addAttribute("infoProprietaire", props);
+						modelMap.addAttribute("listeCode", fgg);
+					}else {
+						String errors = "Aucun compte trouvé";
+						modelMap.addAttribute("msgErrors", errors);
+					}
+					
+				}else if(category.equals("CodeOccasionnel") || category.equals("LeveeDeGage")) {
+					List<OpCodeImportation> fgg = opCodeImportationService.findAllCodeImportationByCodeOccaOrCodeLeveeGage(codeImportExportEntr);
 					modelMap.addAttribute("listeCode", fgg);
-				}else {
-					String errors = "Aucun compte n'est actif";
-					modelMap.addAttribute("msgErrors", errors);
+					System.out.println("je suis occa");
 				}
 				
 			}
@@ -496,14 +512,8 @@ public class CodeImportationController {
 					numDossier = 1 + elmt.getNumDocOp();
 				}			
 				
-				if(category.equals("CodeImportExport")) {
-					opCodeImportation.setMontantOp("30000");
-				}if(category.equals("CodeOccasionnel")) {
-					opCodeImportation.setMontantOp("50000");
-				}if(category.equals("LeveeGage")) {
-					opCodeImportation.setMontantOp("50000");
-				}
 				
+				opCodeImportation.setMontantOp(opCodeImportationFind.getMontantOp());
 				opCodeImportation.setTypeOp("Duplicata");
 				opCodeImportation.setActiveApprobationOp("inactif");
 				opCodeImportation.setTypeCodeOp(category);
@@ -519,7 +529,7 @@ public class CodeImportationController {
 				modelMap.addAttribute("msgErrors", errors);
 			}
 			 
-			return "./"+category+"/duplicataDossier";
+			return "redirect:../../"+category+"/Liste";
 		}
 		
 	
@@ -611,6 +621,49 @@ public class CodeImportationController {
 		 
 		return "./"+category+"/listeApprobation";
 	}
+	
+	//ZONE SIGNATURE
+	
+		@RequestMapping("/{category}/Signature")
+		public String rechSignature(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
+		{
+			if(numDoc!=null) {
+				OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
+				modelMap.addAttribute("infoCodefic", opcodeFic);
+			}
+			
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+			 
+			return "./"+category+"/listeSignature";
+		}
+		
+		@RequestMapping("/{category}/Signer")
+		public String validerSignature(@PathVariable("category") String category, Integer numDoc, 
+											@ModelAttribute("traitementOpCodeImportation") TraitementOpCodeImportation traitementOpCodeImportation,
+												ModelMap modelMap)
+		{
+			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
+			if(opcodeFic != null) {
+			//User connecté
+			String username = GetCurrentUser.getUserConnected();
+			User user = userRepository.findByUsername(username);
+			
+			traitementOpCodeImportation.setStatutTrait("signature");
+			traitementOpCodeImportation.setOpCodeImportation(opcodeFic);
+			traitementOpCodeImportation.setDateTrait(new Date());
+			traitementOpCodeImportation.setUser(user);
+			traitementOpCodeImportationService.saveTraitementOpCodeImportation(traitementOpCodeImportation);
+			opcodeFic.setActiveSignatureOp("oui");
+			opCodeImportationService.saveOpCodeImportation(opcodeFic);	
+			}
+			
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+			modelMap.addAttribute("infoCodefic", opcodeFic);
+			 
+			return "./"+category+"/listeSignature";
+		}
 		
 	//ZONE ETAT CODE
 	  @RequestMapping("/{category}/listeEtatCodes")

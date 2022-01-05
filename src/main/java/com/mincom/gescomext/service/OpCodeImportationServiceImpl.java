@@ -66,7 +66,6 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 
 	@Override
 	public List<OpCodeImportation> findAllCodeImportationByCodeImportExport(String code) {
-		// TODO Auto-generated method stub
 		return opCodeImportationRepository.findAllCodeImportationByCodeImportExport(code);
 	}
 
@@ -78,6 +77,11 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 	@Override
 	public List<OpCodeImportation> findBynumDocOpPdf(Integer code) {
 		return opCodeImportationRepository.findBynumDocOpPdf(code);
+	}
+
+	@Override
+	public List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage(String code) {
+		return opCodeImportationRepository.findAllCodeImportationByCodeOccaOrCodeLeveeGage(code);
 	}
 
 
