@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recuModel" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9704309c-942d-427a-a753-0e2fc9da523c">
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numDocOp" class="java.lang.Integer"/>
+	<field name="montantOp" class="java.lang.String"/>
+	<field name="codeImportation.numCodFic" class="java.lang.String"/>
+	<field name="dateOp" class="java.util.Date"/>
+	<field name="codeImportation.entreprise.nomEntr" class="java.lang.String"/>
+	<field name="typeOp" class="java.lang.String"/>
+	<field name="codeImportation.demandeur.nomDem" class="java.lang.String"/>
+	<field name="codeImportation.statutDemandeurCodeImp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="250" height="20" uuid="a3a797d4-f703-4609-9120-bd26e954cb77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERE DU COMMERCE ET DE L'INDUSTRIE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="10" width="164" height="23" uuid="58459453-8df1-40c4-9d17-aeccdf06b5a9">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="20" y="33" width="200" height="1" uuid="735540cf-3291-4d6c-9867-2722151382fe"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="37" width="250" height="16" uuid="2f22884d-34b2-496d-8789-743935186923"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[DIRECTION GENERALE DU COMMERCE EXTERIEUR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="56" width="200" height="1" uuid="0259c208-3da6-4b93-bd17-99063b37d8b7"/>
+			</line>
+			<staticText>
+				<reportElement x="-1" y="60" width="251" height="17" uuid="c4f2d280-f00f-4bb6-8d9e-710bfc8b865f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[DIRECTION DE LA REGULATION DES ECHANGES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="74" width="251" height="14" uuid="2be54e36-54a9-45c6-ac7a-5b5d519bff65"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[B.P.V 142 ABIDJAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="32" width="164" height="15" uuid="2c7424df-5c6a-4317-bfb5-4de9f0a7743b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[UNION - DISCIPLINE - TRAVAIL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="59" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<staticText>
+				<reportElement x="0" y="-1" width="554" height="26" uuid="bfccb9b5-0e4d-4adf-b479-8c7283caec1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECU DE VERSEMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="28" width="554" height="20" forecolor="#E62825" uuid="411f7fe5-d739-4a0b-b9e8-b49212f16d50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LEVEE DE GAGE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="24" y="53" width="500" height="1" forecolor="#BAB5B5" uuid="ce2249ab-914f-4472-8aad-76c799bfa664">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="285" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<staticText>
+				<reportElement x="32" y="11" width="100" height="30" uuid="9f46245b-f4c3-405f-90ad-6789e8276c57"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° DU RECU :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="55" width="150" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTIE VERSANTE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="105" width="181" height="30" uuid="e7c83780-866d-430f-aaf5-66016ca9ccb2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTANT EN CHIFFRE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="155" width="181" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE DE VERSEMENT :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="205" width="191" height="30" uuid="04e4f440-45c4-49f3-80b9-626eb7df302f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NATURE DE LA RECETTE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="255" width="181" height="30" uuid="d0d86a49-ad6c-49cd-8fd3-a705eed5dedf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRE LE :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="12" width="200" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numDocOp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="55" width="200" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{codeImportation.entreprise.nomEntr} : $F{codeImportation.demandeur.nomDem})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="105" width="200" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{montantOp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="155" width="200" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dateOp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="205" width="200" height="30" uuid="605465fc-a3a8-4adb-a65f-878f0afdda4c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{typeOp}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="255" width="200" height="30" uuid="a162784a-719d-43e9-8130-04b98fcf1794"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dateOp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="131" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="11" width="500" height="1" forecolor="#BAB5B5" uuid="5fb40867-3bc4-4624-bfb8-d83ca766d76d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="373" y="21" width="181" height="30" uuid="2bfef566-fbdf-4f2c-95aa-6c408aeb1044"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LE COMPTABLE]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -291,6 +291,7 @@ public class CodeImportationController {
 				
 				codeImportation.setEntreprise(saveEntreprise);
 				codeImportation.setNumCodFic(codesFiscals);
+				codeImportation.setStatutDemandeurCodeImp("oui");
 				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 				
 				opCodeImportation.setMontantOp("30000");			
@@ -482,7 +483,6 @@ public class CodeImportationController {
 				}else if(category.equals("CodeOccasionnel") || category.equals("LeveeDeGage")) {
 					List<OpCodeImportation> fgg = opCodeImportationService.findAllCodeImportationByCodeOccaOrCodeLeveeGage(codeImportExportEntr);
 					modelMap.addAttribute("listeCode", fgg);
-					System.out.println("je suis occa");
 				}
 				
 			}
@@ -721,10 +721,10 @@ public class CodeImportationController {
 		  return "./"+category+"/editerFiche";
 		}
 	  
-	//ZONNE PAIEMENT
+	//ZONNE TIRAGE RECU
 	  
 		@RequestMapping("/{category}/Recu")			
-		public ResponseEntity<byte[]> generatePdf(@RequestParam Integer numDoc) throws FileNotFoundException, JRException, ParseException {
+		public ResponseEntity<byte[]> generatePdf(@PathVariable("category") String category, @RequestParam Integer numDoc) throws FileNotFoundException, JRException, ParseException {
 			HttpHeaders headers = new HttpHeaders();
 			byte[] data = {};
 			SimpleDateFormat formaters = null;
@@ -733,8 +733,16 @@ public class CodeImportationController {
 				List<OpCodeImportation> listOpCodes = new ArrayList<>();
 				OpCodeImportation opCodes  = opCodeImportationService.findBynumDocOp(numDoc);
 				listOpCodes.add(opCodes);
+				String fichiers ="";
+				if(fichiers.equals("CodeImportExport")){
+					fichiers ="recuImportExport";					
+				}else if(fichiers.equals("CodeOccasionnel")) {
+					fichiers ="recuCodeOccasionnel";	
+				} else if(fichiers.equals("LeveeDeGage")) {
+					fichiers ="recuLeveeDeGage";	
+				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
-				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/autres/recuModel.jrxml"));
+				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/pdf/"+fichiers+".jrxml"));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
 				//JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");

@@ -13,6 +13,8 @@
 	<field name="dateOp" class="java.util.Date"/>
 	<field name="codeImportation.entreprise.nomEntr" class="java.lang.String"/>
 	<field name="typeOp" class="java.lang.String"/>
+	<field name="codeImportation.demandeur.nomDem" class="java.lang.String"/>
+	<field name="codeImportation.statutDemandeurCodeImp" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -96,47 +98,47 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="290" splitType="Stretch">
+		<band height="285" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<staticText>
 				<reportElement x="32" y="11" width="100" height="30" uuid="9f46245b-f4c3-405f-90ad-6789e8276c57"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° DU RECU :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="32" y="55" width="150" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PARTIE VERSANTE :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="31" y="105" width="181" height="30" uuid="e7c83780-866d-430f-aaf5-66016ca9ccb2"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MONTANT EN CHIFFRE :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="32" y="155" width="181" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATE DE VERSEMENT :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="31" y="205" width="191" height="30" uuid="04e4f440-45c4-49f3-80b9-626eb7df302f"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NATURE DE LA RECETTE :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="31" y="255" width="181" height="30" uuid="d0d86a49-ad6c-49cd-8fd3-a705eed5dedf"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DRE LE :]]></text>
 			</staticText>
@@ -148,7 +150,7 @@
 			<textField>
 				<reportElement x="318" y="55" width="200" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{codeImportation.entreprise.nomEntr}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{codeImportation.entreprise.nomEntr} : $F{codeImportation.demandeur.nomDem})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="318" y="105" width="200" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
