@@ -299,7 +299,7 @@ $("#sidebar_menu >li a").filter(function() {
         bootstrapTag.tagsinput();
     }
 
-
+//DATA TABLE CONFIGURATION
   if ($('.lms_table_active').length) {
     $('.lms_table_active').DataTable({
         bLengthChange: false,
@@ -425,11 +425,4 @@ $('.spin_icon_clicker').on('click', function(e) {
 		}
 	}); 
 	
-	//DATA TABLE CONFIGURATION
-	
-	/*$('#DataTables_Table_0').DataTable( {
-        "order": [[ 0, "desc" ]]
-    } );*/
-
-
 }(jQuery));

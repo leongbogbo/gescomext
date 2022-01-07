@@ -19,19 +19,19 @@ public class NationaliteController {
 	@Autowired
 	NationaliteRepository nationaliteRepo;
 	
-	@RequestMapping("/listeNationalites")
+	@RequestMapping("/parametre/listeNationalites")
 	public String listeNationalites(ModelMap modelMap)
 	{
 		List<Nationalite> nats = nationaliteService.getAllNationalite();
 		modelMap.addAttribute("nationalites", nats);
-		return "listeNationalite";
+		return "autres/listeNationalite";
 	}
 	
-	@RequestMapping("/Nationalite/new")
+	@RequestMapping("/parametre/Nationalite/new")
 	public String saveNationalite(Nationalite nationalite)
 	{
 		nationaliteRepo.save(nationalite);
-		return "redirect:../listeNationalites";
+		return "redirect:../parametre/listeNationalites";
 	}
 	
 }

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template3">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
-<title>Liste des marques</title>
+<title>Liste des actions</title>
 </head>
 <body>
 <div layout:fragment="MyContent">
     <!-- LE CORPS  -->
     <div class="main_content_iner ">
         <div class="container-fluid p-0">
-        <!-- ZONE DE TITRE  -->
+        	<!-- ZONE DE TITRE  -->
 			<div class="row">
 			    <div class="col-12">
 			        <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
@@ -20,7 +20,7 @@ layout:decorator="template3">
 			            </div>
 			            <div class="page_title_right">
 			                <div class="page_date_button" data-toggle="modal" data-target="#exampleModalCenter">
-			                    Nouvelle marque
+			                    Nouvelle actions
 			                </div>
 			            </div>
 			        </div>
@@ -40,7 +40,7 @@ layout:decorator="template3">
                         <div class="white_card_body">
                             <div class="QA_section">
                                 <div class="white_box_tittle list_header">
-                                    <h4>LISTE MARQUE</h4>
+                                    <h4>LISTE ACTIONS</h4>
                                     <div class="box_right d-flex lms_block">
                                         <div class="serach_field_2">
                                             <div class="search_inner">
@@ -62,14 +62,16 @@ layout:decorator="template3">
 	                                        <thead>
 	                                            <tr role="row">
 	                                            	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-sort="ascending" aria-label="title: activate to sort column descending">N°</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 297px;" aria-label="Category: activate to sort column ascending">MARQUE</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 51px;" aria-label="Status: activate to sort column ascending">Options</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Actions</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Liens</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="2" style="width: 151px;" aria-label="Status: activate to sort column ascending">Options</th>
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
-	                                            <tr role="row" class="odd" th:each="v:${marques}">
-	                                                <td th:text="${v.idMarque}"></td >
-	                                                <td th:text="${v.nomMarque}"></td >
+	                                            <tr role="row" class="odd" th:each="elmt:${actionListes}">
+	                                                <td th:text="${elmt.idActPro}"></td >
+	                                                <td th:text="${elmt.titreActPro}"></td >
+	                                                <td th:text="${elmt.lienActPro}"></td >
 	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
 	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>
@@ -92,23 +94,29 @@ layout:decorator="template3">
         </div>
     </div>
     <!-- FIN DU CORPS  -->
-    <!-- MODAL  -->
+       <!-- MODAL  -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une marque</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Ajouter des actions</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form th:action="@{MarqueNew}" method="POST">
+        <form th:action="@{test}" method="POST">
         	<div class="modal-body">
 		         <div class="white_card_body">
 	                <div class="form-group row">
-	                    <label for="inputEmail3" class="col-sm-4 col-form-label">Marque</label>
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">Titre Action</label>
 	                    <div class="col-sm-8">
-	                        <input type="text" name="nomMarque" class="form-control" id="inputEmail3" placeholder="Marque">
+	                        <input type="text" name="nomCommune" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">Lien Action</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="nomCommune" class="form-control" id="inputEmail3">
 	                    </div>
 	                </div>
 		         </div>

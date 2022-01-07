@@ -41,7 +41,7 @@ public class VilleController {
 	@Autowired
 	VilleRepository villeRepo;
 	
-	@RequestMapping("/autres/listeVilles")
+	@RequestMapping("/parametre/listeVilles")
 	public String listeVilles(ModelMap modelMap)
 	{
 		List<Ville> vills = villeService.getAllVille();
@@ -50,7 +50,7 @@ public class VilleController {
 		return "autres/listeVille";
 	}
 	
-	@RequestMapping("/Ville/new")
+	@RequestMapping("/parametre/Ville/new")
 	public String saveVille(@Valid Ville ville, BindingResult bindingResult)
 	{
 		if (bindingResult.hasErrors()) return "listeVille";
@@ -58,7 +58,7 @@ public class VilleController {
 		return "autres/listeVille";
 	}
 	
-	@RequestMapping("/autres/pdf")
+	@RequestMapping("/parametre/pdf")
 	public ResponseEntity<byte[]> generatePdf() throws FileNotFoundException, JRException {
 		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(villeService.getAllVille());
 		JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/autres/villepdf.jrxml"));

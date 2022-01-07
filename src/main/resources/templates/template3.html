@@ -124,46 +124,7 @@
                 </div>
             </a>
         </li>
-        <li>
-            <a href="#" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Statistiques </span>
-                </div>
-            </a>
-        </li>
-        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
-            <a class="has-arrow" href="#" aria-expanded="true">
-              <div class="nav_icon_small">
-                <img src="../svg/16.svg" alt="">
-            </div>
-            <div class="nav_title">
-                <span>Opeartion sur dossiers</span>
-            </div>
-            </a>
-            <ul class="mm-collapse mm-show" style="">
-              <li><a href="#">modification</a></li>
-              <li><a href="#">Suppression</a></li>
-            </ul>
-        </li>
-        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
-            <a class="has-arrow" href="#" aria-expanded="true">
-              <div class="nav_icon_small">
-                <img src="../svg/16.svg" alt="">
-            </div>
-            <div class="nav_title">
-                <span>Paramétrage</span>
-            </div>
-            </a>
-            <ul class="mm-collapse mm-show" style="">
-              <li><a th:href="@{../autres/listeVilles}">Liste villes</a></li>
-              <li><a th:href="@{listeCommune}">Liste communes</a></li>
-              <li><a th:href="@{listeNationalites}">Liste nationalites</a></li>
-              <li><a th:href="@{listeFormeJuridiques}">Formes juriques</a></li>
-            </ul>
-        </li>
+        
       </ul>
 </nav>
  <!--/ MENU GAUCHE  -->
@@ -185,104 +146,7 @@
                 <h3>CODE LEVEE GAGE</h3>
                 <div class="header_right d-flex justify-content-between align-items-center">
                     <div class="header_notification_warp d-flex align-items-center">
-                        <li>
-                            <div class="serach_button">
-                                <i class="ti-search"></i>
-                                <div class="serach_field-area d-flex align-items-center">
-                                    <div class="search_inner">
-                                        <form action="#">
-                                            <div class="search_field">
-                                                <input type="text" placeholder="Search here...">
-                                            </div>
-                                            <button class="close_search"> <i class="ti-search"></i> </button>
-                                        </form>
-                                    </div>
-                                    <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="bell_notification_clicker" href="#"> <img src="../bell.svg" alt="">
-                                <span>9</span>
-                            </a>
-                            <!-- Menu_NOtification_Wrap  -->
-                        <div class="Menu_NOtification_Wrap">
-                            <div class="notification_Header">
-                                <h4>Notifications</h4>
-                            </div>
-                            <div class="Notification_body">
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../2.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>Cool Marketing </h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../4.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>Awesome packages</h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../3.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>what a packages</h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../2.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>Cool Marketing </h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../4.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>Awesome packages</h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                                <!-- single_notify  -->
-                                <div class="single_notify d-flex align-items-center">
-                                    <div class="notify_thumb">
-                                        <a href="#"><img src="../3.png" alt=""></a>
-                                    </div>
-                                    <div class="notify_content">
-                                        <a href="#"><h5>what a packages</h5></a>
-                                        <p>Lorem ipsum dolor sit amet</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nofity_footer">
-                                <div class="submit_button text-center pt_20">
-                                    <a href="#" class="btn_1">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Menu_NOtification_Wrap  -->
-                        </li>
-                        <li>
-                            <a class="CHATBOX_open" href="#"> <img src="../images/msg.svg" alt=""> <span>7</span>  </a>
-                        </li>
+                    
                     </div>
                     <div class="profile_info">
                         <img src="../images/client_img.png" alt="#">
@@ -292,9 +156,9 @@
                                 <h5 sec:authentication="name"></h5>
                             </div>
                             <div class="profile_info_details">
-                                <a href="#">My Profile </a>
-                                <a href="#">Settings</a>
-                                <a href="/gescomext/logout">Log Out </a>
+                                <a href="#">Mon Profile </a>
+                                 <a href="../parametre/listeUtilisateurs">Parametre</a>
+                                <a href="/gescomext/logout">Déconnexion</a>
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Required meta tags -->    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>GESCOMEXT</title>
+    <title>GESCOMEXT : PARAMETRE</title>
 
     <link rel="icon" href="../images/mini_logo1.png" type="image/png">
     <!-- Bootstrap CSS -->
@@ -59,73 +59,38 @@
         </div>
     </div>
     <ul id="sidebar_menu" class="metismenu">
-        <li class="mm-active">
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
             <a class="has-arrow" href="#" aria-expanded="true">
               <div class="nav_icon_small">
                 <img src="../svg/16.svg" alt="">
             </div>
             <div class="nav_title">
-                <span>Dossiers </span>
+                <span>Paramétrage</span>
             </div>
             </a>
-            <ul class="mm-collapse mm-show">
-            	<li><a th:href="@{Liste}">Liste</a></li>
-              	<li><a th:href="@{CreationDossier}">creation</a></li>
-              	<li><a th:href="@{Renouvellement}">Renouvellement</a></li>
-              	<li><a th:href="@{Duplicata}">Duplicata</a></li>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../parametre/listeVilles}">Liste villes</a></li>
+              <li><a th:href="@{../parametre/listeCommune}">Liste communes</a></li>
+              <li><a th:href="@{../parametre/listeNationalites}">Liste nationalites</a></li>
+              <li><a th:href="@{../parametre/listeFormeJuridiques}">Formes juriques</a></li>
             </ul>
         </li>
-        <li>
-            <a href="Paiement" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Paiement </span>
-                </div>
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Administration</span>
+            </div>
             </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../parametre/listeUtilisateurs}">Utilisateur</a></li>
+              <li><a th:href="@{../parametre/listeRoles}">Roles</a></li>
+              <li><a th:href="@{../parametre/listeActions}">Liste Actions</a></li>
+              <li><a th:href="@{../parametre/AttributionActions}">Attribution actions</a></li>
+            </ul>
         </li>
-        <li>
-            <a th:href="@{Approbation}" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Approbation </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{Signature}" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Signature </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="EditionFiches" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/2.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Editer Fiche </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="listeEtatCodes" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Etats des codes </span>
-                </div>
-            </a>
-        </li>
-        
       </ul>
 </nav>
  <!--/ MENU GAUCHE  -->
@@ -144,9 +109,11 @@
                     <input type="checkbox" id="checkbox">
                     <div class="slider round open_miniSide"></div>
                 </label>
-                <h3>CODE IMPORT EXPORT</h3>
+                <h3>GESCOMEXT : PARAMETRE</h3>
                 <div class="header_right d-flex justify-content-between align-items-center">
                     <div class="header_notification_warp d-flex align-items-center">
+                     
+                        
                     </div>
                     <div class="profile_info">
                         <img src="../images/client_img.png" alt="#">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
 <title>Liste des utilisateurs</title>
@@ -77,8 +77,8 @@ layout:decorator="template">
 	                                                <td th:text="${elmt.nomUser+' '+elmt.prenomsUser}"></td >
 	                                                <td th:text="${elmt.telUser}"></td >
 	                                                <td th:text="${elmt.emailUser}"></td >
-	                                                <td><a href="#" class="status_btn">Modifier</a></td>
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>
+	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
+	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>
                                            </tbody>
                                     	</table>

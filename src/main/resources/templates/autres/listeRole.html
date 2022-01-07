@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
 <title>Liste des roles</title>
@@ -70,8 +70,8 @@ layout:decorator="template">
 	                                            <tr role="row" class="odd" th:each="v:${roles}">
 	                                                <td th:text="${v.role_id}"></td >
 	                                                <td th:text="${v.role}"></td >
-	                                                <td><a href="#" class="status_btn">Modifier</a></td>
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>
+	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
+	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>
                                            </tbody>
                                     	</table>

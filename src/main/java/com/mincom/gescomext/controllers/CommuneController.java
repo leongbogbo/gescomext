@@ -27,21 +27,21 @@ public class CommuneController {
 	@Autowired
 	CommuneRepository communeRepo;
 	
-	@RequestMapping("/listeCommune")
+	@RequestMapping("/parametre/listeCommune")
 	public String listeCommune(ModelMap modelMap)
 	{
 		List<Commune> coms = communeService.getAllCommune();
 		List<Ville> vils = villeService.getAllVille();
 		modelMap.addAttribute("communes", coms);
 		modelMap.addAttribute("listeVilles", vils);
-		return "listeCommune";
+		return "/autres/listeCommune";
 	}
 	
-	@RequestMapping("/Commune/new")
+	@RequestMapping("/parametre/Commune/new")
 	public String saveCommune(Commune commune)
 	{
 		communeRepo.save(commune);
-		return "redirect:../listeCommune";
+		return "redirect:/parametre/listeCommune";
 	}
 	
 	@PostMapping("/test")

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
 <title>Liste des villes</title>
@@ -52,9 +52,7 @@ layout:decorator="template">
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="add_button ml-10">
-                                            <a th:href="@{../autres/pdf}" class="btn_1">Chercher</a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
         
@@ -73,8 +71,8 @@ layout:decorator="template">
 	                                            <tr role="row" class="odd" th:each="v:${villes}">
 	                                                <td th:text="${v.idVille}"></td >
 	                                                <td th:text="${v.nomVille}"></td >
-	                                                <td><a href="#" class="status_btn">Modifier</a></td>nomuser
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>
+	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
+	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>
                                            </tbody>
                                     	</table>

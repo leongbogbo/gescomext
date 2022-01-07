@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
-<title>Liste des villes</title>
+<title>Liste des communes</title>
 </head>
 <body>
 <div layout:fragment="MyContent">
@@ -52,9 +52,6 @@ layout:decorator="template">
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="add_button ml-10">
-                                            <a href="https://demo.dashboardpack.com/analytic-html/data_table.html#" data-toggle="modal" data-target="#addcategory" class="btn_1">Chercher</a>
-                                        </div>
                                     </div>
                                 </div>
         
@@ -75,8 +72,8 @@ layout:decorator="template">
 	                                                <td th:text="${elmt.idCommune}"></td >
 	                                                <td th:text="${elmt.nomCommune}"></td >
 	                                                <td th:text="${elmt.Ville.nomVille}"></td >
-	                                                <td><a href="#" class="status_btn">Modifier</a></td>
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>
+	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
+	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>
                                            </tbody>
                                     	</table>
@@ -122,7 +119,7 @@ layout:decorator="template">
 	                    <div class="col-sm-8">
 	                        <select name="ville" id="inputState" class="form-control">
 	                            <th:block th:each="vil : ${listeVilles}">
-	                            	<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
+	                            	<option  th:value="${vil.idVille}" th:text="${vil.nomVille}"></option >
 	                            </th:block>
 	                        </select>
 	                    </div>

@@ -19,19 +19,19 @@ public class FormeJuridiqueController {
 	@Autowired
 	FormeJuridiqueRepository formeJuridiqueRepo;
 	
-	@RequestMapping("/listeFormeJuridiques")
+	@RequestMapping("/parametre/listeFormeJuridiques")
 	public String listeFormeJuridiques(ModelMap modelMap)
 	{
 		List<FormeJuridique> formj = formeJuridiqueService.getAllFormeJuridique();
 		modelMap.addAttribute("formeJuridiques", formj);
-		return "listeFormeJuridique";
+		return "autres/listeFormeJuridique";
 	}
 	
-	@RequestMapping("/FormeJuridique/new")
+	@RequestMapping("/parametre/FormeJuridique/new")
 	public String saveFormeJuridique(FormeJuridique formeJuridique)
 	{
 		formeJuridiqueRepo.save(formeJuridique);
-		return "redirect:../listeFormeJuridiques";
+		return "redirect:../parametre/listeFormeJuridiques";
 	}
 	
 }

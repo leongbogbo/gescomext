@@ -1,19 +1,22 @@
 package com.mincom.gescomext.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.entities.ActionListe;
+import com.mincom.gescomext.entities.Role;
 import com.mincom.gescomext.entities.User;
+import com.mincom.gescomext.service.RoleService;
 import com.mincom.gescomext.service.UserService;
 
 @EnableWebSecurity
@@ -23,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	UserDetailsService userDetailsService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	RoleService roleService;
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder passwordEncoder = passwordEncoder();
@@ -31,23 +36,54 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		String  roles="";
-		//User connecté
-		Authentication authentications = SecurityContextHolder.getContext().getAuthentication();
-		if(authentications != null) {			
+		List<Role> roles =  roleService.getAllRole();
+		for(Role role : roles) {
+			System.out.println(role.getRole());
+			List<ActionListe> actionListes = roleService.getRoleById(role.getRole_id()).getActionListe();
+			List<String> urlList = new ArrayList<>();
+			for(ActionListe actionListe : actionListes) {
+				System.out.println("/"+actionListe.getLienActPro());
+				urlList.add("/"+actionListe.getLienActPro());	
+			}
+			String[] authorities = urlList.toArray(new String[0]);			
+			http.authorizeRequests().antMatchers(authorities).hasAuthority(role.getRole().toString());			
+		}
+		
+		/*roles.forEach(profile->{
+			List<String> urlList = new ArrayList<>();
+			profile.getActionListe().forEach(profileAction->{
+				urlList.add("/"+profileAction.getLienActPro());	
+			});
+			String[] authorities = urlList.toArray(new String[0]);
+			try {
+				http.authorizeRequests().antMatchers(authorities).hasAuthority(profile.getRole().toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		});*/
+		
+		
+		/*if(authentications != null) {
 			String username = GetCurrentUser.getUserConnected();
-			if(username.equals(null)) {
+			if(!username.equals(null)) {
 				User agent = userService.findByUsername(username);
-				agent.getRoles().forEach(roleAgent->{					
+				agent.getRoles().forEach(profileAgent->{					
 					try {
-						System.out.println(roleAgent.getRole());
-						http.authorizeRequests().antMatchers("/parametre/listeUtilisateurs").hasAnyRole(roleAgent.getRole());
+						System.out.println(profileAgent.getRole());
+						profileAgent.getActionListe().forEach(actionsAgent->{
+							try {
+								System.out.println(actionsAgent.getLienActPro());
+								http.authorizeRequests().antMatchers("/"+actionsAgent.getLienActPro()).hasAnyRole(profileAgent.getRole());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						});
 					} catch (Exception e) {
 						e.printStackTrace();
 					}				
 				});			
 			}
-		}
+		}*/
 		
 		http.authorizeRequests()
 		.antMatchers("/CodeImportExport/Liste","/CodeImportExport/CreationDossier","/CodeImportExport/Renouvellement","/CodeImportExport/Duplicata","/CodeImportExport/Paiement","/CodeImportExport/Approbation","/CodeImportExport/Signature","/CodeImportExport/EditionFiches","/CodeImportExport/listeEtatCodes").hasAnyRole("ADMIN");
