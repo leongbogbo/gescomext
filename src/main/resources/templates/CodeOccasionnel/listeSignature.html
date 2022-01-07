@@ -60,7 +60,7 @@ layout:decorator="template2">
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='actif' AND infofisc.activeSignatureOp==null}">
+                                    <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='actif' AND infofisc.activeSignatureOp=='non'}">
                                         <th scope="row" th:text="${infofisc.numDocOp}"></th>
                                         <td ><a th:href="@{'Signature?numDoc='+${infofisc.numDocOp}}" th:text="${infofisc.CodeImportation.numOcca}"></a ></td >
                                         <td th:text="${infofisc.dateOp}"><a href="" ></a ></td >

@@ -150,7 +150,7 @@
 			<textField>
 				<reportElement x="318" y="55" width="200" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{codeImportation.entreprise.nomEntr} : $F{codeImportation.demandeur.nomDem})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? ($F{codeImportation.entreprise.nomEntr}): $F{codeImportation.demandeur.nomDem})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="318" y="105" width="200" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>

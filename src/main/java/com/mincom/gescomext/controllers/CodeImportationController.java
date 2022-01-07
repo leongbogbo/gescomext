@@ -307,6 +307,7 @@ public class CodeImportationController {
 			if(demandeur.getNomDem() != null) {
 				Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
 				codeImportation.setDemandeur(saveDemandeur);
+				codeImportation.setStatutDemandeurCodeImp("oui");
 				codeStruc = "42000A";
 			}
 			
@@ -359,6 +360,7 @@ public class CodeImportationController {
 				if(demandeur.getNomDem() != null) {
 					Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
 					codeImportation.setDemandeur(saveDemandeur);
+					codeImportation.setStatutDemandeurCodeImp("non");
 				}
 				
 				if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
@@ -388,6 +390,8 @@ public class CodeImportationController {
 		
 		opCodeImportation.setTypeOp("Attribution");
 		opCodeImportation.setActiveApprobationOp("inactif");
+		opCodeImportation.setActivePaimentOp(0);
+		opCodeImportation.setActiveSignatureOp("non");
 		opCodeImportation.setTypeCodeOp(category);
 		opCodeImportation.setNumDocOp(numDossier);
 		opCodeImportation.setDateOp(date);
@@ -734,11 +738,11 @@ public class CodeImportationController {
 				OpCodeImportation opCodes  = opCodeImportationService.findBynumDocOp(numDoc);
 				listOpCodes.add(opCodes);
 				String fichiers ="";
-				if(fichiers.equals("CodeImportExport")){
+				if(category.equals("CodeImportExport")){
 					fichiers ="recuImportExport";					
-				}else if(fichiers.equals("CodeOccasionnel")) {
+				}else if(category.equals("CodeOccasionnel")) {
 					fichiers ="recuCodeOccasionnel";	
-				} else if(fichiers.equals("LeveeDeGage")) {
+				} else if(category.equals("LeveeDeGage")) {
 					fichiers ="recuLeveeDeGage";	
 				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);

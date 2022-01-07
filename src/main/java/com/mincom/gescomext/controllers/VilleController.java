@@ -55,7 +55,7 @@ public class VilleController {
 	{
 		if (bindingResult.hasErrors()) return "listeVille";
 		villeRepo.save(ville);
-		return "listeVille";
+		return "autres/listeVille";
 	}
 	
 	@RequestMapping("/autres/pdf")

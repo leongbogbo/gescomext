@@ -20,6 +20,10 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_id;
+	private String nomUser;
+	private String prenomsUser;
+	private String telUser;
+	private String emailUser;
 	private String username;
 	private String password;
 	private Boolean enabled;

@@ -315,6 +315,7 @@ $("#sidebar_menu >li a").filter(function() {
         columnDefs: [{
             visible: false
         }],
+        "order": [[ 1, "desc" ]],
         responsive: true,
         searching: false,
     });
@@ -334,6 +335,7 @@ $("#sidebar_menu >li a").filter(function() {
         columnDefs: [{
             visible: false
         }],
+        "order": [[ 1, "desc" ]],
         responsive: true,
         searching: false,
         info: false,
@@ -422,6 +424,12 @@ $('.spin_icon_clicker').on('click', function(e) {
 	    	$('#regcommerceEntr').val("").attr('disabled','disabled');		
 		}
 	}); 
+	
+	//DATA TABLE CONFIGURATION
+	
+	/*$('#DataTables_Table_0').DataTable( {
+        "order": [[ 0, "desc" ]]
+    } );*/
 
 
 }(jQuery));

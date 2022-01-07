@@ -159,10 +159,26 @@
             </div>
             </a>
             <ul class="mm-collapse mm-show" style="">
-              <li><a th:href="@{listeVilles}">Liste villes</a></li>
-              <li><a th:href="@{listeCommune}">Liste communes</a></li>
-              <li><a th:href="@{listeNationalites}">Liste nationalites</a></li>
-              <li><a th:href="@{listeFormeJuridiques}">Formes juriques</a></li>
+              <li><a th:href="@{../parametre/listeVilles}">Liste villes</a></li>
+              <li><a th:href="@{../parametre/listeCommune}">Liste communes</a></li>
+              <li><a th:href="@{../parametre/listeNationalites}">Liste nationalites</a></li>
+              <li><a th:href="@{../parametre/listeFormeJuridiques}">Formes juriques</a></li>
+            </ul>
+        </li>
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Administration</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../parametre/listeUtilisateurs}">Utilisateur</a></li>
+              <li><a th:href="@{../parametre/listeRoles}">Roles</a></li>
+              <li><a th:href="@{../parametre/listeNationalites}">Liste nationalites</a></li>
+              <li><a th:href="@{../parametre/listeFormeJuridiques}">Formes juriques</a></li>
             </ul>
         </li>
       </ul>

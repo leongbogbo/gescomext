@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import com.mincom.gescomext.entities.OpCodeImportation;
 
 public interface OpCodeImportationRepository extends JpaRepository<OpCodeImportation, Long> {	
-	@Query("select e from OpCodeImportation e JOIN e.codeImportation c where (e.typeCodeOp = :code)")
+	@Query("select e from OpCodeImportation e JOIN e.codeImportation c where (e.typeCodeOp = :code) order by e.idOp DESC")
 	List<OpCodeImportation> findAllCodeImportationByTypeCodeOp (@Param("code") String code);
 	
 	@Query("select e from OpCodeImportation e JOIN e.codeImportation c JOIN c.entreprise p where (p.codeImportExportEntr = :code) or (p.contribuableEntr = :code)")
@@ -29,4 +29,5 @@ public interface OpCodeImportationRepository extends JpaRepository<OpCodeImporta
 	OpCodeImportation findFirstByOrderByIdOpDesc();
 	OpCodeImportation findBynumDocOp(Integer numDocOp);
 	List<OpCodeImportation> findByTypeCodeOp(String typeCodeOp);
+	
 }
