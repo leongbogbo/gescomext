@@ -38,11 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		List<Role> roles =  roleService.getAllRole();
 		for(Role role : roles) {
-			System.out.println(role.getRole());
 			List<ActionListe> actionListes = roleService.getRoleById(role.getRole_id()).getActionListe();
 			List<String> urlList = new ArrayList<>();
 			for(ActionListe actionListe : actionListes) {
-				System.out.println("/"+actionListe.getLienActPro());
 				urlList.add("/"+actionListe.getLienActPro());	
 			}
 			String[] authorities = urlList.toArray(new String[0]);			
@@ -88,9 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/CodeImportExport/Liste","/CodeImportExport/CreationDossier","/CodeImportExport/Renouvellement","/CodeImportExport/Duplicata","/CodeImportExport/Paiement","/CodeImportExport/Approbation","/CodeImportExport/Signature","/CodeImportExport/EditionFiches","/CodeImportExport/listeEtatCodes").hasAnyRole("ADMIN");
 		http.authorizeRequests()
-		.antMatchers("/CodeOccasionnel/Liste","/CodeOccasionnel/CreationDossier","/CodeOccasionnel/Renouvellement","/CodeOccasionnel/Duplicata","/CodeOccasionnel/Paiement","/CodeOccasionnel/Approbation","/CodeOccasionnel/Signature","/CodeOccasionnel/EditionFiches","/CodeOccasionnel/listeEtatCodes").hasAnyRole("ADMIN");
+		.antMatchers("/CodeOccasionnel/Liste","/CodeOccasionnel/CreationDossier","/CodeOccasionnel/Duplicata","/CodeOccasionnel/Paiement","/CodeOccasionnel/Approbation","/CodeOccasionnel/Signature","/CodeOccasionnel/EditionFiches","/CodeOccasionnel/listeEtatCodes").hasAnyRole("ADMIN");
 		http.authorizeRequests()
-		.antMatchers("/LeveeDeGage/Liste","/LeveeDeGage/CreationDossier","/LeveeDeGage/Renouvellement","/LeveeDeGage/Duplicata","/LeveeDeGage/Paiement","/LeveeDeGage/Approbation","/LeveeDeGage/Signature","/LeveeDeGage/EditionFiches","/LeveeDeGage/listeEtatCodes").hasAnyRole("ADMIN");
+		.antMatchers("/LeveeDeGage/Liste","/LeveeDeGage/CreationDossier","/LeveeDeGage/Duplicata","/LeveeDeGage/Paiement","/LeveeDeGage/Approbation","/LeveeDeGage/Signature","/LeveeDeGage/EditionFiches","/LeveeDeGage/listeEtatCodes").hasAnyRole("ADMIN");
 		http.authorizeRequests()
 		.antMatchers("/parametre/listeVilles","/parametre/listeCommune","/parametre/listeNationalites","/parametre/listeFormeJuridiques","/parametre/listeUtilisateurs","/parametre/listeRoles").hasAnyRole("ADMIN");
 		
