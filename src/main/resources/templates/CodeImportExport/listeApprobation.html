@@ -63,7 +63,7 @@ layout:decorator="template">
                                     <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='inactif'}">
                                         <th scope="row" th:text="${infofisc.numDocOp}"></th>
                                         <td ><a th:href="@{'Approbation?numDoc='+${infofisc.numDocOp}}" th:text="${infofisc.CodeImportation.numCodFic}"></a ></td >
-                                        <td th:text="${infofisc.dateOp}"><a href="" ></a ></td >
+                                        <td th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"><a href="" ></a ></td >
                                         <td th:text="${infofisc.CodeImportation.Entreprise.nomEntr}"></td >
                                     </tr >
                                 </tbody>
@@ -108,7 +108,7 @@ layout:decorator="template">
                                 </tr>
                                 <tr>
                                     <td class="payment-title">DRE LE</td>
-                                    <td class="text-dark"><strong th:text="${infoCodefics.dateOp}">Code import Export</strong ></td>
+                                    <td class="text-dark"><strong th:text="${#dates.format(infoCodefics.dateOp, 'dd-mm-yyyy')}">Code import Export</strong ></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" th:switch="${infoCodefics.activeApprobationOp}">
@@ -150,7 +150,7 @@ layout:decorator="template">
                                     <tr th:each="infofisco : ${listeCodes}" th:if="${infofisco.activePaimentOp==1 AND infofisco.activeApprobationOp=='actif' }">
                                         <th scope="row" th:text="${infofisco.numDocOp}"></th>
                                         <td ><a th:href="@{'Approbation?numDoc='+${infofisco.numDocOp}}" th:text="${infofisco.CodeImportation.numCodFic}"></a ></td >
-                                        <td th:text="${infofisco.dateOp}"><a href="" ></a ></td >
+                                        <td th:text="${#dates.format(infofisco.dateOp, 'dd-mm-yyyy')}"><a href="" ></a ></td >
                                         <td th:text="${infofisco.CodeImportation.Entreprise.nomEntr}"></td >
                                     </tr >
                                 </tbody>                                  

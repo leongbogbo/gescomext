@@ -142,7 +142,9 @@ public class CodeImportationController {
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap)
 	{
+		File file = new File("villepdf.jrxml");
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+		System.out.println("Chemin absolu: " + file.getAbsolutePath()); 
 		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/listeDossier";
 	}
@@ -760,7 +762,7 @@ public class CodeImportationController {
 					fichiers ="recuLeveeDeGage";	
 				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
-				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(contextPath+"/pdf/"+fichiers+".jrxml"));
+				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(contextPath+"WEB-INF/classes/templates/pdf/"+fichiers+".jrxml"));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
 				//JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");

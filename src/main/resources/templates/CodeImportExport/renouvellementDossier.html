@@ -95,7 +95,7 @@ layout:decorator="template">
 				                                            <tr th:each="infofisc : ${listeCode}">
 				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
 				                                                <td class="center" th:text="${infofisc.CodeImportation.numCodFic}"></td>
-				                                                <td class="left strong" th:text="${infofisc.dateOp}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"></td>
 				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
 				                                                <td class="left">30.000 XOF</td>
 				                                                <td th:switch="${infofisc.activeApprobationOp}">

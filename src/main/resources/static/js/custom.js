@@ -427,23 +427,30 @@ $('.spin_icon_clicker').on('click', function(e) {
 	
 	 $(":input").inputmask();
 	 
+	 $("#numIduEntr").inputmask({
+		mask: 'CI 9999 9999999 A',
+		placeholder: '__-____-_______-_',
+		showMaskOnHover: true,
+		showMaskOnFocus: false
+	});
+	
 	 $("#regcommerceEntr").inputmask({
 		mask: 'AA-AAA-99-9999-A99-999999',
-		placeholder: 'XX-XXX-12-2021-A12-123456',
+		placeholder: '__-___-__-____-___-______',
 		showMaskOnHover: true,
 		showMaskOnFocus: true
 	});
 	
 	$("#comptecontriEntr").inputmask({
 		mask: '9999999A',
-		placeholder: '1234567X',
+		placeholder: '________',
 		showMaskOnHover: true,
 		showMaskOnFocus: true
 	});
 	
 	 $(".maskPhone").inputmask({
 		mask: '99 99 99 99 99',
-		placeholder: '12 34 56 78 90',
+		placeholder: '__ __ __ __ __',
 		showMaskOnHover: true,
 		showMaskOnFocus: true
 	});
