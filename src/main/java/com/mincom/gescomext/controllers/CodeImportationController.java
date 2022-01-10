@@ -1,7 +1,10 @@
 package com.mincom.gescomext.controllers;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,6 +16,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -73,8 +81,10 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.mincom.gescomext.service.TypeStructureService;
+
 @Controller
 public class CodeImportationController {
 	
@@ -121,20 +131,23 @@ public class CodeImportationController {
 		UserRepository userRepository;
 
 		
-		
+	@Value("${server.servlet.context-path}")
+	private String contextPath;
+	
 	Date aujourdhui = new Date();
 	SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
 	String dateDuJour = formater.format(aujourdhui);
+	
 	
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap)
 	{
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
-		modelMap.addAttribute("listeCode", codfs);		
+		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/listeDossier";
 	}
 	
-	@RequestMapping("//{category}/RechercherDossier")
+	@RequestMapping("/{category}/RechercherDossier")
 	public String rechercheDossier(Integer numDocCodFic, ModelMap modelMap)
 	{
 		OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDocCodFic);
@@ -728,7 +741,8 @@ public class CodeImportationController {
 	//ZONNE TIRAGE RECU
 	  
 		@RequestMapping("/{category}/Recu")			
-		public ResponseEntity<byte[]> generatePdf(@PathVariable("category") String category, @RequestParam Integer numDoc) throws FileNotFoundException, JRException, ParseException {
+		public ResponseEntity<byte[]> generatePdf(@PathVariable("category") String category, Integer numDoc) throws FileNotFoundException, JRException, ParseException {
+			System.out.println("gfgfgg");
 			HttpHeaders headers = new HttpHeaders();
 			byte[] data = {};
 			SimpleDateFormat formaters = null;
@@ -746,7 +760,7 @@ public class CodeImportationController {
 					fichiers ="recuLeveeDeGage";	
 				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
-				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/pdf/"+fichiers+".jrxml"));
+				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(contextPath+"/pdf/"+fichiers+".jrxml"));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
 				//JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");

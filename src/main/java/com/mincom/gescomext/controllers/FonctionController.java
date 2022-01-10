@@ -9,12 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.validation.BindingResult;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.mincom.gescomext.entities.Departement;
 import com.mincom.gescomext.entities.Fonction;
-import com.mincom.gescomext.service.DepartementService;
 import com.mincom.gescomext.service.FonctionService;
 
 
@@ -39,4 +36,7 @@ public class FonctionController {
 		fonctionService.saveFonction(fonction);
 		return "redirect:../listeFonctions";
 	}
+	
+
+	
 }

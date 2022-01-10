@@ -423,6 +423,31 @@ $('.spin_icon_clicker').on('click', function(e) {
 		}else{
 	    	$('#regcommerceEntr').val("").attr('disabled','disabled');		
 		}
-	}); 
+	});
+	
+	 $(":input").inputmask();
+	 
+	 $("#regcommerceEntr").inputmask({
+		mask: 'AA-AAA-99-9999-A99-999999',
+		placeholder: 'XX-XXX-12-2021-A12-123456',
+		showMaskOnHover: true,
+		showMaskOnFocus: true
+	});
+	
+	$("#comptecontriEntr").inputmask({
+		mask: '9999999A',
+		placeholder: '1234567X',
+		showMaskOnHover: true,
+		showMaskOnFocus: true
+	});
+	
+	 $(".maskPhone").inputmask({
+		mask: '99 99 99 99 99',
+		placeholder: '12 34 56 78 90',
+		showMaskOnHover: true,
+		showMaskOnFocus: true
+	});
+	
+	$(".maskEmail").inputmask("email");
 	
 }(jQuery));
