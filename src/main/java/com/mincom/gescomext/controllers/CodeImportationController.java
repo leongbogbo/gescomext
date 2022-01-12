@@ -1,10 +1,13 @@
 package com.mincom.gescomext.controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -16,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +37,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lowagie.text.pdf.codec.Base64.InputStream;
+import com.mincom.gescomext.GescomextApplication;
 import com.mincom.gescomext.config.CalculeCodesExportation;
 import com.mincom.gescomext.config.GetCurrentUser;
 import com.mincom.gescomext.config.TableauCorrespondance;
@@ -82,6 +88,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 
 import com.mincom.gescomext.service.TypeStructureService;
 
@@ -140,11 +147,23 @@ public class CodeImportationController {
 	
 	
 	@RequestMapping("/{category}/Liste")
-	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap)
+	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap) throws IOException
 	{
-		File file = new File("villepdf.jrxml");
+		//File file = new File("villepdf.jrxml");
+		
+		//File resource = new ClassPathResource("../villepdf.jrxml").getFile();
+		//String text = new String(Files.readAllBytes(resource.toPath()));
+		
+		//InputStream inputStream = (InputStream) getClass().getResourceAsStream("/text..txt");
+		//BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+		//String contents = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+		
+		//InputStream is = (InputStream) GescomextApplication.class.getClassLoader().getResourceAsStream("villepdf.jrxml");
+		//System.out.println(text);
+		//System.out.println(System.getProperty("user.dir"));
+		
+		
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
-		System.out.println("Chemin absolu: " + file.getAbsolutePath()); 
 		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/listeDossier";
 	}
@@ -169,6 +188,7 @@ public class CodeImportationController {
 		
 		List<Nationalite> nats = natService.getAllNationalite();
 		List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
+		List<TypeStructure> typeStructure = typeStructureService.getAllTypeStructure();
 		List<Fonction> fonction = fonctionService.getAllFonction();
 		List<Marque> marques = marqueService.getAllMarque();
 		List<GenreMarque> genreMarques = genreMarqueService.getAllGenreMarque();
@@ -178,6 +198,7 @@ public class CodeImportationController {
 		modelMap.addAttribute("listefonction", fonction);
 		modelMap.addAttribute("listemarques", marques);
 		modelMap.addAttribute("listegenreMarques", genreMarques);
+		modelMap.addAttribute("listetypeStructure", typeStructure);
 		
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
@@ -762,10 +783,12 @@ public class CodeImportationController {
 					fichiers ="recuLeveeDeGage";	
 				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
-				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(contextPath+"WEB-INF/classes/templates/pdf/"+fichiers+".jrxml"));
+				//InputStream is = (InputStream) GescomextApplication.class.getClassLoader().getResourceAsStream("pdf/villepdf.jrxml");
+				JasperReport compileReport = JasperCompileManager.compileReport(GescomextApplication.class.getClassLoader().getResourceAsStream("pdf/villepdf.jrxml"));
+				//InputStream is = CoolApp.class.getClassLoader().getResourceAsStream("ssl_certs/mysslstore.jks"));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
-				//JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");
+				JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");
 				data = JasperExportManager.exportReportToPdf(report);
 				headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=recuModel.pdf");
 								

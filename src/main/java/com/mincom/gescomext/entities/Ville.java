@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,7 @@ public class Ville {
 	@Size (min = 3,max = 255)
 	private String nomVille;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "ville")
 	private List<Commune> communes;
 	

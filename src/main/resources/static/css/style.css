@@ -2801,6 +2801,31 @@ p a:hover {
   color: #fff;
 }
 
+
+/*green btn*/
+.btn_21 {
+    color: #76d255;
+    border: 1px solid #76d255;
+    display: inline-block;
+    padding: 11px 23px;
+    text-transform: capitalize;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: transparent;
+    white-space: nowrap;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+  
+  /* line 93, G:/admin_project/8 admin/Analytic/scss/_button.scss */
+  .btn_21:hover {
+    background-color: #76d255;
+    border: 1px solid #76d255;
+    color: #fff;
+  }
+
 /* line 99, G:/admin_project/8 admin/Analytic/scss/_button.scss */
 .btn_3 {
   color: #474D58;

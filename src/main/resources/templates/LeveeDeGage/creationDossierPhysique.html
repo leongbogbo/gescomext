@@ -56,12 +56,12 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-1">
 																			<div class="form-check ps-0 q-box">
 																				<div class="q-box__question">
-																					<input checked="" class="form-check-input question__input" id="q_1_no" name="UsageGag" type="radio" value="commercial"> 
-																					<label class="form-check-label question__label" for="q_1_no">Commercial</label>
+																					<input checked="" class="form-check-input question__input" id="UsageGag" name="UsageGag" type="radio" value="commercial"> 
+																					<label class="form-check-label question__label" for="UsageGag">Commercial</label>
 																				</div>
 																				<div class="q-box__question">
-																					<input class="form-check-input question__input" id="q_1_yes" name="UsageGag" type="radio" value="personnel"> 
-																					<label class="form-check-label question__label" for="q_1_yes">Personnel</label>
+																					<input class="form-check-input question__input" id="UsageGag2" name="UsageGag" type="radio" value="personnel"> 
+																					<label class="form-check-label question__label" for="UsageGag2">Personnel</label>
 																				</div>
 																			</div>
 																		</div>
@@ -69,8 +69,8 @@ layout:decorator="template3" xml:lang>
 																	<div class="step">
 																		<h4>INFORMATION SUR LE DEMANDEUR</h4>
 																			<div class="mt-2">                                          
-																				<label class="form-label" for="inputState">Civilité*</label>						                                    
-																				<select name="sexeDem" id="inputState" class="form-control">
+																				<label class="form-label" for="inputState">Civilité <strong class="text-danger">*</strong></label>						                                    
+																				<select name="sexeDem" id="sexeDem" class="form-control">
 																					<option value="">Veuillez selectionner</option>
 																					<option value="monsieur">Monsieur</option>
 																					<option value="madame">Madame</option >
@@ -78,16 +78,16 @@ layout:decorator="template3" xml:lang>
 																				</select>
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputPassword3" class="form-label">Nom*</label>			                                   
-																				<input name="nomDem" type="text" class="form-control" id="inputPassword3">
+																				<label for="inputPassword3" class="form-label">Nom <strong class="text-danger">*</strong></label>			                                   
+																				<input name="nomDem" type="text" class="form-control" id="nomDem">
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputEmail3" class="form-label">Prénom*</label>                              
-																				<input name="prenomsDem" type="text" class="form-control" id="inputEmail3">
+																				<label for="inputEmail3" class="form-label">Prénom <strong class="text-danger">*</strong></label>                              
+																				<input name="prenomsDem" type="text" class="form-control" id="prenomsDem">
 																			</div>
 																			<div class="mt-2">
-																				<label class="form-label" for="inputState">Fonction*</label>
-																				<select name="fonction" id="inputState" class="form-control">
+																				<label class="form-label" for="inputState">Fonction</label>
+																				<select name="fonction" id="fonction" class="form-control">
 																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="Fonc : ${listefonction}">
 																						<option th:text="${Fonc.titreFonc}" th:value="${Fonc.idFonc}"></option >
@@ -95,8 +95,8 @@ layout:decorator="template3" xml:lang>
 																				</select>
 																			</div>
 																			<div class="mt-2">
-																				<label class="form-label" for="inputState">Nationalité*</label>
-																				<select name="nationalite" id="inputState" class="form-control">
+																				<label class="form-label" for="inputState">Nationalité <strong class="text-danger">*</strong></label>
+																				<select name="nationalite" id="nationalite" class="form-control">
 																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="nat : ${listeNationalites}">
 																						<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
@@ -107,8 +107,8 @@ layout:decorator="template3" xml:lang>
 																		<div class="step">
 																			<h4>INFORMATION SUR LE DEMANDEUR</h4>
 																			<div class="mt-2">
-																				<label class="form-label" for="inputState">Type pièces*</label>
-																				<select name="typePieceIdentite" id="inputState" class="form-control">
+																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>
+																				<select name="typePieceIdentite" id="typePieceIdentite" class="form-control">
 																					<option value="">Veuillez selectionner</option>
 																					<th:block th:each="typiec : ${listetypePieceIdentite}">
 																						<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
@@ -116,27 +116,27 @@ layout:decorator="template3" xml:lang>
 																				</select>
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputPassword3" class="form-label">N° de la pièce*</label>
-																				<input name="numpieceDem" type="text" class="form-control" id="inputPassword3">
+																				<label for="inputPassword3" class="form-label">N° de la pièce <strong class="text-danger">*</strong></label>
+																				<input name="numpieceDem" type="text" class="form-control" id="numpieceDem">
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputPassword3" class="form-label">Date validité</label>
-																				<input type="date" name="validitePieceDem" class="form-control" id="inputPassword3">
+																				<label for="inputPassword3" class="form-label">Date validité <strong class="text-danger">*</strong></label>
+																				<input type="date" name="validitePieceDem" class="form-control" id="validitePieceDem">
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputPassword3" class="form-label">N° Tel *</label>
-																				<input name="telDem" type="text" class="form-control" id="inputPassword3">
+																				<label for="inputPassword3" class="form-label">N° Tel <strong class="text-danger">*</strong></label>
+																				<input name="telDem" type="text" class="form-control maskPhone" id="telDem">
 																			</div>
 																			<div class="mt-2">
-																				<label for="inputPassword3" class="form-label">E-Mail</label>
-																				<input name="emailDem" type="email" class="form-control" id="inputPassword3">
+																				<label for="inputPassword3" class="form-label">E-Mail <strong class="text-danger">*</strong></label>
+																				<input name="emailDem" type="email" class="form-control maskEmail" id="emailDem">
 																			</div>
 																	</div>
 																	<div class="step">
 																		<h4>INFORMATION DU DOSSIER</h4>
 																		<div class="mt-2">
-																			<label class="col-form-label" for="inputState">Marque</label>
-																			<select name="marque" id="inputState" class="form-control">
+																			<label class="col-form-label" for="inputState">Marque <strong class="text-danger">*</strong></label>
+																			<select name="marque" id="marque" class="form-control">
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="nat : ${listemarques}">
 																					<option th:text="${nat.nomMarque}" th:value="${nat.idMarque}"></option >
@@ -144,8 +144,8 @@ layout:decorator="template3" xml:lang>
 																			</select>
 																		</div>
 																		<div class="mt-2">
-																			<label class="col-form-label" for="inputState">Genre</label>
-																			<select name="genreMarque" id="inputState" class="form-control">
+																			<label class="col-form-label" for="inputState">Genre <strong class="text-danger">*</strong></label>
+																			<select name="genreMarque" id="genreMarque" class="form-control">
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="nats : ${listegenreMarques}">
 																					<option th:text="${nats.nomGen}" th:value="${nats.idGen}"></option >
@@ -153,13 +153,13 @@ layout:decorator="template3" xml:lang>
 																			</select>
 																		</div>
 																		<div class="mt-2">
-																			<label for="inputPassword3" class="col-form-label">N° immatriculation*</label>
-																			<input name="numImmatriculationtGag" type="text" class="form-control" id="inputPassword3">																		
+																			<label for="inputPassword3" class="col-form-label">N° immatriculation <strong class="text-danger">*</strong></label>
+																			<input name="numImmatriculationtGag" type="text" class="form-control" id="numImmatriculationtGag">																		
 																		</div>
 																		<div class="mt-2">
 																			<div class="form-row">
 																				<div class="col-sm-5">
-																					<label for="inputEmail3" class="col-form-label">Date mise en circulation*</label>
+																					<label for="inputEmail3" class="col-form-label">Date mise en circulation <strong class="text-danger">*</strong></label>
 																					<input type="date" name="dateMiseCirculationGag" onchange="ageCalculate()"   class="form-control" id="dateMiseCirculationGag">
 																				</div>
 																				<div class="col-sm-5 offset-sm-2">
@@ -185,22 +185,23 @@ layout:decorator="template3" xml:lang>
 																	<div class="step">
 																		<h4>INFORMATION DU DOSSIER</h4>
 																		<div class="mt-2">
-																			<label for="inputEmail3" class="col-form-label">N° carte grise*</label>
-																			<input name="numCarteGriseGag" type="text" class="form-control" id="inputEmail3" placeholder="N° carte grise">
+																			<label for="inputEmail3" class="col-form-label">N° carte grise <strong class="text-danger">*</strong></label>
+																			<input name="numCarteGriseGag" type="text" class="form-control" id="numCarteGriseGag" placeholder="N° carte grise">
 																		</div>
 																		<div class="mt-2">
-																			<label for="inputEmail3" class="col-form-label">Date gage *</label>
-																			<input type="date" name="dateGag"  class="form-control" id="inputEmail3" placeholder="Date gage">
+																			<label for="inputEmail3" class="col-form-label">Date gage <strong class="text-danger">*</strong></label>
+																			<input type="date" name="dateGag"  class="form-control" id="dateGag" placeholder="Date gage">
 																		</div>
 																		<div class="mt-2">
-																			<label for="inputEmail3" class="col-form-label">N° chassis *</label>
-																			<input name="numChassisGag" type="text" class="form-control" id="inputEmail3" placeholder="N° chassis">
+																			<label for="inputEmail3" class="col-form-label">N° chassis <strong class="text-danger">*</strong></label>
+																			<input name="numChassisGag" type="text" class="form-control" id="numChassisGag" placeholder="N° chassis">
 																		</div>
 																		<div class="mt-2">
-																			<label for="inputEmail3" class="col-form-label">Type technique *</label>
-																			<input name="TypeTechGag" type="text" class="form-control" id="inputEmail3" placeholder="Type technique">
+																			<label for="inputEmail3" class="col-form-label">Type technique <strong class="text-danger">*</strong></label>
+																			<input name="TypeTechGag" type="text" class="form-control" id="TypeTechGag" placeholder="Type technique">
 																		</div>
 																	</div>
+																	<div class="step"></div>
 																</div>
 																<div id="q-box__button">
 																	<button id="prev-btn" type="button" class="d-none">Precedent</button> 

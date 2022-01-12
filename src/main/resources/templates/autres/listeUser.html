@@ -77,6 +77,12 @@ layout:decorator="templateparam">
 	                                                <td th:text="${elmt.nomUser+' '+elmt.prenomsUser}"></td >
 	                                                <td th:text="${elmt.telUser}"></td >
 	                                                <td th:text="${elmt.emailUser}"></td >
+	                                                <td>
+	                                                	<a th:href="${'Utilisateurs/Activation/'+elmt.user_id}" th:switch="${elmt.enabled}">
+	                                                	<span th:case="true"  class="btn_21"> ACTIVER</span >
+	                                                	<span th:case="*"  class="btn_2"> BLOQUER</span >
+	                                                </a>
+	                                                </td>
 	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
 	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>

@@ -36,18 +36,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		/*http.authorizeRequests()
+		.antMatchers("/CodeImportExport/Liste","/CodeImportExport/CreationDossier","/CodeImportExport/Renouvellement","/CodeImportExport/Duplicata","/CodeImportExport/Paiement","/CodeImportExport/Approbation","/CodeImportExport/Signature","/CodeImportExport/EditionFiches","/CodeImportExport/listeEtatCodes").hasAnyRole("ADMIN");
+		http.authorizeRequests()
+		.antMatchers("/CodeOccasionnel/Liste","/CodeOccasionnel/CreationDossier","/CodeOccasionnel/Duplicata","/CodeOccasionnel/Paiement","/CodeOccasionnel/Approbation","/CodeOccasionnel/Signature","/CodeOccasionnel/EditionFiches","/CodeOccasionnel/listeEtatCodes").hasAnyRole("ADMIN");
+		http.authorizeRequests()
+		.antMatchers("/LeveeDeGage/Liste","/LeveeDeGage/CreationDossier","/LeveeDeGage/Duplicata","/LeveeDeGage/Paiement","/LeveeDeGage/Approbation","/LeveeDeGage/Signature","/LeveeDeGage/EditionFiches","/LeveeDeGage/listeEtatCodes").hasAnyRole("ADMIN");
+		http.authorizeRequests()
+		.antMatchers("/parametre/listeVilles","/parametre/listeCommune","/parametre/listeNationalites","/parametre/listeFormeJuridiques","/parametre/listeUtilisateurs","/parametre/listeRoles").hasAnyRole("ADMIN");
+		
+		
 		List<Role> roles =  roleService.getAllRole();
 		for(Role role : roles) {
+			String rolep = role.getRole();
 			List<ActionListe> actionListes = roleService.getRoleById(role.getRole_id()).getActionListe();
 			List<String> urlList = new ArrayList<>();
 			for(ActionListe actionListe : actionListes) {
-				urlList.add("/"+actionListe.getLienActPro());	
+				urlList.add(actionListe.getLienActPro());	
 			}
 			String[] authorities = urlList.toArray(new String[0]);			
-			http.authorizeRequests().antMatchers(authorities).hasAuthority(role.getRole().toString());			
+			http.authorizeRequests().antMatchers("/CodeImportExport/Liste").access("@userSecurity.hasUser(authentication,#user_id");	
+			System.out.println(role.getRole().toString());
 		}
 		
-		/*roles.forEach(profile->{
+		System.out.println("on a redemarer");
+		
+		roles.forEach(profile->{
 			List<String> urlList = new ArrayList<>();
 			profile.getActionListe().forEach(profileAction->{
 				urlList.add("/"+profileAction.getLienActPro());	
@@ -83,20 +98,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		}*/
 		
-		http.authorizeRequests()
-		.antMatchers("/CodeImportExport/Liste","/CodeImportExport/CreationDossier","/CodeImportExport/Renouvellement","/CodeImportExport/Duplicata","/CodeImportExport/Paiement","/CodeImportExport/Approbation","/CodeImportExport/Signature","/CodeImportExport/EditionFiches","/CodeImportExport/listeEtatCodes").hasAnyRole("ADMIN");
-		http.authorizeRequests()
-		.antMatchers("/CodeOccasionnel/Liste","/CodeOccasionnel/CreationDossier","/CodeOccasionnel/Duplicata","/CodeOccasionnel/Paiement","/CodeOccasionnel/Approbation","/CodeOccasionnel/Signature","/CodeOccasionnel/EditionFiches","/CodeOccasionnel/listeEtatCodes").hasAnyRole("ADMIN");
-		http.authorizeRequests()
-		.antMatchers("/LeveeDeGage/Liste","/LeveeDeGage/CreationDossier","/LeveeDeGage/Duplicata","/LeveeDeGage/Paiement","/LeveeDeGage/Approbation","/LeveeDeGage/Signature","/LeveeDeGage/EditionFiches","/LeveeDeGage/listeEtatCodes").hasAnyRole("ADMIN");
-		http.authorizeRequests()
-		.antMatchers("/parametre/listeVilles","/parametre/listeCommune","/parametre/listeNationalites","/parametre/listeFormeJuridiques","/parametre/listeUtilisateurs","/parametre/listeRoles").hasAnyRole("ADMIN");
-		
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().antMatchers("/css/**").permitAll();
 		http.authorizeRequests().antMatchers("/images/**").permitAll();
 		http.authorizeRequests().antMatchers("/js/**").permitAll();
 		http.authorizeRequests().antMatchers("/svg/**").permitAll();
+		http.authorizeRequests().antMatchers("/classes/**").permitAll();
+		http.authorizeRequests().antMatchers("/pdf/**").permitAll();
+		http.authorizeRequests().antMatchers("/WEB-INF/**").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.formLogin().loginPage("/login");
 		http.exceptionHandling().accessDeniedPage("/accessDenied");

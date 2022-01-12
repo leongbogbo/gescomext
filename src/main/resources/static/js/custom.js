@@ -441,7 +441,7 @@ $('.spin_icon_clicker').on('click', function(e) {
 		showMaskOnFocus: true
 	});
 	
-	$("#comptecontriEntr").inputmask({
+	$("#contribuableEntr").inputmask({
 		mask: '9999999A',
 		placeholder: '________',
 		showMaskOnHover: true,
@@ -457,4 +457,28 @@ $('.spin_icon_clicker').on('click', function(e) {
 	
 	$(".maskEmail").inputmask("email");
 	
+	$("#ville").on('change', function(e) {
+		$("#commune").empty();
+		listeCommuneByVille()    
+  	});
+  	//listeCommuneByVille() 
+	
 }(jQuery));
+
+function listeCommuneByVille(){
+	villeId = $("#ville").val();
+	urlString = "http://localhost:8080/gescomext/api/"+villeId
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designeCommune = $("#commune");
+			$.each(responseJson, function(index, commune){				
+				$("<option>").val(commune.idCommune).text(commune.nomCommune).appendTo(designeCommune);
+			});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+			
+		});
+}

@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mincom.gescomext.entities.Role;
@@ -48,10 +48,33 @@ public class UserController{
 			if(user.getPassword().equals(passconfirm)) {
 				user.setUsername(user.getUsername().toLowerCase());
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				user.setEnabled(false);
 				userService.saveUser(user);
 			}else {
 				System.out.println("Mot de passe non conforme");
 			}			
+		}else {
+			System.out.println("Pseudo deja occupé");
+		}
+		
+		return "redirect:/parametre/listeUtilisateurs";
+	}
+	
+	@RequestMapping("/parametre/Utilisateurs/Activation/{idUser}")
+	public String activeUser(@PathVariable("idUser") Long idUser)
+	{		
+		PasswordEncoder passwordEncoder = passwordEncoders();
+		User verifUser = userService.getUserById(idUser);
+		if(verifUser!=null) {
+			if(verifUser.getEnabled() == true) {
+				verifUser.setEnabled(false);
+			}else if(verifUser.getEnabled() == false) {
+				verifUser.setEnabled(true);
+			}			
+			else {
+				System.out.println("Option n'ont troouvé");
+			}
+			userService.saveUser(verifUser);
 		}else {
 			System.out.println("Pseudo deja occupé");
 		}
