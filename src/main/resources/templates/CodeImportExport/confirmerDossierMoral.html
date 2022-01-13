@@ -47,6 +47,17 @@ layout:decorator="template">
                                         <input type="text" name="sigleEntr" class="form-control" id="input" th:value="${verifEntreprise.sigleEntr}">
                                     </div>
                                 </div>
+                                <div class="form-group row" id="departementBody" th:if="${verifEntreprise.departement!=null}">                                           
+                                	<label class="col-sm-4 col-form-label" for="inputState">Département <strong class="text-danger">*</strong></label>						                                    
+                                    <div class="col-sm-8">
+	                                    <select name="departement" id="departement" class="form-control" th:field="*{verifEntreprise.departement.idDep}">
+	                                    	<option value="">Veuillez selectionner</option>
+	                                        <th:block th:each="Dep : ${listedepartement}">
+				                            	<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
+				                            </th:block>
+	                                    </select>
+                                     </div>
+                                </div>
                                 <div class="form-group row">                                                
                                     <label class="col-sm-4 col-form-label" for="inputState">Type Structure*</label>
                                     <div class="col-sm-8">
@@ -57,7 +68,7 @@ layout:decorator="template">
                                         </select >
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" th:if="${verifEntreprise.numIduEntr!=null}">
                                     <label for="inputPassword3" class="col-sm-4 col-form-label">N° IDU </label>
                                     <div class="col-sm-8">
                                         <input name="numIduEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.numIduEntr}">
@@ -72,7 +83,7 @@ layout:decorator="template">
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" th:if="${verifEntreprise.regcommerceEntr!=null}">
                                     <label for="inputEmail3" class="col-sm-4 col-form-label">N° RCCM</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="regcommerceEntr" class="form-control" id="inputEmail3" th:value="${verifEntreprise.regcommerceEntr}">

@@ -50,9 +50,8 @@ public class ActionListeController{
 	@RequestMapping("/parametre/ActionProfile/new")
 	public String saveActionListe(Role role)
 	{	
-		if(role.getRole_id()==null) {
+		if(role.getRole_id()!=null) {
 			Role roleFind = roleService.getRoleById(role.getRole_id());
-			System.out.println(roleFind.getRole());
 			roleFind.setActionListe(role.getActionListe());
 			roleService.saveRole(roleFind);
 		}

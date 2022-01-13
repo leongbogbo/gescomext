@@ -63,18 +63,31 @@ layout:decorator="templateparam">
 	                                        <thead>
 	                                            <tr role="row">
 	                                            	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-sort="ascending" aria-label="title: activate to sort column descending">N°</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">NOM</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">VILLE</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="2" style="width: 151px;" aria-label="Status: activate to sort column ascending">Options</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">PROFILE</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">IMPORT/EXPORT</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">OCCASIONNEL</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">LEVEE GAGE</th>
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
-	                                            <tr role="row" class="odd" th:each="elmt:${communes}">
-	                                                <td th:text="${elmt.idCommune}"></td >
-	                                                <td th:text="${elmt.nomCommune}"></td >
-	                                                <td th:text="${elmt.Ville.nomVille}"></td >
-	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
+	                                            <tr role="row" class="odd" th:each="elmt:${roleList}">
+	                                                <td th:text="${elmt.role_id}"></td >
+	                                                <td th:text="${elmt.role}"></td >
+	                                                <td>
+		                                                <div class="col-md-4" th:each="action : ${elmt.actionListe}">
+		                                                	<p th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeImportExport'}" th:text="${action.titreActPro}"></p >
+		                                                </div>
+	                                                </td >
+	                                                <td>
+		                                                <div class="col-md-4" th:each="action : ${elmt.actionListe}">
+		                                                	<p th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeOccasionnel'}" th:text="${action.titreActPro}"></p >
+		                                                </div>
+	                                                </td >
+	                                                <td>
+		                                                <div class="col-md-4" th:each="action : ${elmt.actionListe}">
+		                                                	<p th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'LeveeDeGage'}" th:text="${action.titreActPro}"></p >
+		                                                </div>
+	                                                </td >
 	                                            </tr>
                                            </tbody>
                                     	</table>
@@ -128,7 +141,7 @@ layout:decorator="templateparam">
                                     <button class="btn btn-light" type="button">Profile</button>
                                 </div>
                                 <select class="custom-select" name="role_id" id="inputGroupSelect03" aria-label="Example select with button addon" required>
-                                    <option selected="">Selectionner un profile</option>
+                                    <option value="">Selectionner un profile</option>
                                    <th:block th:each="roles : ${roleList}">
 		                            	<option  th:value="${roles.role_id}" th:text="${roles.role}"></option >
 		                            </th:block>
@@ -146,8 +159,8 @@ layout:decorator="templateparam">
 	                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_ex">
 	                                    <div class="card-body form-row align-items-center">	                                    
 	                                    	<th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6">
-					                                <div class="form-check mb-2">
+		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeImportExport'}">
+					                                <div class="form-check mb-2" >
 					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
 					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
 					                                </div>
@@ -167,9 +180,9 @@ layout:decorator="templateparam">
 	                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion_ex">
 	                                    <div class="card-body form-row align-items-center">
 	                                      	<th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6">
+		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeOccasionnel'}">
 					                                <div class="form-check mb-2">
-					                                    <input type="checkbox" class="form-check-input" name="occaListe[]" th:value="${action.idActPro}" id="exampleCheck">
+					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
 					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
 					                                </div>
 					                            </div>
@@ -188,9 +201,9 @@ layout:decorator="templateparam">
 	                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion_ex">
 	                                    <div class="card-body form-row align-items-center">
 	                                        <th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6">
+		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'LeveeDeGage'}">
 					                                <div class="form-check mb-2">
-					                                    <input type="checkbox" class="form-check-input" name="leveListe[]" th:value="${action.idActPro}" id="exampleCheck">
+					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
 					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
 					                                </div>
 					                            </div>

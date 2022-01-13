@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.plexus.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -79,6 +82,7 @@ import com.mincom.gescomext.service.TraitementOpCodeImportationService;
 import com.mincom.gescomext.service.TypePieceIdentiteService;
 import com.mincom.gescomext.service.TypeStructureService;
 import com.mincom.gescomext.service.VilleService;
+import com.sun.tools.javac.Main;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -137,6 +141,18 @@ public class CodeImportationController {
 		@Autowired
 		UserRepository userRepository;
 
+		@SuppressWarnings("finally")
+		private File getFileFromURL() {
+		    URL url = this.getClass().getClassLoader().getResource("templates/pdf/villepdf.jrxml");
+		    File file = null;
+		    try {
+		        file = new File(url.toURI());
+		    } catch (URISyntaxException e) {
+		        file = new File(url.getPath());
+		    } finally {
+		        return file;
+		    }
+		}
 		
 	@Value("${server.servlet.context-path}")
 	private String contextPath;
@@ -149,20 +165,6 @@ public class CodeImportationController {
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap) throws IOException
 	{
-		//File file = new File("villepdf.jrxml");
-		
-		//File resource = new ClassPathResource("../villepdf.jrxml").getFile();
-		//String text = new String(Files.readAllBytes(resource.toPath()));
-		
-		//InputStream inputStream = (InputStream) getClass().getResourceAsStream("/text..txt");
-		//BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		//String contents = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-		
-		//InputStream is = (InputStream) GescomextApplication.class.getClassLoader().getResourceAsStream("villepdf.jrxml");
-		//System.out.println(text);
-		//System.out.println(System.getProperty("user.dir"));
-		
-		
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
 		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/listeDossier";
@@ -173,7 +175,6 @@ public class CodeImportationController {
 	{
 		OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDocCodFic);
 		modelMap.addAttribute("listeCodeFiscal", codeFic);
-		 
 		return "./importExport/listeDossier";
 	}
 	
@@ -764,8 +765,7 @@ public class CodeImportationController {
 	//ZONNE TIRAGE RECU
 	  
 		@RequestMapping("/{category}/Recu")			
-		public ResponseEntity<byte[]> generatePdf(@PathVariable("category") String category, Integer numDoc) throws FileNotFoundException, JRException, ParseException {
-			System.out.println("gfgfgg");
+		public ResponseEntity<byte[]> generatePdf(@PathVariable("category") String category, Integer numDoc) throws JRException, ParseException, IOException {
 			HttpHeaders headers = new HttpHeaders();
 			byte[] data = {};
 			SimpleDateFormat formaters = null;
@@ -783,14 +783,14 @@ public class CodeImportationController {
 					fichiers ="recuLeveeDeGage";	
 				}
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
-				//InputStream is = (InputStream) GescomextApplication.class.getClassLoader().getResourceAsStream("pdf/villepdf.jrxml");
-				JasperReport compileReport = JasperCompileManager.compileReport(GescomextApplication.class.getClassLoader().getResourceAsStream("pdf/villepdf.jrxml"));
-				//InputStream is = CoolApp.class.getClassLoader().getResourceAsStream("ssl_certs/mysslstore.jks"));
+				ClassLoader classLoader = getClass().getClassLoader();
+			    File file = new File(classLoader.getResource("templates/pdf/"+fichiers+".jrxml").getFile());
+			    System.out.println(file);
+				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(file));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
-				JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");
 				data = JasperExportManager.exportReportToPdf(report);
-				headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=recuModel.pdf");
+				headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename="+fichiers+numDoc+".pdf");
 								
 			}
 			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);	

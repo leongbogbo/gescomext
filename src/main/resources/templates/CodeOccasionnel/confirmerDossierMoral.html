@@ -48,7 +48,18 @@ layout:decorator="template2" xml:lang="">
                                                             <div class="col-sm-4">
                                                                 <label for="inputPassword3" class="col-form-label">Sigle</label>
                                                                 <input type="text" name="sigleEntr" class="form-control" id="input" th:value="${verifEntreprise.sigleEntr}">
-                                                            </div>                                                        
+                                                            </div>
+                                                            <div class="form-group row" id="departementBody" th:if="${verifEntreprise.departement!=null}">                                           
+							                                	<label class="col-sm-4 col-form-label" for="inputState">Département <strong class="text-danger">*</strong></label>						                                    
+							                                    <div class="col-sm-8">
+								                                    <select name="departement" id="departement" class="form-control" th:field="*{verifEntreprise.departement.idDep}">
+								                                    	<option value="">Veuillez selectionner</option>
+								                                        <th:block th:each="Dep : ${listedepartement}">
+											                            	<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
+											                            </th:block>
+								                                    </select>
+							                                     </div>
+							                                </div>                                                        
                                                             <div class="col-sm-4">                                                
                                                                 <label class="col-form-label" for="inputState">Type Structure*</label>
                                                                 <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntreprise.TypeStructure.idStruc}">
@@ -58,22 +69,10 @@ layout:decorator="template2" xml:lang="">
                                                                 </select >
                                                             </div>
                                                         
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-4" th:if="${verifEntreprise.numIduEntr!=null}">
                                                                 <label for="inputPassword3" class="col-form-label">N° IDU </label>
                                                                     <input name="numIduEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.numIduEntr}">
                                                             </div>
-                                                            <div class="col-sm-4">                                                
-                                                                <label class="col-form-label" for="inputState">Exonérer RCCM</label>
-                                                                <select name="exoregcomEntr" id="inputState" class="form-control" th:field="*{verifEntreprise.exoregcomEntr}">
-                                                                    <option value="non">NON</option>
-                                                                    <option value="oui">OUI</option >
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <label for="inputEmail3" class="col-form-label">N° RCCM</label>
-                                                                <input type="text" name="regcommerceEntr" class="form-control" id="inputEmail3" th:value="${verifEntreprise.regcommerceEntr}">
-                                                            </div>
-                                                       
                                                             <div class="col-sm-4">                                                
                                                                 <label class="col-form-label" for="inputState">Ville*</label>
                                                                 <select name="villeEntr" id="inputState" class="form-control">
