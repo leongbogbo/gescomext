@@ -73,7 +73,7 @@ layout:decorator="template3" xml:lang>
 																			<select name="typeStructure" id="typeStructure" class="form-control" required>
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="struc : ${listetypeStructure}">
-																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc!=1}" th:text="${struc.titreStruc}" ></option >
+																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc==7 or struc.idStruc==8 or struc.idStruc==10}" th:text="${struc.titreStruc}" ></option >
 																				</th:block>
 																			</select>
 																		</div>

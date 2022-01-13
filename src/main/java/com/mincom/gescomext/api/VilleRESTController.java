@@ -23,15 +23,12 @@ public class VilleRESTController {
 	
 	@RequestMapping(value="/listeVille", method = RequestMethod.GET)
 	public List<Ville> getAllVilles() {
-		System.out.println("dfffddf");
 		return villeService.getAllVille();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public List<Commune> getCommuneByIdVille(@PathVariable("id") Long id) {
-		List<Commune> communes = villeService.getVilleById(id).getCommunes();
-		
-		return communes;
+		return villeService.getVilleById(id).getCommunes();
 	}
 
 }

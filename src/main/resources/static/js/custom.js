@@ -461,13 +461,12 @@ $('.spin_icon_clicker').on('click', function(e) {
 		$("#commune").empty();
 		listeCommuneByVille()    
   	});
-  	//listeCommuneByVille() 
 	
 }(jQuery));
 
 function listeCommuneByVille(){
 	villeId = $("#ville").val();
-	urlString = "http://localhost:8080/gescomext/api/"+villeId
+	urlString = "../api/"+villeId
 	$.ajax({metod: "GET", url: urlString})
 		.done(function(responseJson){
 			designeCommune = $("#commune");

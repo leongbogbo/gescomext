@@ -117,7 +117,7 @@ layout:decorator="template3">
                                 </tr>
                                 <tr>
                                     <td colspan="2" th:switch="${infoCodefics.activePaimentOp}">
-                                    	<a th:href="@{'Recu?numDoc='+${infoCodefics.numDocOp}}" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="1">
+                                    	<a target="_blank" th:href="@{'Recu?numDoc='+${infoCodefics.numDocOp}}" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="1">
                                     		<span >RECU</span >
                                     	</a>
                                     	<a th:href="@{'Payer?numDoc='+${infoCodefics.numDocOp}}" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="*">
