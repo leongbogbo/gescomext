@@ -68,7 +68,7 @@ layout:decorator="template">
 	                                                <td th:text="${#dates.format(elmt.dateOp, 'dd-mm-yyyy')}"></td >
 	                                                <td th:text="${elmt.montantOp}"></td >
 	                                                <td th:switch="${elmt.activeApprobationOp}">
-		                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIVER</a>
+		                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIF</a>
 		                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>
 		                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
 		                                                <a class="sm_btn" th:case="*">INACTIF</a>

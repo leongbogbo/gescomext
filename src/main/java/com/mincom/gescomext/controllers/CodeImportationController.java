@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -42,9 +43,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lowagie.text.pdf.codec.Base64.InputStream;
 import com.mincom.gescomext.GescomextApplication;
+import com.mincom.gescomext.ZXingHelper.ZXingHelper;
 import com.mincom.gescomext.config.CalculeCodesExportation;
 import com.mincom.gescomext.config.GetCurrentUser;
 import com.mincom.gescomext.config.TableauCorrespondance;
+import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.CodeImportation;
 import com.mincom.gescomext.entities.Commune;
 import com.mincom.gescomext.entities.Demandeur;
@@ -65,6 +68,7 @@ import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.entities.Ville;
 import com.mincom.gescomext.repository.EntrepriseRepository;
 import com.mincom.gescomext.repository.UserRepository;
+import com.mincom.gescomext.service.ActionListeService;
 import com.mincom.gescomext.service.CodeImportationService;
 import com.mincom.gescomext.service.CommuneService;
 import com.mincom.gescomext.service.DemandeurService;
@@ -134,33 +138,21 @@ public class CodeImportationController {
 		GenreMarqueService genreMarqueService;
 		@Autowired 
 		FonctionService fonctionService;
+		@Autowired
+		ActionListeService actionListeService;
 		
 		//INJECTION DES REPOSITORY
 		@Autowired
 		EntrepriseRepository entrepriseRepo;
 		@Autowired
 		UserRepository userRepository;
-
-		@SuppressWarnings("finally")
-		private File getFileFromURL() {
-		    URL url = this.getClass().getClassLoader().getResource("templates/pdf/villepdf.jrxml");
-		    File file = null;
-		    try {
-		        file = new File(url.toURI());
-		    } catch (URISyntaxException e) {
-		        file = new File(url.getPath());
-		    } finally {
-		        return file;
-		    }
-		}
 		
-	@Value("${server.servlet.context-path}")
-	private String contextPath;
+	//@Value("${server.servlet.context-path}")
+	//private String contextPath;
 	
 	Date aujourdhui = new Date();
 	SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
 	String dateDuJour = formater.format(aujourdhui);
-	
 	
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap) throws IOException
@@ -354,6 +346,7 @@ public class CodeImportationController {
 			Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);				
 			entreprise.setProprietaires(saveProprietaire);		
 			entreprise.setDateEntr(date);
+			entreprise.setQuotaOccaEntr(1);
 			
 			Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
 			codeImportation.setEntreprise(saveEntreprise);
@@ -412,6 +405,7 @@ public class CodeImportationController {
 				}
 				
 				codeImportation.setNumGag(codesLege);
+				codeImportation.setTypeGag(typeGage);
 				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 				
 				if(typeGage.equals("ordinaire")) {
@@ -785,7 +779,6 @@ public class CodeImportationController {
 				JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
 				ClassLoader classLoader = getClass().getClassLoader();
 			    File file = new File(classLoader.getResource("templates/pdf/"+fichiers+".jrxml").getFile());
-			    System.out.println(file);
 				JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(file));
 				HashMap<String, Object> map = new HashMap<>();
 				JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
@@ -795,4 +788,45 @@ public class CodeImportationController {
 			}
 			return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);	
 		}
+		
+		//ZONNE TIRAGE FICHE DE CODE
+		  
+			@RequestMapping("/{category}/EditionFiche")			
+			public ResponseEntity<byte[]> generatePdfCODE(@PathVariable("category") String category, Integer numDoc,  HttpServletResponse response) throws JRException, ParseException, IOException {
+				HttpHeaders headers = new HttpHeaders();
+				byte[] data = {};
+				SimpleDateFormat formaters = null;
+			    formaters = new SimpleDateFormat("dd-MM-yy");		    
+				if(numDoc != null) {
+					List<OpCodeImportation> listOpCodes = new ArrayList<>();
+					OpCodeImportation opCodes  = opCodeImportationService.findBynumDocOp(numDoc);
+					listOpCodes.add(opCodes);
+					String fichiers ="";
+					if(category.equals("CodeImportExport")){
+						fichiers ="ficheImportExport";					
+					}else if(category.equals("CodeOccasionnel")) {
+						fichiers ="ficheCodeOccasionnel";	
+					} else if(category.equals("LeveeDeGage")) {
+						fichiers ="ficheLeveeDeGage";	
+					}
+					//-------------------------------CODE BARRE ------------------------------------------------------//
+					/*response.setContentType("image/png");
+					OutputStream outputStream = response.getOutputStream();
+					outputStream.write(ZXingHelper.getBarCodeImage("gbogbo leon", 200, 50));
+					outputStream.flush();
+					outputStream.close();*/
+					//-----------------------------FIN CODE BARRE -------------------------------------------------//
+					JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
+					ClassLoader classLoader = getClass().getClassLoader();
+				    File file = new File(classLoader.getResource("templates/pdf/"+fichiers+".jrxml").getFile());
+					JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(file));
+					HashMap<String, Object> map = new HashMap<>();
+					//map.put("CodeBarre", outputStream);
+					JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
+					data = JasperExportManager.exportReportToPdf(report);
+					headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename="+fichiers+numDoc+".pdf");
+									
+				}
+				return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);	
+			}
 }

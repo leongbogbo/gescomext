@@ -65,7 +65,7 @@ layout:decorator="template2">
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.typeCodeOcca}"></td >
 	                                                 <td th:text="${#dates.format(elmt.OpCodeImportation.dateOp, 'dd-mm-yyyy')}"></td >
 	                                                <td >
-		                                                <a href="#" class="btn btn-outline-info mb-3">Editer Fiche</a>
+		                                                <a target="_blank" th:href="@{'EditionFiche?numDoc='+${elmt.OpCodeImportation.numDocOp}}" class="btn btn-outline-info mb-3">Editer Fiche</a>
 	                                                </td >
 	                                            </tr>
                                            </tbody>

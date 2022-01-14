@@ -52,7 +52,7 @@ layout:decorator="template2" xml:lang>
 															<form th:action="@{confirmationDossier}" class="needs-validation" id="form-wrapper" name="form-wrapper" method="POST" novalidate="">
 																<div id="steps-container">
 																	<div class="step d-block">
-																		<h4>INFORMATION SUR LA STRUCTURE</h4>
+																		<h4>INFORMATION TYPE DE STRUCTURE</h4>
 																		<div class="mt-2">                                           
 																			<label for="typeStructure" class="form-label" >Type Structure <strong class="text-danger">*</strong></label>						                                    
 																			<select name="typeStructure" id="typeStructure" class="form-control" required>
@@ -64,7 +64,7 @@ layout:decorator="template2" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR LA STRUCTURE</h4>
+																		<h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
 																		<div class="mt-1">
 																			 <label for="inputEmail3" class="form-label">Raison sociale <strong class="text-danger">*</strong></label>						                                   
 																			<input type="text" name="nomEntr" class="form-control" id="nomEntr">
@@ -105,7 +105,7 @@ layout:decorator="template2" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																	  <h4>INFORMATION SUR LA STRUCTURE</h4>
+																	  <h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
 																		<div class="mt-2">                                           
 																			<label class="form-label" for="inputState">Forme juridique <strong class="text-danger">*</strong></label>						                                    
 																			<select name="formeJuridique" id="formeJuridique" class="form-control">
@@ -144,7 +144,7 @@ layout:decorator="template2" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR LA STRUCTURE</h4>
+																		<h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
 																		<div class="mt-2">
 																		<label for="inputPassword3" class="col-form-label">Adresse postale</label>
 																		
@@ -160,7 +160,7 @@ layout:decorator="template2" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR LE REPRESENTANT</h4>
+																		<h4>INFORMATION SUR LE PROPRIETAIRE</h4>
 																			<div class="mt-1">                                          
 																				<label class="form-label" for="inputState">Civilité <strong class="text-danger">*</strong></label>						                                    
 																				<select name="sexeProp" id="inputState" class="form-control">
@@ -198,7 +198,7 @@ layout:decorator="template2" xml:lang>
 																			</div>
 																		</div>
 																		<div class="step">
-																			<h4>INFORMATION SUR LE REPRESENTANT</h4>
+																			<h4>INFORMATION SUR LE PROPRIETAIRE</h4>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>
 																				<select name="typePieceIdentite" id="typePieceIdentite" class="form-control">
@@ -240,7 +240,7 @@ layout:decorator="template2" xml:lang>
 						                                        			<input type="date" name="dateEmisOcca"  class="form-control" id="dateEmisOcca" placeholder="Date d'émission">
 																		</div>
 																		<div class="mt-2">
-																			<label class="form-label" for="inputState">Fiche déclaration?</label>
+																			<label class="form-label" for="inputState">Fiche de déclaration à l'importation ?</label>
 																			<select name="declarationOcca" id="declarationOcca" class="form-control">
 																				<option value="non">NON</option>
 																				<option value="oui">OUI</option >

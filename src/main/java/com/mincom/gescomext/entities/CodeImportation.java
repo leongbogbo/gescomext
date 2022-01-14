@@ -43,6 +43,7 @@ public class CodeImportation {
 	private String dateMiseCirculationGag;
 	private String typeTechGag;
 	private String usageGag;
+	private String typeGag;
 	
 	@ManyToOne
 	@JoinColumn(name = "marque_id")

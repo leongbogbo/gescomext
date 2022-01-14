@@ -29,6 +29,7 @@ public class Demandeur {
 	private String numpieceDem;
 	private String telDem;
 	private String emailDem;
+	private Integer quotaOccaDem;
 
 	
 	@ManyToOne	  

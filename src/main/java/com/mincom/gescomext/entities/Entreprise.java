@@ -33,6 +33,7 @@ public class Entreprise {
 	private String regcommerceEntr;
 	private String codeImportExportEntr;
 	private String numIduEntr;
+	private Integer quotaOccaEntr;
 	
 	private Date dateEntr;
 	
