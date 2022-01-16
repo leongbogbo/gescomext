@@ -30,5 +30,8 @@ public class TypePieceIdentite {
 	private List<Proprietaire> proprietaire;
 	
 	@OneToMany(mappedBy = "typePieceIdentite")
-	private List<Demandeur> demandeur;	
+	private List<Demandeur> demandeur;
+	
+	@OneToMany(mappedBy = "pieceBeneficiaire")
+	private List<Beneficiaire> beneficiaire;
 }

@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorator="template3" xml:lang="">
 <head>
 <meta charset="utf-8">
-<title>Création : Code Occasionnel</title>
+<title>Confirmation : Levée de Gage</title>
 </head>
 <body>
 <div layout:fragment="MyContent">
@@ -318,16 +318,79 @@ layout:decorator="template3" xml:lang="">
 															</select>
 														</div>
 													</div>
-													<div class="form-group row">
-														<div class="col-sm-10">
-															<button type="submit" class="btn btn-primary">Enregistrer</button>
-														</div>
-													</div>
                                                 </div>
 						                    </div>
-						                </div>
-						                					                
+						                </div>						                					                
 						            </div>
+						            <div class="col-lg-12">						                    
+						                    <div class="white_card card_height_100 mb_30">
+						                        <div class="white_card_header">
+						                            <div class="box_header m-0">
+						                                <div class="main-title">
+						                                    <h3 class="m-0">INFORMATION SUR LE BENEFICIAIRE</h3>
+						                                </div>
+						                            </div>
+						                        </div>
+						                        <div class="white_card_body">
+                                                    <div class="form-row">  
+                                                    	<div class="col-sm-4 ">                                              
+                                                        	<label class="col-form-label" for="inputState">Civilité*</label>                                                        
+                                                            <select name="sexeBen" id="sexeBen" class="form-control" th:field="*{verifBeneficiaire.sexeBen}">
+                                                                <option value="monsieur">Monsieur</option>
+                                                                <option value="madame">Madame</option >
+                                                                <option value="mademoiselle">Mademoiselle</option >
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        <label for="inputPassword3" class="col-form-label">Nom*</label>
+                                                            <input name="nomBen" type="text" class="form-control" id="nomBen" th:value="${verifBeneficiaire.nomBen}">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        	<label for="inputEmail3" class="col-form-label">Prénom*</label>
+                                                            <input name="prenomsBen" type="text" class="form-control" id="prenomsBen" th:value="${verifBeneficiaire.prenomsBen}">
+                                                        </div>                   
+                                                        <div class="col-sm-4">
+                                                        	<label class="col-form-label" for="pieceBeneficiaire">Type pièces*</label>
+                                                            <select name="pieceBeneficiaire" id="pieceBeneficiaire" class="form-control" th:field="*{verifBeneficiaire.pieceBeneficiaire.idTyp}">
+                                                                <th:block th:each="typiec : ${listetypePieceIdentite}">
+                                                                    <option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        <label for="inputPassword3" class="col-form-label">N° de la pièce*</label>
+                                                            <input name="numpieceBen" type="text" class="form-control" id="numpieceBen" th:value="${verifBeneficiaire.numpieceBen}">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        <label for="inputPassword3" class="col-form-label">Date validité *</label>
+                                                            <input type="Date" name="validitePieceBen" class="form-control" id="validitePieceBen" th:value="${verifBeneficiaire.validitePieceBen}">
+                                                        </div>                              
+                                                        <div class="col-sm-4">
+                                                        <label class="col-form-label" for="inputState">Nationalité*</label>
+                                                            <select name="natBeneficiaire" id="natBeneficiaire" class="form-control" th:field="*{verifBeneficiaire.natBeneficiaire.idNat}">
+                                                                <th:block th:each="nat : ${listeNationalites}">
+                                                                    <option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        	<label for="inputPassword3" class="col-form-label">N° Tel *</label>
+                                                            <input name="telBen" type="text" class="form-control" id="inputPassword3" th:value="${verifBeneficiaire.telBen}">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        	<label for="inputPassword3" class="col-form-label">E-Mail</label>
+                                                            <input name="emailBen" type="email" class="form-control" id="inputPassword3" th:value="${verifBeneficiaire.emailBen}">
+                                                        </div>
+                                                    </div>
+                                                <div class="form-group row mt-4 ">
+													<div class="offset-sm-10 col-sm-2">
+														<button type="submit" class="btn btn-primary pull-right">Valider</button>
+													</div>
+												</div>
+                                            	</div>
+						                    </div>										                
+						                </div>
+						            
 						            </form>	
                                 </div>                        
                             </div>

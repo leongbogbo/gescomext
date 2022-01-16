@@ -41,13 +41,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lowagie.text.Image;
+import com.lowagie.text.pdf.Barcode128;
+import com.lowagie.text.pdf.BarcodeEAN;
 import com.lowagie.text.pdf.codec.Base64.InputStream;
 import com.mincom.gescomext.GescomextApplication;
 import com.mincom.gescomext.ZXingHelper.ZXingHelper;
 import com.mincom.gescomext.config.CalculeCodesExportation;
 import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
 import com.mincom.gescomext.config.TableauCorrespondance;
 import com.mincom.gescomext.entities.ActionListe;
+import com.mincom.gescomext.entities.Beneficiaire;
 import com.mincom.gescomext.entities.CodeImportation;
 import com.mincom.gescomext.entities.Commune;
 import com.mincom.gescomext.entities.Demandeur;
@@ -69,6 +74,7 @@ import com.mincom.gescomext.entities.Ville;
 import com.mincom.gescomext.repository.EntrepriseRepository;
 import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.ActionListeService;
+import com.mincom.gescomext.service.BeneficiaireService;
 import com.mincom.gescomext.service.CodeImportationService;
 import com.mincom.gescomext.service.CommuneService;
 import com.mincom.gescomext.service.DemandeurService;
@@ -140,6 +146,8 @@ public class CodeImportationController {
 		FonctionService fonctionService;
 		@Autowired
 		ActionListeService actionListeService;
+		@Autowired
+		BeneficiaireService beneficiaireService;
 		
 		//INJECTION DES REPOSITORY
 		@Autowired
@@ -154,17 +162,47 @@ public class CodeImportationController {
 	SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
 	String dateDuJour = formater.format(aujourdhui);
 	
+	@RequestMapping("")
+	public String idex(ModelMap modelMap) throws IOException
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		//List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
+		//modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
+		
+		return "index";
+	}
+	
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap) throws IOException
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
+		List<TableauCorrespondance> tableauCorrespondance = TableauCorrespondance.getAlphaBaseDix();
+		for (TableauCorrespondance donnees : tableauCorrespondance){
+			System.out.println(donnees.getBaseDix()+" "+donnees.getLettre()+" "+donnees.getCorrepondance());
+		}
+		
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
 		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/listeDossier";
 	}
 	
 	@RequestMapping("/{category}/RechercherDossier")
-	public String rechercheDossier(Integer numDocCodFic, ModelMap modelMap)
+	public String rechercheDossier(@PathVariable("category") String category, Integer numDocCodFic, ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDocCodFic);
 		modelMap.addAttribute("listeCodeFiscal", codeFic);
 		return "./importExport/listeDossier";
@@ -173,6 +211,12 @@ public class CodeImportationController {
 	@RequestMapping(value = {"/{category}/DemandeurPhysique"})
 	public String afficheFormulaire(@PathVariable("category") String category, ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		Integer numDossier = 1;
 		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
 		if(elmt != null) {
@@ -202,6 +246,12 @@ public class CodeImportationController {
 	@RequestMapping(value = {"/{category}/CreationDossier","/{category}/DemandeurMoral"})
 	public String afficheFormulaires(@PathVariable("category") String category, ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		Integer numDossier = 1;
 		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
 		if(elmt != null) {
@@ -243,7 +293,14 @@ public class CodeImportationController {
 											@ModelAttribute("codeImportation") CodeImportation codeImportation,
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													@ModelAttribute("demandeur") Demandeur demandeur,
-														ModelMap modelMap){
+														@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
+															ModelMap modelMap){
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		String pageselect="confirmerDossierMoral"; 
 		List<Commune> coms = communeService.getAllCommune();
 		List<Ville> vils = villeService.getAllVille();
@@ -271,6 +328,7 @@ public class CodeImportationController {
 		modelMap.addAttribute("verifProprietaire", proprietaire);
 		modelMap.addAttribute("verifCodeImportation", codeImportation);
 		modelMap.addAttribute("verifDemandeur", demandeur);
+		modelMap.addAttribute("verifBeneficiaire", beneficiaire);
 		if(demandeur.getNomDem()!=null && demandeur.getPrenomsDem()!=null){
 			pageselect = "confirmerDossier";
 		}
@@ -286,11 +344,15 @@ public class CodeImportationController {
 											@ModelAttribute("codeImportation") CodeImportation codeImportation,
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													@ModelAttribute("demandeur") Demandeur demandeur,
-														ModelMap modelMap)
+														@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
+															ModelMap modelMap)
 	{
 		//User connecté
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 
 		//calcul du dernier dossier
 		Integer numDossier = 1001001;
@@ -404,6 +466,11 @@ public class CodeImportationController {
 					codeImportation.setStatutDemandeurCodeImp("oui");
 				}
 				
+				if(beneficiaire.getNomBen() != null) {
+					Beneficiaire saveBeneficiaire = beneficiaireService.saveBeneficiaire(beneficiaire);
+					codeImportation.setBeneficiaire(saveBeneficiaire);
+				}
+				
 				codeImportation.setNumGag(codesLege);
 				codeImportation.setTypeGag(typeGage);
 				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
@@ -442,6 +509,13 @@ public class CodeImportationController {
 	public String renouvellementCode(@PathVariable("category") String category,
 												String codeImportExportEntr,
 													ModelMap modelMap){
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		if(codeImportExportEntr!=null){
 			Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
 			Proprietaire props = entr.getProprietaires();
@@ -458,12 +532,16 @@ public class CodeImportationController {
 											@ModelAttribute("codeImportation") CodeImportation codeImportation, 
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													ModelMap modelMap) {
-		String codesFiscals="";
-		Date date = new Date();
 		//User connecté
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
-
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+				
+		String codesFiscals="";
+		Date date = new Date();
+		
 		//calcul du dernier dossier
 		Integer numDossier = 1;
 		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
@@ -501,6 +579,14 @@ public class CodeImportationController {
 	  @RequestMapping("/{category}/Duplicata")
 		public String duplicataCode(@PathVariable("category") String category, String codeImportExportEntr, ModelMap modelMap)
 		{
+		  
+		  	//User connecté
+			String username = GetCurrentUser.getUserConnected();
+			User user = userRepository.findByUsername(username);
+			ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+			List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+			modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
 			if(codeImportExportEntr!=null){
 				if(category.equals("CodeImportExport")) {
 					Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
@@ -539,6 +625,9 @@ public class CodeImportationController {
 				//User connecté
 				String username = GetCurrentUser.getUserConnected();
 				User user = userRepository.findByUsername(username);
+				ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+				List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+				modelMap.addAttribute("listeUrlUser", listeUrlUser);
 				
 				//calcul du dernier dossier
 				Integer numDossier = 1;	
@@ -573,6 +662,14 @@ public class CodeImportationController {
 	@RequestMapping("/{category}/Paiement")
 	public String rechercheCode(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
 	{
+		
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		if(numDoc != null) {
 			OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDoc);
 			modelMap.addAttribute("infoCodefic", codeFic);			
@@ -590,11 +687,16 @@ public class CodeImportationController {
 										@ModelAttribute("traitementOpCodeImportation") TraitementOpCodeImportation traitementOpCodeImportation,
 											ModelMap modelMap)
 	{
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
+		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		OpCodeImportation opcode = opCodeImportationService.findBynumDocOp(numDoc);
 		if(opcode != null) {
-			//User connecté
-			String username = GetCurrentUser.getUserConnected();
-			User user = userRepository.findByUsername(username);
+			
 			
 			traitementOpCodeImportation.setStatutTrait("paiement");
 			traitementOpCodeImportation.setOpCodeImportation(opcode);
@@ -619,6 +721,13 @@ public class CodeImportationController {
 	@RequestMapping("/{category}/Approbation")
 	public String rechApprobationCode(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
 	{
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+				
 		if(numDoc!=null) {
 			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
 			modelMap.addAttribute("infoCodefic", opcodeFic);
@@ -635,12 +744,15 @@ public class CodeImportationController {
 										@ModelAttribute("traitementOpCodeImportation") TraitementOpCodeImportation traitementOpCodeImportation,
 											ModelMap modelMap)
 	{
-		OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
-		if(opcodeFic != null) {
 		//User connecté
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
-		
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+				
+		OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
+		if(opcodeFic != null) {
 		traitementOpCodeImportation.setStatutTrait("approbation");
 		traitementOpCodeImportation.setOpCodeImportation(opcodeFic);
 		traitementOpCodeImportation.setDateTrait(new Date());
@@ -662,6 +774,13 @@ public class CodeImportationController {
 		@RequestMapping("/{category}/Signature")
 		public String rechSignature(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
 		{
+			//User connecté
+			String username = GetCurrentUser.getUserConnected();
+			User user = userRepository.findByUsername(username);
+			ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+			List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+			modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
 			if(numDoc!=null) {
 				OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
 				modelMap.addAttribute("infoCodefic", opcodeFic);
@@ -678,11 +797,15 @@ public class CodeImportationController {
 											@ModelAttribute("traitementOpCodeImportation") TraitementOpCodeImportation traitementOpCodeImportation,
 												ModelMap modelMap)
 		{
-			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
-			if(opcodeFic != null) {
 			//User connecté
 			String username = GetCurrentUser.getUserConnected();
 			User user = userRepository.findByUsername(username);
+			ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+			List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+			modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
+			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc);
+			if(opcodeFic != null) {
 			
 			traitementOpCodeImportation.setStatutTrait("signature");
 			traitementOpCodeImportation.setOpCodeImportation(opcodeFic);
@@ -706,10 +829,15 @@ public class CodeImportationController {
 			  							Long numDoc, 
 			  								String statut,  
 			  									ModelMap modelMap) {
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
 		  if(numDoc !=null && statut !=null) {
-			//User connecté
-				String username = GetCurrentUser.getUserConnected();
-				User user = userRepository.findByUsername(username);
+			
 				
 			  if(statut.equals("actif") || statut.equals("bloquer") || statut.equals("annuler")) {
 				  TraitementOpCodeImportation elmts = traitementOpCodeImportationService.getTraitementOpCodeImportationById(numDoc);
@@ -731,6 +859,13 @@ public class CodeImportationController {
 	  
   @RequestMapping("/{category}/ListeEtatCode")
   public String rechListeEtatCode(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap) {
+	//User connecté
+	String username = GetCurrentUser.getUserConnected();
+	User user = userRepository.findByUsername(username);
+	ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+	List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+	modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
 	  if(numDoc !=null ) {
 		  	List<TraitementOpCodeImportation> codeimp = opCodeImportationService.findBynumDocOp(numDoc).getTraitementOpCodeImportation();
 		  	if(codeimp!=null) {
@@ -743,6 +878,13 @@ public class CodeImportationController {
 	  
 	  @RequestMapping("/{category}/EditionFiches")
 	  public String gageEditerFiches(@PathVariable("category") String category, String numDocCode, ModelMap modelMap) {
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+			
 		  if(numDocCode !=null) {
 			//   List<TraitementOpCodeImportation> codes = traitementOpCodeImportationService.findAllTraitementOpCodeImportationByTypeCodeOp(numDocCode).getTraitementOpCodeImportation();
 			//    if(codes!=null) {

@@ -23,9 +23,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="130" splitType="Stretch">
+		<band height="103" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="10" width="250" height="20" uuid="a3a797d4-f703-4609-9120-bd26e954cb77"/>
+				<reportElement x="50" y="3" width="150" height="31" uuid="a3a797d4-f703-4609-9120-bd26e954cb77"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -41,17 +41,17 @@
 				<text><![CDATA[REPUBLIQUE DE COTE D'IVOIRE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="20" y="33" width="200" height="1" uuid="735540cf-3291-4d6c-9867-2722151382fe"/>
+				<reportElement x="79" y="34" width="100" height="1" uuid="735540cf-3291-4d6c-9867-2722151382fe"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="37" width="250" height="16" uuid="2f22884d-34b2-496d-8789-743935186923"/>
+				<reportElement x="0" y="38" width="250" height="16" uuid="2f22884d-34b2-496d-8789-743935186923"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[DIRECTION GENERALE DU COMMERCE EXTERIEUR]]></text>
 			</staticText>
 			<line>
-				<reportElement x="19" y="56" width="200" height="1" uuid="0259c208-3da6-4b93-bd17-99063b37d8b7"/>
+				<reportElement x="80" y="56" width="100" height="1" uuid="0259c208-3da6-4b93-bd17-99063b37d8b7"/>
 			</line>
 			<staticText>
 				<reportElement x="-1" y="60" width="251" height="17" uuid="c4f2d280-f00f-4bb6-8d9e-710bfc8b865f"/>
@@ -68,36 +68,36 @@
 				<text><![CDATA[B.P.V 142 ABIDJAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="32" width="164" height="15" uuid="2c7424df-5c6a-4317-bfb5-4de9f0a7743b"/>
+				<reportElement x="390" y="81" width="164" height="15" uuid="2c7424df-5c6a-4317-bfb5-4de9f0a7743b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[UNION - DISCIPLINE - TRAVAIL]]></text>
 			</staticText>
 			<image>
-				<reportElement x="439" y="49" width="70" height="63" uuid="828aef4d-f206-49a0-9db1-cb6758d14501"/>
+				<reportElement x="450" y="31" width="59" height="46" uuid="828aef4d-f206-49a0-9db1-cb6758d14501"/>
 				<imageExpression><![CDATA[this.getClass().getResourceAsStream("static/images/embleme.png")]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="59" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<staticText>
-				<reportElement x="0" y="-1" width="554" height="26" uuid="bfccb9b5-0e4d-4adf-b479-8c7283caec1e"/>
+				<reportElement x="0" y="5" width="554" height="26" uuid="bfccb9b5-0e4d-4adf-b479-8c7283caec1e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IMPORT - EXPORT]]></text>
 			</staticText>
 			<line>
-				<reportElement x="24" y="53" width="500" height="1" forecolor="#BAB5B5" uuid="ce2249ab-914f-4472-8aad-76c799bfa664">
+				<reportElement x="24" y="60" width="500" height="1" forecolor="#BAB5B5" uuid="ce2249ab-914f-4472-8aad-76c799bfa664">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="23" width="554" height="30" forecolor="#FF4F4D" uuid="2f760dff-5e3d-482c-b42a-1fa371b9b062"/>
+				<reportElement x="0" y="29" width="554" height="30" forecolor="#FF4F4D" uuid="2f760dff-5e3d-482c-b42a-1fa371b9b062"/>
 				<box>
 					<pen lineColor="#FFFFFF"/>
 				</box>
@@ -106,6 +106,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{typeOp}.toUpperCase()]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="26" y="4" width="500" height="1" forecolor="#BAB5B5" uuid="72cb14b7-47ec-4f45-ba77-7e730bae747d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -178,7 +184,7 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{codeImportation.entreprise.nomEntr}.toUpperCase() : $F{codeImportation.demandeur.nomDem}.toUpperCase())]]></textFieldExpression>
 			</textField>
-			<textField pattern="MMMMM dd, yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="310" y="320" width="208" height="30" uuid="4732903a-8c11-4b6b-8aba-a530752afd55"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
@@ -186,7 +192,7 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="152" splitType="Stretch">
+		<band height="155" splitType="Stretch">
 			<line>
 				<reportElement x="20" y="11" width="500" height="1" forecolor="#BAB5B5" uuid="5fb40867-3bc4-4624-bfb8-d83ca766d76d">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -204,6 +210,12 @@
 				<reportElement x="10" y="40" width="180" height="39" uuid="894f2072-5585-4a40-b49c-eac26dec97a9"/>
 				<imageExpression><![CDATA[new java.net.URL("http://bcgen.com/demo/linear-dbgs.aspx?D="+$F{codeImportation.numCodFic})]]></imageExpression>
 			</image>
+			<componentElement>
+				<reportElement x="300" y="90" width="180" height="40" uuid="d3e5d9d1-c25e-4592-a012-05f5e65311c3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA["fdfsdfsdfdfd"]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</columnFooter>
 </jasperReport>

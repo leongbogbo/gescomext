@@ -114,7 +114,8 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-		</dependency>	
+		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -62,6 +62,15 @@ public class CodeImportation {
 	@JoinColumn(name = "demandeur_id")
 	private Demandeur demandeur;
 	
+	//beneficiaire du code pour operation
+	@ManyToOne
+	@JoinColumn(name = "beneficiaire_id")
+	private Beneficiaire beneficiaire;
+	
+	@ManyToOne	  
+  	@JoinColumn(name = "nat_id")
+	private Nationalite paysorigine;
+	
 	@OneToMany(mappedBy = "codeImportation")
 	private List<OpCodeImportation> opCodeImportation;
 	

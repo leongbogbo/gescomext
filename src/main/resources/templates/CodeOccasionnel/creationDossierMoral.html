@@ -250,13 +250,22 @@ layout:decorator="template2" xml:lang>
 																			<label for="inputPassword3" class="form-label">Objet  <strong class="text-danger">*</strong></label>
 																			<textarea name="objetOcca" class="form-control" id="objetOcca" placeholder="Objet"></textarea >
 																		</div>
+																		<div class="mt-2">
+																			<label class="form-label" for="inputState">Pays d'origine<strong class="text-danger">*</strong></label>
+																			<select name="paysorigine" id="paysorigine" class="form-control">
+																				<option value="">Veuillez selectionner</option>
+																				<th:block th:each="nat : ${listeNationalites}">
+																					<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+																				</th:block>
+																			</select>
+																		</div>
 																	</div>
 																	<div class="step"></div>
 																</div>
 																<div id="q-box__buttonss">
 																	<button id="prev-btn" type="button" class="d-none">Precedent</button> 
 																	<button id="next-btn" type="button" class="d-inline-block">Suivant</button> 
-																	<button id="submit-btn" type="submit" class="d-none">Enregistrer</button>
+																	<button id="submit-btn" type="submit" class="d-none">Vérification</button>
 																</div>
 															</form>
 														</div>

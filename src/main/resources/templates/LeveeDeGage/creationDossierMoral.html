@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorator="template3" xml:lang>
 <head>
 <meta charset="utf-8">
-<title>Création : Code Occasionnel</title>
+<title>Création : Lévée de gage</title>
 </head>
 <body>
 <div layout:fragment="MyContent">
@@ -109,7 +109,6 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-2" id="exoregcomBody">                                          
 																			<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
 																			<select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
-																				<option value="">Veuillez selectionner</option>
 																				<option value="non">NON</option>
 																				<option value="oui">OUI</option >
 																			</select>
@@ -308,13 +307,70 @@ layout:decorator="template3" xml:lang>
 																			<label for="inputEmail3" class="col-form-label">Type technique <strong class="text-danger">*</strong></label>
 																			<input name="TypeTechGag" type="text" class="form-control" id="TypeTechGag" placeholder="Type technique">
 																		</div>
-																		<div class="step"></div>
 																	</div>
+																	<div class="step">
+																		<h4>INFORMATION SUR LE BENEFICIAIRE</h4>
+																			<div class="mt-1">                                          
+																				<label class="form-label" for="inputState">Civilité <strong class="text-danger">*</strong></label>						                                    
+																				<select name="sexeBen" id="inputState" class="form-control">
+																					<option value="">Veuillez selectionner</option>
+																					<option value="monsieur">Monsieur</option>
+																					<option value="madame">Madame</option >
+																					<option value="mademoiselle">Mademoiselle</option >
+																				</select>
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputPassword3" class="form-label">Nom <strong class="text-danger">*</strong></label>			                                   
+																				<input name="nomBen" type="text" class="form-control" id="nomBen">
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputEmail3" class="form-label">Prénom <strong class="text-danger">*</strong></label>                              
+																				<input name="prenomsBen" type="text" class="form-control" id="prenomsBen">
+																			</div>
+																			<div class="mt-2">
+																				<label class="form-label" for="inputState">Nationalité <strong class="text-danger">*</strong></label>
+																				<select name="natBeneficiaire" id="natBeneficiaire" class="form-control">
+																					<option value="">Veuillez selectionner</option>
+																					<th:block th:each="nat : ${listeNationalites}">
+																						<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+																					</th:block>
+																				</select>
+																			</div>
+																		</div>
+																		<div class="step">
+																			<h4>INFORMATION SUR LE BENEFICIAIRE</h4>
+																			<div class="mt-2">
+																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>
+																				<select name="pieceBeneficiaire" id="pieceBeneficiaire" class="form-control">
+																					<option value="">Veuillez selectionner</option>
+																					<th:block th:each="typiec : ${listetypePieceIdentite}">
+																						<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+																					</th:block>
+																				</select>
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputPassword3" class="form-label">N° de la pièce <strong class="text-danger">*</strong></label>
+																				<input name="numpieceBen" type="text" class="form-control" id="numpieceBen">
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputPassword3" class="form-label">Date validité <strong class="text-danger">*</strong></label>
+																				<input type="date" name="validitePieceBen" class="form-control" id="validitePieceBen">
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputPassword3" class="form-label">N° Tel <strong class="text-danger">*</strong></label>
+																				<input name="telBen" type="text" class="form-control maskPhone" id="telBen">
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputPassword3" class="form-label">E-Mail <strong class="text-danger">*</strong></label>
+																				<input name="emailBen" type="text" class="form-control maskEmail" id="emailBen">
+																			</div>
+																	</div>
+																	<div class="step"></div>																	
 																</div>
 																<div id="q-box__buttonss">
 																	<button id="prev-btn" type="button" class="d-none">Precedent</button> 
 																	<button id="next-btn" type="button" class="d-inline-block">Suivant</button> 
-																	<button id="submit-btn" type="submit" class="d-none">Enregistrer</button>
+																	<button id="submit-btn" type="submit" class="d-none">Vérification</button>
 																</div>
 															</form>
 														</div>

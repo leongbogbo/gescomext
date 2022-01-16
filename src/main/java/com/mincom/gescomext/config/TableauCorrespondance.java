@@ -18,11 +18,12 @@ public class TableauCorrespondance {
 
     public static List<TableauCorrespondance> getAlphaBaseDix() {
 		List<TableauCorrespondance> tableauCorrespondance = new ArrayList<>();
-        int base = 1;
-        char[] caract = {'A', 'B', 'D', 'K', 'Y', 'M','T', 'N', 'P'};
-        for (int i = 0; i < 26; i++) {            
-            if( base >= 9){ base = 0; } base = base+1;            
-            char data = (char)(65 + (i/26)*6 + i);
+        int base = 0;
+        char[] caract = {'A','B','C','D','E','F','G','H','J','K','L','M','N','P','R','S','T','U','V','W','X','Y','Z'};
+        for (int i = 0; i < 23; i++) {            
+            //if( base >= 9){ base = 0; } 
+            base = base+1;            
+            char data = (char)(65 + (i/23)*6 + i);
             tableauCorrespondance.add(new TableauCorrespondance(data,base,caract[base-1]));
         }
 		return tableauCorrespondance;

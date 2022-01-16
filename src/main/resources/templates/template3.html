@@ -59,72 +59,16 @@
         </div>
     </div>
     <ul id="sidebar_menu" class="metismenu">
-        <li class="mm-active">
-            <a class="has-arrow" href="#" aria-expanded="true">
-              <div class="nav_icon_small">
-                <img src="../svg/16.svg" alt="">
-            </div>
-            <div class="nav_title">
-                <span>Dossiers </span>
-            </div>
-            </a>
-            <ul class="mm-collapse mm-show">
-            	<li><a th:href="@{Liste}">Liste</a></li>
-              	<li><a th:href="@{CreationDossier}">creation</a></li>
-              	<li><a th:href="@{Duplicata}">Duplicata</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="Paiement" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Paiement </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{Approbation}" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Approbation </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a th:href="@{Signature}" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Signature </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="EditionFiches" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/2.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Editer Fiche </span>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="listeEtatCodes" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span>Etats des codes </span>
-                </div>
-            </a>
-        </li>
-        
+        <li th:each="urlListeUser:${listeUrlUser}">
+	            <a th:href="${'../'+urlListeUser.lienActPro}" aria-expanded="false">
+	                <div class="nav_icon_small">
+	                    <img src="../svg/3.svg" alt="">
+	                </div>
+	                <div class="nav_title">
+	                    <span th:text="${urlListeUser.titreActPro}"></span >
+	                </div>
+	            </a>
+	        </li >  
       </ul>
 </nav>
  <!--/ MENU GAUCHE  -->

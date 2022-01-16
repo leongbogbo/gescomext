@@ -25,6 +25,12 @@ public class Nationalite {
 	@OneToMany(mappedBy = "nationalite")
 	private List<Proprietaire> proprietaires;
 	
+	@OneToMany(mappedBy = "paysorigine")
+	private List<CodeImportation> codeImportation;
+	
+	@OneToMany(mappedBy = "natBeneficiaire")
+	private List<Beneficiaire> beneficiaire;
+	
 	public Nationalite(String titreNat) {
 		super();
 		this.titreNat = titreNat;
