@@ -118,7 +118,7 @@ layout:decorator="template2">
                                 <tr>
                                     <td colspan="2" th:switch="${infoCodefics.activeApprobationOp}">
                                     	<a href="#" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="actif">
-                                    		<span >SIGNATURE</span >
+                                    		<span >DOSSIER APPROUVE</span >
                                     	</a>
                                     	<a th:href="@{'Approuver?numDoc='+${infoCodefics.numDocOp}}" class="btn_1 mt-1 mb-1 w-100 text-center" th:case="*">
                                     		<span >APPROUVER</span >

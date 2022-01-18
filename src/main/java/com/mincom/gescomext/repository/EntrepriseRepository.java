@@ -19,5 +19,7 @@ public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
 	Entreprise findByCodeImportExportEntrAndContribuableEntr (@Param("code") String code);
 	
 	Entreprise findByNomEntr(String nomEntr);
+	Entreprise findByRegcommerceEntr(String regcommerceEntr);
+	Entreprise findByNumIduEntr(String numIduEntr);
 
 }

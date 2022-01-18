@@ -14,4 +14,7 @@ public interface EntrepriseService {
 	Entreprise findByCodeImportExportEntr(String codeImportExportEntr);
 	Entreprise findByContribuableEntr (String contribuableEntr);
 	Entreprise findByCodeImportExportEntrAndContribuableEntr (String code);
+	Entreprise findByRegcommerceEntr(String regcommerceEntr);
+	Entreprise findByNumIduEntr(String numIduEntr);
+
 }

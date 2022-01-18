@@ -89,8 +89,8 @@ div.ageVehicule #anLGage, div.ageVehicule #moisLGage, div.ageVehicule #joursLGag
   padding: 0;
   position: relative;
   font-weight: 500;
-  font-size: 23px;
-  font-size: 1.4375rem;
+  font-size: 20px;
+  font-size: 1.2375rem;
   line-height: 1.6;
 }
 #stepByStep button#prev-btn, #stepByStep button#next-btn, #stepByStep button#submit-btn {

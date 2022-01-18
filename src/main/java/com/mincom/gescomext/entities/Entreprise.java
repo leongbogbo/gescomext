@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,30 +39,32 @@ public class Entreprise {
 	
 	private Date dateEntr;
 	
+	@JsonIgnore
 	@ManyToOne	  
 	@JoinColumn(name = "commune_id") 
 	private Commune commune;
-	  
+	@JsonIgnore
 	 @ManyToOne		  
 	 @JoinColumn(name = "fjury_id")
 	 private FormeJuridique formeJuridique;
 		 
-	
+	 @JsonIgnore
 	 @ManyToOne		  
 	 @JoinColumn(name = "proprietaire_id") 
 	 private Proprietaire proprietaires;
-	
-	@OneToMany(mappedBy = "entreprise")
-	private List<CodeImportation> codeImportation;
-	
+	 
+	 @JsonIgnore
+	 @OneToMany(mappedBy = "entreprise")
+	 private List<CodeImportation> codeImportation;
+	 @JsonIgnore
 	@ManyToOne		  
 	 @JoinColumn(name = "typestruc_id")
 	 private TypeStructure typeStructure;
-
+	@JsonIgnore
 	 @ManyToOne		  
 	 @JoinColumn(name = "departement_id")
 	 private Departement departement;
-	
+	 @JsonIgnore
 	@ManyToOne		  
 	 @JoinColumn(name = "domact_id")
 	 private DomaineActivite domaineActivite;

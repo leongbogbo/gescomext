@@ -60,6 +60,17 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return entrepriseRepository.findByCodeImportExportEntrAndContribuableEntr(code);
 	}
 
+	@Override
+	public Entreprise findByRegcommerceEntr(String regcommerceEntr) {
+		// TODO Auto-generated method stub
+		return entrepriseRepository.findByRegcommerceEntr(regcommerceEntr);
+	}
+
+	@Override
+	public Entreprise findByNumIduEntr(String numIduEntr) {
+		return entrepriseRepository.findByNumIduEntr(numIduEntr);
+	}
+
 	
 
 }

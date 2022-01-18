@@ -434,6 +434,10 @@ $('.spin_icon_clicker').on('click', function(e) {
 		showMaskOnFocus: false
 	});
 	
+	$("input").inputmask({
+		casing:'upper'
+	});
+	
 	 $("#regcommerceEntr").inputmask({
 		mask: 'AA-AAA-99-9999-A99-999999',
 		placeholder: '__-___-__-____-___-______',
@@ -461,12 +465,45 @@ $('.spin_icon_clicker').on('click', function(e) {
 		$("#commune").empty();
 		listeCommuneByVille()    
   	});
+  	
+  	//$(".dispPasse").css("display", "none");
+  	
+  	$("#ville").on('change', function(e) {
+		$("#commune").empty();
+		listeCommuneByVille()    
+  	});
+  	$("#nomEntr").on('keyup', function(e) {
+		verificationRaisonSociale()    
+  	});
+  	
+  	$("#regcommerceEntr").on('keyup', function(e) {
+		verificationRCCM()    
+  	});
+  	
+  	$("#contribuableEntr").on('keyup', function(e) {
+		verificationContribuable()    
+  	});
+  	
+  	$("#numIduEntr").on('keyup', function(e) {
+		verificationnumIdu()    
+  	});
+  	
+  	/*$("#codeVerif").on('submit', function(e) {
+		var codeImport = $("#codeVerif").val();
+		if(codeImport.length == 9){
+			return false;
+		}if(codeImport.length == 10){
+			
+		}
+		alert("er");
+		
+  	});*/
 	
 }(jQuery));
 
 function listeCommuneByVille(){
 	villeId = $("#ville").val();
-	urlString = "../api/"+villeId
+	urlString = "../api/"+villeId;
 	$.ajax({metod: "GET", url: urlString})
 		.done(function(responseJson){
 			designeCommune = $("#commune");
@@ -479,5 +516,93 @@ function listeCommuneByVille(){
 		})
 		.always(function(){
 			
+		});
+}
+
+function verificationRaisonSociale(){
+	valeur = $("#nomEntr").val();
+	urlString = "../api/raisonSociale/"+valeur;
+	
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designechp = $("#infoRaison");
+			//$.each(responseJson, function(index, elmt){
+				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#infoRaison").text("element  présent dans la base");				
+				}else{
+					$("#infoRaison").text(" ");
+				}			
+			//});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+		});
+}
+
+function verificationRCCM(){
+	valeur = $("#regcommerceEntr").val();
+	urlString = "../api/regicommerce/"+valeur;
+	
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designechp = $("#infoRccm");
+			//$.each(responseJson, function(index, elmt){
+				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#infoRccm").text("element  présent dans la base");				
+				}else{
+					$("#infoRccm").text(" ");
+				}			
+			//});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+		});
+}
+
+function verificationContribuable(){
+	valeur = $("#contribuableEntr").val();
+	urlString = "../api/contribuable/"+valeur;
+	
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designechp = $("#infoContri");
+			//$.each(responseJson, function(index, elmt){
+				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#infoContri").text("element  présent dans la base");				
+				}else{
+					$("#infoContri").text(" ");
+				}			
+			//});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+		});
+}
+
+function verificationnumIdu(){
+	valeur = $("#numIduEntr").val();
+	urlString = "../api/numidu/"+valeur;
+	
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designechp = $("#infoIdu");
+			//$.each(responseJson, function(index, elmt){
+				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#infoIdu").text("element  présent dans la base");				
+				}else{
+					$("#infoIdu").text(" ");
+				}			
+			//});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
 		});
 }

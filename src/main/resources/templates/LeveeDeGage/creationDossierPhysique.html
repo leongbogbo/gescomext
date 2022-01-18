@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorator="template3" xml:lang>
 <head>
 <meta charset="utf-8">
-<title>Création : Lévée de gage"</title>
+<title>Création : Lévée de gage </title>
 </head>
 <body>
 <div layout:fragment="MyContent">
@@ -56,7 +56,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-1">
 																			<div class="form-check ps-0 q-box">
 																				<div class="q-box__question">
-																					<input checked="" class="form-check-input question__input" id="UsageGag" name="UsageGag" type="radio" value="commercial"> 
+																					<input class="form-check-input question__input" id="UsageGag" name="UsageGag" type="radio" value="commercial"> 
 																					<label class="form-check-label question__label" for="UsageGag">Commercial</label>
 																				</div>
 																				<div class="q-box__question">
@@ -80,6 +80,7 @@ layout:decorator="template3" xml:lang>
 																			<div class="mt-2">
 																				<label for="inputPassword3" class="form-label">Nom <strong class="text-danger">*</strong></label>			                                   
 																				<input name="nomDem" type="text" class="form-control" id="nomDem">
+																				<input name="codeAncien" type="hidden" class="form-control">
 																			</div>
 																			<div class="mt-2">
 																				<label for="inputEmail3" class="form-label">Prénom <strong class="text-danger">*</strong></label>                              
@@ -201,7 +202,7 @@ layout:decorator="template3" xml:lang>
 																			<input name="TypeTechGag" type="text" class="form-control" id="TypeTechGag" placeholder="Type technique">
 																		</div>
 																	</div>
-																	<div class="step">
+																	<div class="step benefDispa">
 																		<h4>INFORMATION SUR LE BENEFICIAIRE</h4>
 																			<div class="mt-1">                                          
 																				<label class="form-label" for="inputState">Civilité <strong class="text-danger">*</strong></label>						                                    
@@ -230,7 +231,7 @@ layout:decorator="template3" xml:lang>
 																				</select>
 																			</div>
 																		</div>
-																		<div class="step">
+																		<div class="step benefDispa">
 																			<h4>INFORMATION SUR LE BENEFICIAIRE</h4>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>

@@ -16,7 +16,7 @@ public class CalculeCodesExportation {
 		    List<TableauCorrespondance> tableauCorrespondance = TableauCorrespondance.getAlphaBaseDix();			
 			String regCommerce = regimeCom;
 			String[] deCoupeRegCommerce = regCommerce.split("-");
-			int codeJury = Integer.parseInt(deCoupeRegCommerce[2])%9;
+			int codeJury = Integer.parseInt(deCoupeRegCommerce[2]);
 			// trouver la clé
 			char keys=' ';
 			 for (TableauCorrespondance donnees : tableauCorrespondance){

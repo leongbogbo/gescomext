@@ -1,35 +1,17 @@
 package com.mincom.gescomext.controllers;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.codehaus.plexus.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -39,18 +21,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.lowagie.text.Image;
-import com.lowagie.text.pdf.Barcode128;
-import com.lowagie.text.pdf.BarcodeEAN;
-import com.lowagie.text.pdf.codec.Base64.InputStream;
-import com.mincom.gescomext.GescomextApplication;
-import com.mincom.gescomext.ZXingHelper.ZXingHelper;
 import com.mincom.gescomext.config.CalculeCodesExportation;
 import com.mincom.gescomext.config.GetCurrentUser;
 import com.mincom.gescomext.config.ListeRolesActionsUser;
-import com.mincom.gescomext.config.TableauCorrespondance;
 import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Beneficiaire;
 import com.mincom.gescomext.entities.CodeImportation;
@@ -92,8 +65,6 @@ import com.mincom.gescomext.service.TraitementOpCodeImportationService;
 import com.mincom.gescomext.service.TypePieceIdentiteService;
 import com.mincom.gescomext.service.TypeStructureService;
 import com.mincom.gescomext.service.VilleService;
-import com.sun.tools.javac.Main;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -101,10 +72,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-
-import com.mincom.gescomext.service.TypeStructureService;
 
 @Controller
 public class CodeImportationController {
@@ -183,11 +150,6 @@ public class CodeImportationController {
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		
-		List<TableauCorrespondance> tableauCorrespondance = TableauCorrespondance.getAlphaBaseDix();
-		for (TableauCorrespondance donnees : tableauCorrespondance){
-			System.out.println(donnees.getBaseDix()+" "+donnees.getLettre()+" "+donnees.getCorrepondance());
-		}
 		
 		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
 		modelMap.addAttribute("listeCode", codfs);
@@ -294,7 +256,8 @@ public class CodeImportationController {
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													@ModelAttribute("demandeur") Demandeur demandeur,
 														@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
-															ModelMap modelMap){
+															String codeAncien,
+																ModelMap modelMap){
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
@@ -329,6 +292,8 @@ public class CodeImportationController {
 		modelMap.addAttribute("verifCodeImportation", codeImportation);
 		modelMap.addAttribute("verifDemandeur", demandeur);
 		modelMap.addAttribute("verifBeneficiaire", beneficiaire);
+		
+		modelMap.addAttribute("numDossiers", codeAncien.toUpperCase());
 		if(demandeur.getNomDem()!=null && demandeur.getPrenomsDem()!=null){
 			pageselect = "confirmerDossier";
 		}
@@ -345,7 +310,8 @@ public class CodeImportationController {
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
 													@ModelAttribute("demandeur") Demandeur demandeur,
 														@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
-															ModelMap modelMap)
+															String codeAncien,
+																ModelMap modelMap)
 	{
 		//User connecté
 		String username = GetCurrentUser.getUserConnected();
@@ -361,6 +327,7 @@ public class CodeImportationController {
 			numDossier = 1 + elmt.getNumDocOp();
 		}		
 		Date date = new Date();
+		String codeStruc ="";
 		if(category.equals("CodeImportExport")) {
 			String codesExportation="";
 			String codesFiscals="";
@@ -369,6 +336,9 @@ public class CodeImportationController {
 				codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
 				codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
 			}else if(entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){
+				codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
+				codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+			}else if(entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){
 				codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
 				codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
 			}
@@ -385,20 +355,26 @@ public class CodeImportationController {
 				codeImportation.setStatutDemandeurCodeImp("oui");
 				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 				
+				if(codeAncien != null && codeAncien.length()==9) {
+					opCodeImportation.setTypeOp("Renouvellement");					
+				}else{
+					opCodeImportation.setTypeOp("Attribution");
+				}
 				opCodeImportation.setMontantOp("30000");			
 				opCodeImportation.setCodeImportation(codeImportationSave);
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
 			}else{
 				System.out.println("Une erreur s'est produite pendant l'enregistrement");
 			}
 			
 		}if(category.equals("CodeOccasionnel")) {
 			
-			String codeStruc ="";
-			
 			if(demandeur.getNomDem() != null) {
+				demandeur.setQuotaOccaDem(1);
 				Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
 				codeImportation.setDemandeur(saveDemandeur);
-				codeImportation.setStatutDemandeurCodeImp("oui");
+				codeImportation.setStatutDemandeurCodeImp("non");				
 				codeStruc = "42000A";
 			}
 			
@@ -412,8 +388,7 @@ public class CodeImportationController {
 			
 			Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
 			codeImportation.setEntreprise(saveEntreprise);
-			codeImportation.setStatutDemandeurCodeImp("oui");
-			
+			codeImportation.setStatutDemandeurCodeImp("oui");			
 			}
 			
 			
@@ -421,8 +396,16 @@ public class CodeImportationController {
 			
 			codeImportation.setNumOcca(codesOccasionnel);
 			CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
-			
-			opCodeImportation.setMontantOp("50000");
+			if(codeStruc.equals("42000A")) {
+				opCodeImportation.setMontantOp("50000");
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
+			}else {
+				opCodeImportation.setMontantOp("0");
+				opCodeImportation.setActiveApprobationOp("actif");
+				opCodeImportation.setActivePaimentOp(1);
+			}
+			opCodeImportation.setTypeOp("Attribution");
 			opCodeImportation.setCodeImportation(codeImportationSave);
 			
 			
@@ -481,14 +464,14 @@ public class CodeImportationController {
 					opCodeImportation.setMontantOp("50000");
 				}
 				
+				opCodeImportation.setTypeOp("Attribution");
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
 				opCodeImportation.setCodeImportation(codeImportationSave);
 			}
-			
 		}
 		
-		opCodeImportation.setTypeOp("Attribution");
-		opCodeImportation.setActiveApprobationOp("inactif");
-		opCodeImportation.setActivePaimentOp(0);
+		
 		opCodeImportation.setActiveSignatureOp("non");
 		opCodeImportation.setTypeCodeOp(category);
 		opCodeImportation.setNumDocOp(numDossier);
@@ -516,15 +499,43 @@ public class CodeImportationController {
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		if(codeImportExportEntr!=null){
+		String dossierAfficher = "renouvellementDossier";
+		if(codeImportExportEntr!=null && codeImportExportEntr.length()==10){
 			Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
 			Proprietaire props = entr.getProprietaires();
 			List<OpCodeImportation> fgg = opCodeImportationService.findCodeImportationByTypecodeAndByCodeRccmOrCc(codeImportExportEntr,category);
 			modelMap.addAttribute("infoEntreprise",entr); 
 			modelMap.addAttribute("infoProprietaire", props);
 			modelMap.addAttribute("listeCode", fgg);
+		}if(codeImportExportEntr!=null && codeImportExportEntr.length()==9){
+			List<Commune> coms = communeService.getAllCommune();
+			List<Ville> vils = villeService.getAllVille();
+			List<Nationalite> nats = natService.getAllNationalite();
+			List<FormeJuridique> fmjury = fjuryService.getAllFormeJuridique();
+			List<Marque> marques = marqueService.getAllMarque();
+			List<GenreMarque> genreMarques = genreMarqueService.getAllGenreMarque();
+			List<TypeStructure> typeStructure = typeStructureService.getAllTypeStructure();
+			List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
+			List<DomaineActivite> domaineActivite = domaineActiviteService.getAllDomaineActivite();
+			List<Departement> departement = departementService.getAllDepartement();
+			List<Fonction> fonction = fonctionService.getAllFonction();
+			modelMap.addAttribute("listeCommunes", coms);
+			modelMap.addAttribute("listeVilles", vils);
+			modelMap.addAttribute("listeNationalites", nats);
+			modelMap.addAttribute("listeFormjury", fmjury);
+			modelMap.addAttribute("listemarques", marques);
+			modelMap.addAttribute("listegenreMarques", genreMarques);
+			modelMap.addAttribute("listetypeStructure", typeStructure);
+			modelMap.addAttribute("listetypePieceIdentite", typePieceIdentite);
+			modelMap.addAttribute("listedomaineActivite", domaineActivite);
+			modelMap.addAttribute("listedepartement", departement);
+			modelMap.addAttribute("listefonction", fonction);
+			
+			modelMap.addAttribute("numDossiers", codeImportExportEntr.toUpperCase());
+			modelMap.addAttribute("dateDuJour", dateDuJour);
+			dossierAfficher="reNewDossierMoral";
 		}	
-		return "./"+category+"/renouvellementDossier";
+		return "./"+category+"/"+dossierAfficher;
 	}
 	
 	@RequestMapping("/{category}/Renouveller/{idEntr}")
@@ -575,11 +586,185 @@ public class CodeImportationController {
 		return "redirect:../../"+category+"/Liste";
 	}
 	
+	
+	@RequestMapping("/{category}/Renouveler/Ancien")
+	public String RenouvelleAncCodeEntreprise(@PathVariable("category") String category, 
+									@ModelAttribute("entreprise") Entreprise entreprise,
+										@ModelAttribute("proprietaire") Proprietaire proprietaire,
+											@ModelAttribute("codeImportation") CodeImportation codeImportation,
+												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation,
+													@ModelAttribute("demandeur") Demandeur demandeur,
+														@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
+															ModelMap modelMap)
+	{
+		//User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+
+		//calcul du dernier dossier
+		Integer numDossier = 1001001;
+		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
+		if(elmt != null) {
+			numDossier = 1 + elmt.getNumDocOp();
+		}		
+		Date date = new Date();
+		String codeStruc ="";
+		if(category.equals("CodeImportExport")) {
+			String codesExportation="";
+			String codesFiscals="";
+			
+			if(entreprise.getExoregcomEntr().equals("non") && !entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){
+				codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
+				codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
+			}else if(entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr().isEmpty() && !entreprise.getContribuableEntr().isEmpty()){
+				codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
+				codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+			}
+			if(!codesExportation.isEmpty() && !codesFiscals.isEmpty()){
+				Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);
+				entreprise.setProprietaires(saveProprietaire);		
+				entreprise.setDateEntr(date);
+				entreprise.setCodeImportExportEntr(codesExportation);
+				
+				Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);		
+				
+				codeImportation.setEntreprise(saveEntreprise);
+				codeImportation.setNumCodFic(codesFiscals);
+				codeImportation.setStatutDemandeurCodeImp("oui");
+				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+				
+				opCodeImportation.setMontantOp("30000");			
+				opCodeImportation.setCodeImportation(codeImportationSave);
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
+			}else{
+				System.out.println("Une erreur s'est produite pendant l'enregistrement");
+			}
+			
+		}if(category.equals("CodeOccasionnel")) {
+			
+			if(demandeur.getNomDem() != null) {
+				demandeur.setQuotaOccaDem(1);
+				Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
+				codeImportation.setDemandeur(saveDemandeur);
+				codeImportation.setStatutDemandeurCodeImp("non");				
+				codeStruc = "42000A";
+			}
+			
+			if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
+			TypeStructure typeStructures = typeStructureService.getTypeStructureById(entreprise.getTypeStructure().getIdStruc());
+			codeStruc = typeStructures.getCodeStruc();
+			Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);				
+			entreprise.setProprietaires(saveProprietaire);		
+			entreprise.setDateEntr(date);
+			entreprise.setQuotaOccaEntr(1);
+			
+			Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
+			codeImportation.setEntreprise(saveEntreprise);
+			codeImportation.setStatutDemandeurCodeImp("oui");			
+			}
+			
+			
+			String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
+			
+			codeImportation.setNumOcca(codesOccasionnel);
+			CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+			if(codeStruc.equals("42000A")) {
+				opCodeImportation.setMontantOp("50000");
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
+			}else {
+				opCodeImportation.setMontantOp("0");
+				opCodeImportation.setActiveApprobationOp("actif");
+				opCodeImportation.setActivePaimentOp(1);
+			}
+			
+			opCodeImportation.setCodeImportation(codeImportationSave);
+			
+			
+		}if(category.equals("LeveeDeGage")) {
+			
+			String dategag = codeImportation.getDateGag();
+			
+			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDuJours = formatGag.format(new Date());
+			LocalDate dates = LocalDate.parse(dategag, DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+			
+			Period diffDate = Period.between(dJour, dates);
+			int years = Math.abs(diffDate.getYears());
+			int mois = Math.abs(diffDate.getMonths());
+			
+			String typeGage="";
+			
+			if((years == 2 && mois > 0) || (years > 2 )) {
+				typeGage = "ordinaire";
+			}else if((years == 2 && mois == 0) || (years < 2 )) {
+				typeGage = "exceptionnel";
+			}
+
+			String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(), codeImportation.getNumChassisGag(), typeGage, numDossier);
+			if(!codesLege.isEmpty()) {
+				if(demandeur.getNomDem() != null) {
+					Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
+					codeImportation.setDemandeur(saveDemandeur);
+					codeImportation.setStatutDemandeurCodeImp("non");
+				}
+				
+				if(proprietaire.getNomProp() != null && entreprise.getNomEntr() !=null ) {
+					Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);	
+					
+					entreprise.setProprietaires(saveProprietaire);		
+					entreprise.setDateEntr(date);
+					
+					Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
+					codeImportation.setEntreprise(saveEntreprise);
+					codeImportation.setStatutDemandeurCodeImp("oui");
+				}
+				
+				if(beneficiaire.getNomBen() != null) {
+					Beneficiaire saveBeneficiaire = beneficiaireService.saveBeneficiaire(beneficiaire);
+					codeImportation.setBeneficiaire(saveBeneficiaire);
+				}
+				
+				codeImportation.setNumGag(codesLege);
+				codeImportation.setTypeGag(typeGage);
+				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+				
+				if(typeGage.equals("ordinaire")) {
+					opCodeImportation.setMontantOp("40000");
+				}else if(typeGage.equals("exceptionnel")) {
+					opCodeImportation.setMontantOp("50000");
+				}
+				
+				opCodeImportation.setActiveApprobationOp("inactif");
+				opCodeImportation.setActivePaimentOp(0);
+				opCodeImportation.setCodeImportation(codeImportationSave);
+			}
+		}
+		
+		opCodeImportation.setTypeOp("Attribution");
+		opCodeImportation.setActiveSignatureOp("non");
+		opCodeImportation.setTypeCodeOp(category);
+		opCodeImportation.setNumDocOp(numDossier);
+		opCodeImportation.setDateOp(date);
+		opCodeImportation.setUser(user);
+		opCodeImportationService.saveOpCodeImportation(opCodeImportation);
+		
+		numDossier = numDossier +1;
+		modelMap.addAttribute("numDossiers", numDossier);
+		modelMap.addAttribute("dateDuJour", dateDuJour);
+		
+		return "./"+category+"/creationDossierMoral";
+	}
+	
 	//ZONE DUPLICATA
 	  @RequestMapping("/{category}/Duplicata")
 		public String duplicataCode(@PathVariable("category") String category, String codeImportExportEntr, ModelMap modelMap)
 		{
-		  
 		  	//User connecté
 			String username = GetCurrentUser.getUserConnected();
 			User user = userRepository.findByUsername(username);
@@ -614,7 +799,7 @@ public class CodeImportationController {
 		public String codeDupliquer(@PathVariable("category") String category,
 											@PathVariable("id") Long id, 
 												@ModelAttribute("opCodeImportation") OpCodeImportation opCodeImportation, 
-												ModelMap modelMap){
+													ModelMap modelMap){
 			
 			OpCodeImportation opCodeImportationFind = opCodeImportationService.getOpCodeImportationById(id);
 			if(opCodeImportationFind != null && opCodeImportationFind.getActiveApprobationOp().equals("actif")) {
@@ -635,17 +820,24 @@ public class CodeImportationController {
 				if(elmt != null) {
 					numDossier = 1 + elmt.getNumDocOp();
 				}			
-				
-				
+								
 				opCodeImportation.setMontantOp(opCodeImportationFind.getMontantOp());
 				opCodeImportation.setTypeOp("Duplicata");
-				opCodeImportation.setActiveApprobationOp("inactif");
+				if(opCodeImportationFind.getCodeImportation().getEntreprise().getTypeStructure().getCodeStruc().equals("42000A")) {
+					opCodeImportation.setActiveApprobationOp("inactif");
+					opCodeImportation.setActivePaimentOp(0);
+				}else {
+					opCodeImportation.setActiveApprobationOp("actif");
+					opCodeImportation.setActivePaimentOp(1);
+				}
 				opCodeImportation.setTypeCodeOp(category);
 				opCodeImportation.setNumDocOp(numDossier);
 				opCodeImportation.setDateOp(date);
 				opCodeImportation.setUser(user);
 				opCodeImportation.setCodeImportation(codeImportation);				
 				opCodeImportationService.saveOpCodeImportation(opCodeImportation);
+				opCodeImportationFind.setActiveApprobationOp("desactiver");
+				opCodeImportationService.saveOpCodeImportation(opCodeImportationFind);
 			}
 			else {
 				String errors = "Aucun compte n'est actif";
@@ -934,36 +1126,43 @@ public class CodeImportationController {
 		//ZONNE TIRAGE FICHE DE CODE
 		  
 			@RequestMapping("/{category}/EditionFiche")			
-			public ResponseEntity<byte[]> generatePdfCODE(@PathVariable("category") String category, Integer numDoc,  HttpServletResponse response) throws JRException, ParseException, IOException {
+			public ResponseEntity<byte[]> generatePdfCODE(@PathVariable("category") String category, Integer numDoc) throws JRException, ParseException, IOException {
 				HttpHeaders headers = new HttpHeaders();
 				byte[] data = {};
-				SimpleDateFormat formaters = null;
-			    formaters = new SimpleDateFormat("dd-MM-yy");		    
+				SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+				String dateDuJours = formatGag.format(new Date());
+
+				LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+				
+				
 				if(numDoc != null) {
 					List<OpCodeImportation> listOpCodes = new ArrayList<>();
 					OpCodeImportation opCodes  = opCodeImportationService.findBynumDocOp(numDoc);
 					listOpCodes.add(opCodes);
 					String fichiers ="";
+					int mois =0; int years =0; int jour =0;
 					if(category.equals("CodeImportExport")){
 						fichiers ="ficheImportExport";					
 					}else if(category.equals("CodeOccasionnel")) {
 						fichiers ="ficheCodeOccasionnel";	
 					} else if(category.equals("LeveeDeGage")) {
+						LocalDate dates = LocalDate.parse(opCodes.getCodeImportation().getDateMiseCirculationGag(), DateTimeFormatter.ISO_LOCAL_DATE);
+						Period diffDate = Period.between(dJour, dates);
+						years = Math.abs(diffDate.getYears());
+						mois = Math.abs(diffDate.getMonths());
+						jour = Math.abs(diffDate.getDays());
 						fichiers ="ficheLeveeDeGage";	
 					}
-					//-------------------------------CODE BARRE ------------------------------------------------------//
-					/*response.setContentType("image/png");
-					OutputStream outputStream = response.getOutputStream();
-					outputStream.write(ZXingHelper.getBarCodeImage("gbogbo leon", 200, 50));
-					outputStream.flush();
-					outputStream.close();*/
-					//-----------------------------FIN CODE BARRE -------------------------------------------------//
+					
 					JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listOpCodes);
 					ClassLoader classLoader = getClass().getClassLoader();
 				    File file = new File(classLoader.getResource("templates/pdf/"+fichiers+".jrxml").getFile());
 					JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream(file));
 					HashMap<String, Object> map = new HashMap<>();
-					//map.put("CodeBarre", outputStream);
+					if(category.equals("LeveeDeGage")){
+					map.put("Jour", jour); map.put("Mois", mois); map.put("Annee", years);
+					}
+					
 					JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
 					data = JasperExportManager.exportReportToPdf(report);
 					headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename="+fichiers+numDoc+".pdf");

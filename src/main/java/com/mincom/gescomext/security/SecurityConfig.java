@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder passwordEncoder = passwordEncoder();
+		//System.out.println(passwordEncoder.encode("gescomext@2022")); 
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
 

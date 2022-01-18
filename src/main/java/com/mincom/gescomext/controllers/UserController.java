@@ -63,7 +63,6 @@ public class UserController{
 	@RequestMapping("/parametre/Utilisateurs/Activation/{idUser}")
 	public String activeUser(@PathVariable("idUser") Long idUser)
 	{		
-		PasswordEncoder passwordEncoder = passwordEncoders();
 		User verifUser = userService.getUserById(idUser);
 		if(verifUser!=null) {
 			if(verifUser.getEnabled() == true) {

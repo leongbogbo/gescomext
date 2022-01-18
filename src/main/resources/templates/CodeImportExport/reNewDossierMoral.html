@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorator="template" xml:lang="">
 <head>
 <meta charset="utf-8">
-<title>Création du dossier</title>
+<title>Renouvellement du dossier</title>
 </head>
 <body>
 <div layout:fragment="MyContent">
@@ -15,7 +15,7 @@ layout:decorator="template" xml:lang="">
                 <div class="col-12">
                     <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
                         <div class="page_title_left">
-                            
+                            <h5 class="f_s_25 f_w_700 dark_text" >HARMONISATION DES DONNEES AVEC UN ANCIEN CODE : <span th:text="${numDossiers}"></span ></h5>
                         </div>
                         <div class="page_title_right">
                             <div class="page_date_button" th:text="${dateDuJour}">
@@ -61,7 +61,6 @@ layout:decorator="template" xml:lang="">
 			                                <div class="mt-1">
 			                                 	<label for="inputEmail3" class="form-label">Raison sociale <strong class="text-danger">*</strong></label>						                                   
 			                                    <input type="text" name="nomEntr" class="form-control" id="nomEntr" required>
-			                                    <strong id="infoRaison" class="text-danger"></strong >
 			                                </div>
 			                             	<div class="mt-2">
 			                                	<label for="inputPassword3" class="form-label">Sigle</label>						                                   
@@ -80,13 +79,11 @@ layout:decorator="template" xml:lang="">
 			                                <div class="mt-2" id="numIduBody">
 			                                	<label for="inputPassword3" class="form-label">N° IDU </label>
 			                                    <input name="numIduEntr" type="text" class="form-control" id="numIduEntr">
-			                               		<strong id="infoIdu" class="text-danger"></strong >
 			                                </div>
 			                                <div class="mt-2">
 			                                	<label for="inputPassword3" class="form-label">Compte contribuable <strong class="text-danger">*</strong></label>
 			                                    <input name="contribuableEntr" type="text" class="form-control" id="contribuableEntr">
-			                                	<input name="codeAncien" type="hidden" class="form-control">
-			                                	<strong id="infoContri" class="text-danger"></strong >
+			                                    <input name="codeAncien" type="hidden" class="form-control" th:value="${numDossiers}">
 			                                </div>
 			                                <div class="mt-2" id="exoregcomBody">                                          
 			                                	<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
@@ -98,7 +95,7 @@ layout:decorator="template" xml:lang="">
 			                            	<div class="mt-2" id="regcommerceBody">
 			                                <label for="inputEmail3" class="form-label">N° RCCM</label>						                                    
 			                                    <input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr">
-			                   					<strong id="infoRccm" class="text-danger"></strong >
+			                   
 			                                </div>
 			                            </div>
 			                            <div class="step">

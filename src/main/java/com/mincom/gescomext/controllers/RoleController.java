@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mincom.gescomext.entities.Role;
@@ -33,6 +34,24 @@ public class RoleController {
 		Role roles = new Role();
 		roles.setRole(role);
 		roleRepo.save(roles);
+		return "redirect:/parametre/listeRoles";
+	}
+	
+	@RequestMapping("/parametre/Role/{role_id}")
+	public String AfficheRole(@PathVariable("role_id") Long role_id, ModelMap modelMap){
+		Role roles = roleService.getRoleById(role_id);
+		modelMap.addAttribute("roles", roles);
+		return "/autres/updateRole";
+	}
+	
+	@RequestMapping("/parametre/updateRole")
+	public String updateRole(String role, Long role_id, ModelMap modelMap){
+		Role roles = new Role();
+		roles.setRole_id(role_id);
+		roles.setRole(role);
+		roleService.saveRole(roles);
+		List<Role> listeRole = roleService.getAllRole();
+		modelMap.addAttribute("listeRole", listeRole);
 		return "redirect:/parametre/listeRoles";
 	}
 	

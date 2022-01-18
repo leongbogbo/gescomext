@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mincom.gescomext.entities.GenreMarque;
+import com.mincom.gescomext.entities.Marque;
 import com.mincom.gescomext.repository.GenreMarqueRepository;
 import com.mincom.gescomext.service.GenreMarqueService;
 
@@ -22,23 +24,39 @@ public class GenreMarqueController {
 	@Autowired
 	GenreMarqueRepository genreMarqueRepo;
 	
-	@RequestMapping("/listeGenreMarques")
+	@RequestMapping("/parametre/listeGenres")
 	public String listeGenreMarques(ModelMap modelMap)
 	{
 		List<GenreMarque> elmt = genreMarqueService.getAllGenreMarque();
 		modelMap.addAttribute("genreMarques", elmt);
 		modelMap.addAttribute("genreMarqueVide", new GenreMarque());
-		return "listeGenreMarque";
+		return "autres/listeGenreMarque";
 	}
 	
-	@RequestMapping("/GenreMarqueNew")
+	@RequestMapping("/parametre/GenreNew")
 	public String saveMarque(@Valid GenreMarque genreMarque, BindingResult bindingResult,ModelMap modelMap)
 	{
 		if (bindingResult.hasErrors()) return "listeGenreMarque";
 		genreMarqueRepo.save(genreMarque);
 		List<GenreMarque> elmt = genreMarqueService.getAllGenreMarque();
 		modelMap.addAttribute("genreMarques", elmt);
-		return "listeGenreMarque";
+		return "autres/listeGenreMarque";
+	}
+	
+	@RequestMapping("/parametre/Genre/{idGen}")
+	public String AfficheMarque(@PathVariable("idGen") Long idGen, ModelMap modelMap){
+		GenreMarque elmts = genreMarqueService.getGenreMarqueById(idGen);
+		modelMap.addAttribute("genretrouve", elmts);
+		return "/autres/updateGenreMarque";
+	}
+	
+	@RequestMapping("/parametre/updateGenre")
+	public String updateMarque(GenreMarque genre, ModelMap modelMap){
+		
+		genreMarqueService.saveGenreMarque(genre);
+		List<GenreMarque> listeGenre = genreMarqueService.getAllGenreMarque();
+		modelMap.addAttribute("genreMarques", listeGenre);
+		return "redirect:/parametre/listeGenres";
 	}
 	
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="template3">
+layout:decorator="templateparam">
 <head>
 <meta charset="utf-8">
 <title>Liste Genre Marque</title>
@@ -70,6 +70,7 @@ layout:decorator="template3">
 	                                            <tr role="row" class="odd" th:each="v:${genreMarques}">
 	                                                <td th:text="${v.idGen}"></td >
 	                                                <td th:text="${v.nomGen}"></td >
+	                                                 <td><a th:href="${'Genre/'+v.idGen}" class="btn_21">Modifier</a></td>
 	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
 	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
 	                                            </tr>

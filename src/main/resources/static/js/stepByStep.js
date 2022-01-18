@@ -27,18 +27,13 @@ const progress = (value) => {
 	
    nextBtn.addEventListener('click', () => {
 	var struc = "";
-	if($("#typeStructure").find(":selected").val()==7){
-		struc = $("#numIduEntr").val()
-	}else{
-		struc = $("#departement").find(":selected").val()
-	}
 	
 	if($('#UsageGag').is(':checked') || $('#UsageGag2').is(':checked')) { //on est dans levee de gage
 		
 		if(typeof $("#typeStructure").find(":selected").val()!="undefined"){
 			if(
 			   current_step == 1 && $("#typeStructure").find(":selected").val()==""
-			|| current_step == 2 && $("#nomEntr").val()=="" || current_step == 2 && struc == ""|| current_step == 2 && $("#comptecontriEntr").val()==""
+			|| current_step == 2 && $("#nomEntr").val()=="" ||  current_step == 2 && $("#comptecontriEntr").val()==""
 			|| current_step == 3 && $("#formeJuridique").find(":selected").val()=="" || current_step == 3 && $("#domaineActivite").find(":selected").val()==""
 			|| current_step == 3 && $("#ville").find(":selected").val()=="" || current_step == 3 && $("#commune").find(":selected").val()==""
 			|| current_step == 4 && $("#telEntr").val()=="" || current_step == 4 && $("#emailEntr").val()==""
@@ -50,8 +45,6 @@ const progress = (value) => {
 			|| current_step == 7 && $("#numImmatriculationtGag").val()=="" || current_step == 7 && $("#dateMiseCirculationGag").val()==""
 			|| current_step == 8 && $("#numCarteGriseGag").val()=="" || current_step == 8 && $("#dateGag").val()==""
 			|| current_step == 8 && $("#numChassisGag").val()=="" || current_step == 8 && $("#TypeTechGag").val()==""
-			
-				
 			){
 				return false
 			}			
@@ -77,7 +70,7 @@ const progress = (value) => {
 		if($("#typeStructure").find(":selected").val()!=1){
 			if(
 			   current_step == 0 && $("#typeStructure").find(":selected").val()==""
-			|| current_step == 1 && $("#nomEntr").val()=="" || current_step == 1 && struc == ""|| current_step == 1 && $("#comptecontriEntr").val()==""
+			|| current_step == 1 && $("#nomEntr").val()=="" || current_step == 1 && $("#comptecontriEntr").val()==""
 			|| current_step == 2 && $("#formeJuridique").find(":selected").val()=="" || current_step == 2 && $("#domaineActivite").find(":selected").val()==""
 			|| current_step == 2 && $("#ville").find(":selected").val()=="" || current_step == 2 && $("#commune").find(":selected").val()==""
 			|| current_step == 3 && $("#telEntr").val()=="" || current_step == 3 && $("#emailEntr").val()==""

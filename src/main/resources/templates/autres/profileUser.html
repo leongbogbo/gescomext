@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templateparam">
+<head>
+<meta charset="utf-8">
+<title>Mon profile</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+     <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="dashboard_header mb_50">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="dashboard_header_title">
+                                    <h3> Profile utilisateur</h3>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="email-sidebar">
+                        <button class="btn_1 w-100 mb-2 btn-lg email-gradient gradient-9-hover email__btn waves-effect">
+	                        <i class="icon-pencil"></i>
+	                        Mes details
+                        </button>
+                        
+                        <ul class="text-left mt-2">
+                            <li class="active"><a href="#"><i class="fas fa-inbox"></i> Informations personnelles</a></li>
+                            <li><a href="#"><i class="ti-crown"></i> Contact</a></li>
+                            <li><a href="#"><i class="ti-user"></i>Pseudo</a></li>
+                            <li><a href="#"><i class="ti-star"></i> Modifier mot de passe</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="white_box QA_section mb_30">
+                        <div class="white_box_tittle list_header">
+                            
+                            <div class="box_right d-flex lms_block">
+                                <div class="serach_field_2">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="QA_table ">
+                            <!-- table-responsive -->
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 613px;">
+                                <thead>
+                                    <tr role="row">
+                                    	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 20px;" aria-sort="ascending" aria-label=": activate to sort column descending"><label class="primary_checkbox d-flex mr-12 ">
+                                                <input type="checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 16px;" aria-label=": activate to sort column ascending">
+                                        </th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;" aria-label="name: activate to sort column ascending">
+                                        	
+                                        </th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<form th:action="@{updatePassProfile}" method="POST">
+                                	<tr role="row" class="odd">
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          <strong> NOM & PRENOMS</strong>
+                                        </th>
+                                        <td>
+                                        <p th:text=${infosuser.nomUser}></p >
+                                        </td>
+                                        <td>
+                                            <p th:text=${infosuser.prenomsUser}></p >
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          <strong> CONTACT</strong>
+                                        </th>
+                                        <td>
+                                        <p th:text=${infosuser.telUser}></p >
+                                        </td>
+                                        <td>
+                                            <p th:text=${infosuser.emailUser}></p >
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          <strong> PSEUDO</strong>
+                                        </th>
+                                        <td>
+                                        <p th:text=${infosuser.username}></p >
+                                        </td>
+                                        <td>
+                                            <p></p >
+                                        </td>
+                                    </tr>
+                                     <tr role="row" class="odd">                                     
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          <strong>NOUVEAU</strong>
+                                        </th>
+                                        <td colspan=2>
+                                        	<input type="password" name="passWd" class="form-control" reqired />
+                                        </td >
+                                                                      
+                                    </tr>
+                                    <tr role="row" class="odd">                                     
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          <strong>CONFIRMEZ</strong>
+                                        </th>
+                                        <td colspan=2>
+                                        	<input type="password" name="passConfirm" class="form-control" reqired />
+                                        	<input type="hidden" name="idProfile" class="form-control" th:value=${infosuser.user_id} >
+                                        </td >                                                                      
+                                    </tr>
+                                    <tr role="row" class="odd dispPasse">                                     
+                                        <th scope="row" tabindex="0" class="sorting_1">
+                                          
+                                        </th>
+                                        <td colspan=2>
+                                        	<input type="submit" name="" value="Modifier" class="form-control"/>
+                                        </td >                                                                      
+                                    </tr>
+                             </tbody>
+                            </form>
+                             
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+       <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AJOUTER UN UTILISATEUR</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{Utilisateurs/new}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body">
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">NOM</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="nomUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PRENOMS</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="prenomsUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">TEL</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="telUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">E-MAIL</label>
+	                    <div class="col-sm-8">
+	                        <input type="email" name="emailUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PSEUDO</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="username" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PASSWORD</label>
+	                    <div class="col-sm-8">
+	                        <input type="password" name="password" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">CONFIRME</label>
+	                    <div class="col-sm-8">
+	                        <input type="password" name="passconfirm" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                
+	                <div class="form-group row">                                                
+	                    <label class="col-sm-4 col-form-label" for="inputState">ROLE</label>
+	                    <div class="col-sm-8">
+	                        <select name="roles" id="inputState" class="form-control">
+	                        	<option value="">Selectionner un role</option >
+	                            <th:block th:each="vil : ${roleList}">
+	                            	<option th:value="${vil.role_id}" th:text="${vil.role}"></option >
+	                            </th:block>
+	                        </select>
+	                    </div>
+	                </div>
+		         </div>
+        	</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Enregistrer</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+</div>
+</body>

@@ -56,7 +56,7 @@ layout:decorator="template3" xml:lang>
 																		<div class="mt-1">
 																			<div class="form-check ps-0 q-box">
 																				<div class="q-box__question">
-																					<input checked="" class="form-check-input question__input" id="UsageGag" name="UsageGag" type="radio" value="commercial"> 
+																					<input class="form-check-input question__input" id="UsageGag" name="UsageGag" type="radio" value="commercial"> 
 																					<label class="form-check-label question__label" for="UsageGag">Commercial</label>
 																				</div>
 																				<div class="q-box__question">
@@ -79,47 +79,52 @@ layout:decorator="template3" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
-																		<div class="mt-1">
-																			 <label for="inputEmail3" class="form-label">Raison sociale <strong class="text-danger">*</strong></label>						                                   
-																			<input type="text" name="nomEntr" class="form-control" id="nomEntr">
-																		</div>
-																		 <div class="mt-2">
-																			<label for="inputPassword3" class="form-label">Sigle</label>						                                   
-																			<input type="text" name="sigleEntr" class="form-control" id="input">
-																		</div>
-																		
+																		<h4>INFORMATION SUR LA STRUCTURE</h4>
+										                                <div class="mt-1">
+										                                 	<label for="inputEmail3" class="form-label">Raison sociale <strong class="text-danger">*</strong></label>						                                   
+										                                    <input type="text" name="nomEntr" class="form-control" id="nomEntr" required>
+										                                    <strong id="infoRaison" class="text-danger"></strong >
+										                                </div>
+										                             	<div class="mt-2">
+										                                	<label for="inputPassword3" class="form-label">Sigle</label>						                                   
+										                                    <input type="text" name="sigleEntr" class="form-control" id="sigleEntr">
+										                                </div>
+										                                
 																		<div class="mt-2" id="departementBody">                                           
-																			<label class="form-label" for="inputState">Département <strong class="text-danger">*</strong></label>						                                    
-																			<select name="departement" id="departement" class="form-control">
-																				<option value="">Veuillez selectionner</option>
-																				<th:block th:each="Dep : ${listedepartement}">
-																					<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
-																				</th:block>
-																			</select>
-																		</div>
-																		<div class="mt-2" id="numIduBody">
-																			<label for="inputPassword3" class="form-label">N° IDU <strong class="text-danger">*</strong></label>
-																			<input name="numIduEntr" type="text" class="form-control" id="numIduEntr">
-																		</div>
-																		<div class="mt-2">
-																			<label for="inputPassword3" class="form-label">Compte contribuable <strong class="text-danger">*</strong> </label>
-																			<input name="contribuableEntr" type="text" class="form-control" id="contribuableEntr">
-																		</div>
-																		<div class="mt-2" id="exoregcomBody">                                          
-																			<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
-																			<select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
-																				<option value="non">NON</option>
-																				<option value="oui">OUI</option >
-																			</select>
-																		</div>
-																		<div class="mt-2" id="regcommerceBody">
-																		<label for="inputEmail3" class="form-label">N° RCCM </label>						                                    
-																			<input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr">
-																		</div>
-																	</div>
+										                                	<label class="form-label" for="inputState">Département <strong class="text-danger">*</strong></label>						                                    
+										                                    <select name="departement" id="departement" class="form-control">
+										                                    <option value="">Veuillez selectionner</option>
+										                                        <th:block th:each="Dep : ${listedepartement}">
+													                            	<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
+													                            </th:block>
+										                                    </select>
+										                                </div>
+										                                <div class="mt-2" id="numIduBody">
+										                                	<label for="inputPassword3" class="form-label">N° IDU </label>
+										                                    <input name="numIduEntr" type="text" class="form-control" id="numIduEntr">
+										                               		<strong id="infoIdu" class="text-danger"></strong >
+										                                </div>
+										                                <div class="mt-2">
+										                                	<label for="inputPassword3" class="form-label">Compte contribuable <strong class="text-danger">*</strong></label>
+										                                    <input name="contribuableEntr" type="text" class="form-control" id="contribuableEntr">
+										                                	<input name="codeAncien" type="hidden" class="form-control">
+										                                	<strong id="infoContri" class="text-danger"></strong >
+										                                </div>
+										                                <div class="mt-2" id="exoregcomBody">                                          
+										                                	<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
+										                                    <select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
+										                                        <option value="non">NON</option>
+										                                        <option value="oui">OUI</option >
+										                                    </select>
+										                                </div>
+										                            	<div class="mt-2" id="regcommerceBody">
+										                                <label for="inputEmail3" class="form-label">N° RCCM</label>						                                    
+										                                    <input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr">
+										                   					<strong id="infoRccm" class="text-danger"></strong >
+										                                </div>
+										                            </div>
 																	<div class="step">
-																	  <h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
+																	  <h4>INFORMATION SUR LA FORME JURIDIQUE</h4>
 																		<div class="mt-2">                                           
 																			<label class="form-label" for="inputState">Forme juridique <strong class="text-danger">*</strong></label>						                                    
 																			<select name="formeJuridique" id="formeJuridique" class="form-control">
@@ -158,7 +163,7 @@ layout:decorator="template3" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR L'ENTREPRISE COMMERCIALE</h4>
+																		<h4>INFORMATION SUR LE CONTACT</h4>
 																		<div class="mt-2">
 																		<label for="inputPassword3" class="col-form-label">Adresse postale</label>
 																		
@@ -174,7 +179,7 @@ layout:decorator="template3" xml:lang>
 																		</div>
 																	</div>
 																	<div class="step">
-																		<h4>INFORMATION SUR LE PROPRIETAIRE</h4>
+																		<h4>INFORMATION SUR LE REPRESENTANT</h4>
 																			<div class="mt-1">                                          
 																				<label class="form-label" for="inputState">Civilité <strong class="text-danger">*</strong></label>						                                    
 																				<select name="sexeProp" id="sexeProp" class="form-control">
@@ -212,7 +217,7 @@ layout:decorator="template3" xml:lang>
 																			</div>
 																		</div>
 																		<div class="step">
-																			<h4>INFORMATION SUR LE PROPRIETAIRE</h4>
+																			<h4>INFORMATION SUR LE REPRESENTANT</h4>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>
 																				<select name="typePieceIdentite" id="typePieceIdentite" class="form-control">
