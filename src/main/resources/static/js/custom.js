@@ -315,7 +315,7 @@ $("#sidebar_menu >li a").filter(function() {
         columnDefs: [{
             visible: false
         }],
-        "order": [[ 1, "desc" ]],
+        "order": [[ 0, "desc" ]],
         responsive: true,
         searching: false,
     });
@@ -335,7 +335,7 @@ $("#sidebar_menu >li a").filter(function() {
         columnDefs: [{
             visible: false
         }],
-        "order": [[ 1, "desc" ]],
+        "order": [[ 0, "desc" ]],
         responsive: true,
         searching: false,
         info: false,
@@ -407,11 +407,11 @@ $('.spin_icon_clicker').on('click', function(e) {
 	    var nbre = $(this).val();
 	    if(nbre == 7){
 			$("#numIduEntr").removeAttr('disabled');
-            $("#exoregcomBody,#regcommerceBody,#numIduBody").show();
+            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#typeRCCM").show();
             $("#departementBody").hide();
 		}else{
 	    	$('#numIduEntr').val("").attr('disabled','disabled');
-            $("#exoregcomBody,#regcommerceBody,#numIduBody").hide();
+            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#nouvauselect,#typeRCCM").hide();
             $("#departementBody").show();		
 		}
 	});
@@ -420,8 +420,23 @@ $('.spin_icon_clicker').on('click', function(e) {
 	    var nbre = $(this).val();
 	    if(nbre == 'non'){
 			$("input").removeAttr('disabled');
+			$('#typeRCCMEntr').removeAttr('disabled');
 		}else{
-	    	$('#regcommerceEntr').val("").attr('disabled','disabled');		
+	    	$('#regcommerceEntr').val("").attr('disabled','disabled');
+	    	$('#typeRCCMEntr').val("").attr('disabled','disabled');
+	    	$('#regcommerceEntranc').val("").attr('disabled','disabled');
+	    	
+		}
+	});
+	$("#nouvauselect").hide();
+	$('#typeRCCMEntr').change(function(){
+	    var nbre = $(this).val();
+	    if(nbre == 'nouveau'){
+			$("#nouvauselect").show();
+			$("#ancienselect").hide();
+		}else{
+	    	$("#ancienselect").show();
+	    	$("#nouvauselect").hide();
 		}
 	});
 	
@@ -438,7 +453,7 @@ $('.spin_icon_clicker').on('click', function(e) {
 		casing:'upper'
 	});
 	
-	 $("#regcommerceEntr").inputmask({
+	 $("#regcommerceEntrNBV").inputmask({
 		mask: 'AA-AAA-99-9999-A99-999999',
 		placeholder: '__-___-__-____-___-______',
 		showMaskOnHover: true,
@@ -487,7 +502,7 @@ $('.spin_icon_clicker').on('click', function(e) {
   	$("#numIduEntr").on('keyup', function(e) {
 		verificationnumIdu()    
   	});
-  	
+   	
   	/*$("#codeVerif").on('submit', function(e) {
 		var codeImport = $("#codeVerif").val();
 		if(codeImport.length == 9){
@@ -495,7 +510,7 @@ $('.spin_icon_clicker').on('click', function(e) {
 		}if(codeImport.length == 10){
 			
 		}
-		alert("er");
+		
 		
   	});*/
 	

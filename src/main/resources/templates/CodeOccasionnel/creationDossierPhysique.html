@@ -106,8 +106,8 @@ layout:decorator="template2" xml:lang>
 																			<h4>INFORMATION SUR LE DEMANDEUR</h4>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Type pièces <strong class="text-danger">*</strong></label>
-																				<option vaue="">Veuillez selectionner</option>
 																				<select name="typePieceIdentite" id="typePieceIdentite" class="form-control">
+																					<option vaue="">Veuillez selectionner</option>
 																					<th:block th:each="typiec : ${listetypePieceIdentite}">
 																						<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
 																					</th:block>

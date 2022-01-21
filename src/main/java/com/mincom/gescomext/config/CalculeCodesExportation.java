@@ -15,18 +15,45 @@ public class CalculeCodesExportation {
     public static String getCodeImportExport(String regimeCom, String CCcode, Integer numOrdre) {
 		    List<TableauCorrespondance> tableauCorrespondance = TableauCorrespondance.getAlphaBaseDix();			
 			String regCommerce = regimeCom;
-			String[] deCoupeRegCommerce = regCommerce.split("-");
-			int codeJury = Integer.parseInt(deCoupeRegCommerce[2]);
-			// trouver la clé
+			int codeJury=0;
+			String lettreAnc;
 			char keys=' ';
-			 for (TableauCorrespondance donnees : tableauCorrespondance){
+			int lettreRegCom=0;
+			String[] deCoupeRegCommerce = regCommerce.split("-");
+			System.out.println(deCoupeRegCommerce.length);
+			if(deCoupeRegCommerce.length==6) {
+				codeJury = Integer.parseInt(deCoupeRegCommerce[2]);	
+				for (TableauCorrespondance donnees : tableauCorrespondance){
 				 if(donnees.getBaseDix() == codeJury){
 					 keys = donnees.getCorrepondance();
 				 }
-			 }
-			 // DETERMINER A1
-			// Premier chiffre du numero d'ordre du RCCm
-			 int lettreRegCom = Integer.parseInt(deCoupeRegCommerce[5].substring(0,1));
+				 // DETERMINER A1
+				// Premier chiffre du numero d'ordre du RCCm
+				lettreRegCom = Integer.parseInt(deCoupeRegCommerce[5].substring(0,1));
+			 }			
+			}else {
+				System.out.println("on est ici ");
+				lettreAnc = deCoupeRegCommerce[3];
+				if(lettreAnc.equals("A")) {
+					keys='A';
+				}else if(lettreAnc.equals("B")) {
+					keys='B';
+				}else if(lettreAnc.equals("M")) {
+					keys='F';
+				}else if(lettreAnc.equals("M1")) {
+					keys='C';
+				}else if(lettreAnc.equals("M2")) {
+					keys='D';
+				}else if(lettreAnc.equals("M3")) {
+					keys='E';
+				}
+				// DETERMINER A1
+				// Premier chiffre du numero d'ordre du RCCm
+				lettreRegCom = Integer.parseInt(deCoupeRegCommerce[4].substring(0,1));
+			}
+			// trouver la clé
+			 
+			
 			 // Dernier chiffre numerique du CC 
 			 int lettreCC = Integer.parseInt(CCcode.substring(6,7));
 			 // cle trouvé converti en Base10 

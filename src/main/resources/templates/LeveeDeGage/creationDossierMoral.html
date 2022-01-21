@@ -117,9 +117,23 @@ layout:decorator="template3" xml:lang>
 										                                        <option value="oui">OUI</option >
 										                                    </select>
 										                                </div>
-										                            	<div class="mt-2" id="regcommerceBody">
-										                                <label for="inputEmail3" class="form-label">N° RCCM</label>						                                    
-										                                    <input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr">
+										                            	 <div class="mt-2" id="">                                          
+										                                	<label class="form-label" for="inputState">TYPE RCCM</label>						                                    
+										                                    <select name="typeRCCMEntr" id="typeRCCMEntr" class="form-control">
+										                                        <option value="ancien">ANCIEN</option >
+										                                        <option value="nouveau">NOUVEAU</option>
+										                                    </select>
+										                                </div>											
+										                                <div class="mt-2" id="nouvauselect">
+										                                	<label for="inputEmail3" class="form-label ">N° RCCM NOUVEAU</label>						                                    
+										                                    <input type="text" name="regcommerceNouv" class="form-control" id="regcommerceEntr">
+										                                    <strong id="" class="text-info">Format exigé : XX-XXX-99-9999-X99-*</strong >
+										                   					<strong id="infoRccm" class="text-danger"></strong >
+										                                </div>
+										                            	<div class="mt-2" id="ancienselect">
+										                                	<label for="inputEmail3" class="form-label nouvauselect">N° RCCM ANCIEN</label>						                                    
+										                                    <input type="text" name="regcommerceEntrAnc" class="form-control" id="regcommerceEntranc">
+										                                    <strong id="" class="text-info">Format exigé : XX-XXX-9999-X-*</strong >
 										                   					<strong id="infoRccm" class="text-danger"></strong >
 										                                </div>
 										                            </div>

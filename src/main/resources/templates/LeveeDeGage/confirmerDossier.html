@@ -44,6 +44,7 @@ layout:decorator="template3" xml:lang="">
 						                                    <label class="col-sm-4 col-form-label" for="inputState">Civilité*</label>
 						                                    <div class="col-sm-8">
 						                                        <select name="sexeDem" id="inputState" class="form-control" th:field="*{verifDemandeur.sexeDem}">
+						                                            <option value="">Veuillez selectionner</option>
 						                                            <option value="monsieur">Monsieur</option>
 						                                            <option value="madame">Madame</option >
 						                                            <option value="mademoiselle">Mademoiselle</option >
@@ -136,6 +137,7 @@ layout:decorator="template3" xml:lang="">
 															<label class="col-sm-4 col-form-label" for="inputState">Marque</label>
 															<div class="col-sm-8">
 																<select name="marque" id="inputState" class="form-control" th:field="*{verifCodeImportation.Marque.idMarque}">
+																	<option value="">Veuillez selectionner</option>
 																	<th:block th:each="nat : ${listemarques}">
 																		<option th:text="${nat.nomMarque}" th:value="${nat.idMarque}"></option >
 																	</th:block>
@@ -146,6 +148,7 @@ layout:decorator="template3" xml:lang="">
 															<label class="col-sm-4 col-form-label" for="inputState">Genre</label>
 															<div class="col-sm-8">
 																<select name="genreMarque" id="inputState" class="form-control" th:field="*{verifCodeImportation.GenreMarque.idGen}">
+																	<option value="">Veuillez selectionner</option>
 																	<th:block th:each="nats : ${listegenreMarques}">
 																		<option th:text="${nats.nomGen}" th:value="${nats.idGen}"></option >
 																	</th:block>
@@ -217,6 +220,7 @@ layout:decorator="template3" xml:lang="">
 															<label class="col-sm-4 col-form-label" for="inputState">Usage</label>
 															<div class="col-sm-8">                                 
 																<select name="UsageGag" id="inputState" class="form-control" th:field="*{verifCodeImportation.UsageGag}">
+																	<option value="">Veuillez selectionner</option>
 																	<option value="personnel">Personnel</option>
 																	<option value="commercial">Commercial</option >
 																</select>
@@ -239,6 +243,7 @@ layout:decorator="template3" xml:lang="">
 	                                                    	<div class="col-sm-4 ">                                              
 	                                                        	<label class="col-form-label" for="inputState">Civilité*</label>                                                        
 	                                                            <select name="sexeBen" id="sexeBen" class="form-control" th:field="*{verifBeneficiaire.sexeBen}">
+	                                                                <option value="">Veuillez selectionner</option>
 	                                                                <option value="monsieur">Monsieur</option>
 	                                                                <option value="madame">Madame</option >
 	                                                                <option value="mademoiselle">Mademoiselle</option >
@@ -255,6 +260,7 @@ layout:decorator="template3" xml:lang="">
 	                                                        <div class="col-sm-4">
 	                                                        	<label class="col-form-label" for="pieceBeneficiaire">Type pièces*</label>
 	                                                            <select name="pieceBeneficiaire" id="pieceBeneficiaire" class="form-control" th:field="*{verifBeneficiaire.pieceBeneficiaire.idTyp}">
+	                                                                <option value="">Veuillez selectionner</option>
 	                                                                <th:block th:each="typiec : ${listetypePieceIdentite}">
 	                                                                    <option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
 	                                                                </th:block>
@@ -271,6 +277,7 @@ layout:decorator="template3" xml:lang="">
 	                                                        <div class="col-sm-4">
 	                                                        <label class="col-form-label" for="inputState">Nationalité*</label>
 	                                                            <select name="natBeneficiaire" id="natBeneficiaire" class="form-control" th:field="*{verifBeneficiaire.natBeneficiaire.idNat}">
+	                                                                <option value="">Veuillez selectionner</option>
 	                                                                <th:block th:each="nat : ${listeNationalites}">
 	                                                                    <option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
 	                                                                </th:block>

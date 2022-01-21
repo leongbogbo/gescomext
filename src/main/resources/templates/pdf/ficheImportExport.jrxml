@@ -8,18 +8,19 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="numDocOp" class="java.lang.Integer"/>
-	<field name="montantOp" class="java.lang.String"/>
-	<field name="codeImportation.numCodFic" class="java.lang.String"/>
-	<field name="dateOp" class="java.util.Date"/>
-	<field name="codeImportation.entreprise.nomEntr" class="java.lang.String"/>
-	<field name="typeOp" class="java.lang.String"/>
-	<field name="codeImportation.demandeur.nomDem" class="java.lang.String"/>
-	<field name="codeImportation.statutDemandeurCodeImp" class="java.lang.String"/>
-	<field name="codeImportation.entreprise.sigleEntr" class="java.lang.String"/>
-	<field name="codeImportation.entreprise.codeImportExportEntr" class="java.lang.String"/>
-	<field name="codeImportation.entreprise.contribuableEntr" class="java.lang.String"/>
-	<field name="codeImportation.demandeur.prenomsDem" class="java.lang.String"/>
+	<field name="opCodeImportation.numDocOp" class="java.lang.Integer"/>
+	<field name="opCodeImportation.montantOp" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.numCodFic" class="java.lang.String"/>
+	<field name="opCodeImportation.dateOp" class="java.util.Date"/>
+	<field name="opCodeImportation.codeImportation.entreprise.nomEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.typeOp" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.demandeur.nomDem" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.statutDemandeurCodeImp" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.entreprise.sigleEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.entreprise.codeImportExportEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.entreprise.contribuableEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.demandeur.prenomsDem" class="java.lang.String"/>
+	<field name="dateTrait" class="java.util.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -42,7 +43,7 @@
 				<text><![CDATA[SIGLE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="32" y="211" width="188" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
+				<reportElement x="32" y="211" width="208" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -56,105 +57,105 @@
 				<text><![CDATA[CODE FISCAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="32" y="335" width="198" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
+				<reportElement x="32" y="335" width="228" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COMPTE CONTRIBUABLE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="31" y="393" width="181" height="30" uuid="d0d86a49-ad6c-49cd-8fd3-a705eed5dedf"/>
+				<reportElement x="31" y="393" width="219" height="30" uuid="d0d86a49-ad6c-49cd-8fd3-a705eed5dedf"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATE DE DELIVRANCE]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="318" y="149" width="236" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
+				<reportElement x="260" y="149" width="294" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codeImportation.entreprise.sigleEntr}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.sigleEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="211" width="236" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
+				<reportElement x="262" y="211" width="292" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codeImportation.entreprise.codeImportExportEntr}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.codeImportExportEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="273" width="236" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
+				<reportElement x="264" y="273" width="290" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codeImportation.numCodFic}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.numCodFic}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="335" width="236" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
+				<reportElement x="261" y="335" width="293" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codeImportation.entreprise.contribuableEntr}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.contribuableEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="30" y="87" width="152" height="30" uuid="c69d3618-8a56-4a81-920a-48042fb0e1ad"/>
+				<reportElement x="30" y="87" width="182" height="30" uuid="c69d3618-8a56-4a81-920a-48042fb0e1ad"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RAISON SOCIALE]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="320" y="77" width="234" height="60" uuid="83d80bc9-db80-488b-b900-63a65261fded"/>
+				<reportElement x="261" y="77" width="293" height="60" uuid="83d80bc9-db80-488b-b900-63a65261fded"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{codeImportation.entreprise.nomEntr}.toUpperCase() : $F{codeImportation.demandeur.nomDem}.toUpperCase())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{opCodeImportation.codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{opCodeImportation.codeImportation.entreprise.nomEntr}.toUpperCase() : $F{opCodeImportation.codeImportation.demandeur.nomDem}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="310" y="390" width="244" height="30" uuid="4732903a-8c11-4b6b-8aba-a530752afd55"/>
+				<reportElement x="260" y="390" width="294" height="30" uuid="4732903a-8c11-4b6b-8aba-a530752afd55"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dateTrait}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="220" y="335" width="80" height="30" uuid="27c58e20-e5df-4c0a-8c04-2f9b1771ffea"/>
+				<reportElement x="183" y="335" width="80" height="30" uuid="27c58e20-e5df-4c0a-8c04-2f9b1771ffea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="390" width="80" height="30" uuid="3c3341bf-2f09-446f-98d7-01a2e5459c24"/>
+				<reportElement x="183" y="390" width="80" height="30" uuid="3c3341bf-2f09-446f-98d7-01a2e5459c24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="273" width="80" height="30" uuid="cb0fd1e8-36e6-48e1-a47a-909970d2d13b"/>
+				<reportElement x="183" y="273" width="80" height="30" uuid="cb0fd1e8-36e6-48e1-a47a-909970d2d13b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="213" width="80" height="30" uuid="48662d95-b256-4808-966b-9df8e2d362ef"/>
+				<reportElement x="183" y="213" width="80" height="30" uuid="48662d95-b256-4808-966b-9df8e2d362ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="151" width="80" height="30" uuid="9c48cf61-7b6b-40d5-a7d5-8163e4c8088c"/>
+				<reportElement x="183" y="151" width="80" height="30" uuid="9c48cf61-7b6b-40d5-a7d5-8163e4c8088c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="87" width="80" height="30" uuid="85e9bb64-e8c0-4d1e-bc69-6d68259440ec"/>
+				<reportElement x="183" y="87" width="80" height="30" uuid="85e9bb64-e8c0-4d1e-bc69-6d68259440ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -175,7 +176,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{typeOp}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{opCodeImportation.typeOp}.toUpperCase()]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -183,7 +184,7 @@
 		<band height="155" splitType="Stretch">
 			<image>
 				<reportElement x="41" y="10" width="439" height="39" uuid="894f2072-5585-4a40-b49c-eac26dec97a9"/>
-				<imageExpression><![CDATA[new java.net.URL("http://bcgen.com/demo/linear-dbgs.aspx?D="+$F{codeImportation.numCodFic}+$F{numDocOp}+$F{codeImportation.numCodFic}+$F{numDocOp})]]></imageExpression>
+				<imageExpression><![CDATA[new java.net.URL("http://bcgen.com/demo/linear-dbgs.aspx?D="+$F{opCodeImportation.codeImportation.numCodFic}+$F{opCodeImportation.numDocOp}+$F{opCodeImportation.codeImportation.numCodFic}+$F{opCodeImportation.numDocOp})]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement mode="Opaque" x="22" y="32" width="478" height="20" backcolor="#FFFFFF" uuid="72f7843f-65c6-4c89-a80a-4bf8ad73b8e4"/>

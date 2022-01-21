@@ -71,6 +71,11 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return entrepriseRepository.findByNumIduEntr(numIduEntr);
 	}
 
+	@Override
+	public Entreprise findByNomEntr(String nomEntr) {
+		return entrepriseRepository.findByNomEntr(nomEntr);
+	}
+
 	
 
 }
