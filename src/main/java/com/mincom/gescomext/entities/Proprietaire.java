@@ -2,6 +2,7 @@ package com.mincom.gescomext.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Proprietaire {
 	private String telProp;
 	private String emailProp;
 
-	@OneToMany(mappedBy = "proprietaires")
+	@OneToMany(mappedBy = "proprietaires", cascade = CascadeType.REMOVE)
 	private List<Entreprise> entreprises;
 	
 	  @ManyToOne	  

@@ -24,11 +24,11 @@ layout:decorator="template2">
                         <div class="white_card_body">
                             <div class="QA_section">
                                 <div class="white_box_tittle list_header">
-                                    <h4>LISTE DOSSIERS</h4  >
+                                    <h4>LISTE DOSSIERS</h4>
                                     <div class="box_right d-flex lms_block">
                                         <div class="serach_field_2">
                                             <div class="search_inner">
-                                                <form th:action="@{RechercherDossier}" method="POST">
+                                                <form th:action="@{EditionFiches}" method="POST">
                                                     <div class="search_field">
                                                         <input type="text" name="numDoc" placeholder="N° DOSSIER">
                                                     </div>
@@ -38,7 +38,6 @@ layout:decorator="template2">
                                         </div>
                                     </div>
                                 </div>
-        
                                 <div class="QA_table mb_30">
                                     <!-- table-responsive -->
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -49,10 +48,9 @@ layout:decorator="template2">
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Demandeur</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Occasionnel</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Type Code</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Type OP</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Montant</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Date</th>	                                            	
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Statut</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Modifier</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Supprimer</th>
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
@@ -64,19 +62,13 @@ layout:decorator="template2">
 	                                                </td >
 	                                                
 	                                                <td th:text="${elmt.CodeImportation.numOcca}"></td >
-	                                                <td th:switch="${elmt.CodeImportation.statutDemandeurCodeImp}">
-		                                                <span th:case="oui" th:text="${elmt.CodeImportation.Entreprise.typeStructure.titreStruc}"></span  >
-		                                                <span th:case="*" th:text="${'ORDINAIRE'}"></span  >
-	                                                </td >
-	                                                <td th:text="${elmt.typeOp}"></td >
-	                                                <td th:text="${elmt.montantOp}"></td >
-	                                                 <td th:text="${#dates.format(elmt.dateOp, 'dd-mm-yyyy')}"></td >
-	                                                <td th:switch="${elmt.activeApprobationOp}">
-		                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIF</a>
-		                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>
-		                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
-		                                                <a href="#" class="sm_btn" th:case="*">INACTIF</a>
-	                                                </td >
+                                                        <td th:switch="${elmt.CodeImportation.statutDemandeurCodeImp}">
+                                                            <span th:case="oui" th:text="${elmt.CodeImportation.Entreprise.typeStructure.titreStruc}"></span  >
+                                                            <span th:case="*" th:text="${'ORDINAIRE'}"></span  >
+                                                        </td >
+	                                                 <td th:text="${#dates.format(elmt.dateOp, 'dd-MMM-yyyy')}"></td >
+	                                                <td><a th:href="@{'../../Operation/Update/Dossier/'+${elmt.numDocOp}}" class="btn_21"><i class="ti-pencil"></i></a></td>
+	                                                <td><a th:href="@{'../../Operation/Suppression/Dossier/'+${elmt.idOp}}" class="btn_2"><i class="ti-trash"></i></a></td>
 	                                            </tr>
                                            </tbody>
                                     	</table>

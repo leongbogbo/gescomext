@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +28,7 @@ public class TraitementOpCodeImportation {
 	
 	@ManyToOne
 	@JoinColumn(name = "opcodeimport_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private OpCodeImportation opCodeImportation;
 	
 	@ManyToOne

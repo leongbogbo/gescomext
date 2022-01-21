@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template2">
+<head>
+<meta charset="utf-8">
+<title>Liste des dossiers</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>SUPPRESSION</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            
+                                        </div>
+                                    </div>
+                                 </div>
+								  
+				                <div class="row">				                
+				                    <div class="col-12">
+				                        <div class="page_title_box d-flex align-items-center justify-content-between">
+				                            <div class="page_title_left"></div>
+				                            <a th:href="@{'/CodeOccasionnel/Operation/Valider/Suppression/'+${numDoc}}" class="white_btn3">Supprimer</a >
+				                        </div>
+				                    </div>
+				               
+				                    <div class="col-12 QA_section">
+				                        <div class="card QA_table">
+				                            <div class="card-header" th:each="infossfisco : ${listeCode}" th:if="${infossfisco.CodeImportation}" >
+				                            Code Occasionnel :
+				                                <strong th:text="${infossfisco.CodeImportation.numOcca}"></strong >
+				
+				                            </div>
+				                            <div class="card-body">
+				                                <div class="row mb-4" th:each="infofiscos : ${listeCode}">
+				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" >				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.nomEntr}"></div >
+				                                        <div th:text="'RCCM : '+${infofiscos.CodeImportation.Entreprise.regcommerceEntr}"></div >
+				                                        <div th:text="'CC : '+${infofiscos.CodeImportation.Entreprise.contribuableEntr}"></div >
+				                                        <div th:text="'Tel : '+${infofiscos.CodeImportation.Entreprise.telEntr}"></div >
+				                                        <div th:text="'E-Mail : '+${infofiscos.CodeImportation.Entreprise.emailEntr}"></div >
+				                                    </div>
+				
+				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nomProp} +' ' + ${infofiscos.CodeImportation.entreprise.proprietaires.prenomsProp}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.sexeProp}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.emailProp}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.telProp}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nationalite.titreNat}"></div >
+				                                    </div>
+				                                    <div class="col-sm-4" th:if="${infofiscos.CodeImportation.demandeur}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.demandeur.nomDem} +' ' + ${infofiscos.CodeImportation.demandeur.prenomsDem}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.demandeur.sexeDem}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.demandeur.emailDem}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.demandeur.telDem}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.demandeur.nationalite.titreNat}"></div >
+				                                    </div>
+				                                </div>				
+				                                <div class="table-responsive-sm">
+				                                <h5><strong>Historique des codes occasionnels</strong></h5>
+				                                    <table class="table table-striped">
+				                                        <thead>
+				                                            <tr>
+				                                            	<th class="right">#</th>
+				                                                <th class="center">Code Occasionnel</th>
+				                                                <th>Date Création</th>
+				                                                <th>Type Operation</th>
+				                                                <th>Prix</th>
+				                                                <th class="center">Statut</th>
+				                                            </tr >
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr th:each="infofisc : ${listeCode}">
+				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
+				                                                <td class="center" th:text="${infofisc.CodeImportation.numOcca}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"></td>
+				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
+				                                                <td class="left" th:text="${infofisc.montantOp}"></td>
+				                                                <td th:switch="${infofisc.activeApprobationOp}">
+					                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIVER</a>
+					                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>
+					                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
+					                                                <a class="sm_btn" th:case="*">INACTIF</a>
+				                                                </td >
+				                                            </tr >
+				                                        </tbody>
+				                                    </table>
+				                                </div>
+				                                <div class="row">
+				                                    <div class="col-lg-4 col-sm-5">
+				
+				                                    </div>
+				                                    
+				                                </div>
+				
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+</div>
+</body>

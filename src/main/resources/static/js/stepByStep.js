@@ -17,12 +17,14 @@ const progress = (value) => {
    let current_step = 0;
    var count= $('div.step').length;
    let stepCount =count-1
-   step[current_step].classList.add('d-block');
-   if(current_step == 0){
-      prevBtn.classList.add('d-none');
-      submitBtn.classList.add('d-none');
-      nextBtn.classList.add('d-inline-block');
-   }
+   if(count!=0){
+   		step[current_step].classList.add('d-block');	
+	   if(current_step == 0){
+	      prevBtn.classList.add('d-none');
+	      submitBtn.classList.add('d-none');
+	      nextBtn.classList.add('d-inline-block');
+	   }
+	
 
 	
    nextBtn.addEventListener('click', () => {
@@ -174,7 +176,9 @@ submitBtn.addEventListener('click', () => {
       if(current_step == 0 && $("#typeStructure").find(":selected").val()==""){
 		$("#next-btn").css("display","none");
 	}
+
+
       
 });
-
+}
 

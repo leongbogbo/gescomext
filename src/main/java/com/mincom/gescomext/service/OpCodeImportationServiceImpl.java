@@ -84,6 +84,12 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 		return opCodeImportationRepository.findAllCodeImportationByCodeOccaOrCodeLeveeGage(code);
 	}
 
+	@Override
+	public List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code) {
+		// TODO Auto-generated method stub
+		return opCodeImportationRepository.findAllOpCodeImportationNUMDOC(code);
+	}
+
 
 	
 

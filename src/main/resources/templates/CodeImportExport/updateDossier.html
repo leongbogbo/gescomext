@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head>
+<meta charset="utf-8">
+<title>Création du dossier</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0 sm_padding_15px">
+        <div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h3 class="f_s_25 f_w_700 dark_text" >Modification du dossier : <span></span ></h3>
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button" th:text="${'N° : '+numDoc}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form th:action="@{/CodeImportExport/Operation/Valide/Update}" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">INFORMATION SUR LA STRUCTURE</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Raison sociale*</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="nomEntr" class="form-control" id="nomEntr" th:value="${verifEntr.nomEntr}">
+                                        <input type="hidden" name="idEntr" class="form-control" id="idEntr" th:value="${verifEntr.idEntr}">
+                                        <input type="hidden" name="numDossier" class="form-control" id="numDossier" th:value="${numDoc}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Sigle</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="sigleEntr" class="form-control" id="input" th:value="${verifEntr.sigleEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="departementBody" th:if="${verifEntr.departement!=null}">                                           
+                                	<label class="col-sm-4 col-form-label" for="inputState">Département <strong class="text-danger">*</strong></label>						                                    
+                                    <div class="col-sm-8">
+	                                    <select name="departement" id="departement" class="form-control" th:field="*{verifEntr.departement.idDep}">
+	                                    	<option value="">Veuillez selectionner</option>
+	                                        <th:block th:each="Dep : ${listedepartement}">
+				                            	<option th:value="${Dep.idDep}" th:text="${Dep.titreDep}" ></option >
+				                            </th:block>
+	                                    </select>
+                                     </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Type Structure*</label>
+                                    <div class="col-sm-8">
+                                        <select name="typeStructure" id="typeStructure" class="form-control" th:field="*{verifEntr.TypeStructure.idStruc}">
+                                            <option value="">Veuillez selectionner</option>
+                                            <th:block th:each="struc : ${listetypeStructure}">
+				                            	<option th:value="${struc.idStruc}" th:text="${struc.titreStruc}" th:if="${struc.idStruc==7 or struc.idStruc==8 or struc.idStruc==10}"></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="numIduBody" th:if="${verifEntr.numIduEntr!=null}">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">N° IDU </label>
+                                    <div class="col-sm-8">
+                                        <input name="numIduEntr" type="text" class="form-control" id="numIduEntr" th:value="${verifEntr.numIduEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="exoregcomBody" th:if="${verifEntr.departement==null}">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Exonérer RCCM</label>
+                                    <div class="col-sm-8">
+                                        <select name="exoregcomEntr" id="exoregcomEntr" class="form-control" th:field="*{verifEntr.exoregcomEntr}">
+                                            <option value="">Veuillez selectionner</option>
+                                            <option value="non">NON</option>
+                                            <option value="oui">OUI</option >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="regcommerceBody" th:if="${verifEntr.departement==null}">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">N° RCCM</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="regcommerceEntr" class="form-control" id="regcommerceEntr" th:value="${verifEntr.regcommerceEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Compte contribuable* </label>
+                                    <div class="col-sm-8">
+                                        <input name="contribuableEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntr.contribuableEntr}">
+                                        <input name="codeAncien" type="hidden" class="form-control" th:value="${numDossiers}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Ville*</label>
+                                    <div class="col-sm-8">
+                                        <select name="villeEntr" id="villess" class="form-control">
+                                        	<option value="">Veuillez selectionner</option>
+                                           <th:block th:each="vil : ${listeVilles}">
+				                            	<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label  class="col-sm-4 col-form-label" for="inputState">Commune*</label >
+                                    <div class="col-sm-8">
+                                        <select name="commune" id="commune" class="form-control" th:field="*{verifEntr.Commune.idCommune}">
+                                            <option value="">Veuillez selectionner</option>
+                                            <th:block th:each="com : ${listeCommunes}">
+				                            	<option th:text="${com.nomCommune}" th:value="${com.idCommune}"></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Adresse postale</label>
+                                    <div class="col-sm-8">
+                                        <input name="postaleEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntr.postaleEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">Téléphone</label>
+                                    <div class="col-sm-8">
+                                        <input name="telEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntr.telEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-4 col-form-label">E-Mail*</label>
+                                    <div class="col-sm-8">
+                                        <input name="emailEntr" type="email" class="form-control" id="inputPassword3" th:value="${verifEntr.emailEntr}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Forme juridique*</label>
+                                    <div class="col-sm-8">
+                                        <select name="formeJuridique" id="inputState" class="form-control" th:field="*{verifEntr.FormeJuridique.idJury}">
+                                            <option value="">Veuillez selectionner</option>
+                                            <th:block th:each="jury : ${listeFormjury}">
+				                            	<option th:text="${jury.titreJury}" th:value="${jury.idJury}"></option >
+				                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">                                                
+                                    <label class="col-sm-4 col-form-label" for="inputState">Domaine Activité*</label>
+                                    <div class="col-sm-8">
+                                        <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntr.DomaineActivite.idDomAct}">
+	                                        <option value="">Veuillez selectionner</option>
+                                            <th:block th:each="dom : ${listedomaineActivite}">
+				                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
+				                            </th:block>
+                                        </select >
+                                    </div>
+                                </div>
+                                
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">INFORMATION SUR LE REPRESENTANT</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="form-group row">                                                
+                                <label class="col-sm-4 col-form-label" for="inputState">Civilité*</label>
+                                <div class="col-sm-8">
+                                    <select name="sexeProp" id="inputState" class="form-control" th:field="*{verifProp.sexeProp}">
+                                        <option value="">Veuillez selectionner</option>
+                                        <option value="monsieur">Monsieur</option>
+                                        <option value="madame">Madame</option >
+                                        <option value="mademoiselle">Mademoiselle</option >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-4 col-form-label">Nom*</label>
+                                <div class="col-sm-8">
+                                    <input name="nomProp" type="text" class="form-control" id="nomProp" th:value="${verifProp.nomProp}">
+                                    <input name="idProp" type="hidden" class="form-control" id="idProp" th:value="${verifProp.idProp}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Prénom*</label>
+                                <div class="col-sm-8">
+                                    <input name="prenomsProp" type="text" class="form-control" id="inputEmail3" th:value="${verifProp.prenomsProp}">
+                                </div>
+                            </div>
+                            <div class="form-group row">                                                
+                                <label class="col-sm-4 col-form-label" for="inputState">Type pièces*</label>
+                                <div class="col-sm-8">
+                                    <select name="typePieceIdentite" id="inputState" class="form-control" th:field="*{verifProp.typePieceIdentite.idTyp}">
+        								<option value="">Veuillez selectionner</option>
+        								<th:block th:each="typiec : ${listetypePieceIdentite}">
+			                            	<option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+			                            </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-4 col-form-label">N° de la pièce*</label>
+                                <div class="col-sm-8">
+                                    <input name="numpieceProp" type="text" class="form-control" id="inputPassword3" th:value="${verifProp.numpieceProp}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-4 col-form-label">Date validité *</label>
+                                <div class="col-sm-8">
+                                    <input type="Date" name="validitePieceProp" class="form-control" id="inputPassword3" th:value="${verifProp.validitePieceProp}">
+                                </div>
+                            </div>
+                            <div class="form-group row">                                                
+                                <label class="col-sm-4 col-form-label" for="inputState">Nationalité*</label>
+                                <div class="col-sm-8">
+                                    <select name="nationalite" id="inputState" class="form-control" th:field="*{verifProp.Nationalite.idNat}">
+                                        <option value="">Veuillez selectionner</option>
+                                        <th:block th:each="nat : ${listeNationalites}">
+			                            	<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+			                            </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-4 col-form-label">N° Tel *</label>
+                                <div class="col-sm-8">
+                                    <input name="telProp" type="text" class="form-control" id="inputPassword3" th:value="${verifProp.telProp}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-4 col-form-label">E-Mail</label>
+                                <div class="col-sm-8">
+                                    <input name="emailProp" type="email" class="form-control" id="inputPassword3" th:value="${verifProp.emailProp}">
+                                </div>
+                            </div>                      
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                </div>
+                            </div>   
+            </div>
+            
+            </form>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+</div>
+</body>

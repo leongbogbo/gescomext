@@ -28,9 +28,9 @@ layout:decorator="template">
                                     <div class="box_right d-flex lms_block">
                                         <div class="serach_field_2">
                                             <div class="search_inner">
-                                                <form th:action="@{rechercheDossier}" method="POST">
+                                                <form th:action="@{RechercherDossier}" method="POST">
                                                     <div class="search_field">
-                                                        <input type="text" name="numDocCodFic" placeholder="N° Dossier">
+                                                        <input type="text" name="numDoc" placeholder="N° Dossier">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
                                                 </form>
@@ -49,7 +49,6 @@ layout:decorator="template">
 	                                            	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-sort="ascending" aria-label="title: activate to sort column descending">Dossier</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Entreprise</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Import Export</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Date</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Fiscal</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Type OP</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Date</th>
@@ -62,7 +61,6 @@ layout:decorator="template">
 	                                            	<td th:text="${elmt.numDocOp}"></td >
 	                                                <td th:text="${elmt.CodeImportation.Entreprise.nomEntr}"></td >
 	                                                <td th:text="${elmt.CodeImportation.Entreprise.codeImportExportEntr}"></td >
-	                                                <td th:text="${#dates.format(elmt.CodeImportation.Entreprise.dateEntr, 'dd-mm-yyyy')}"></td >
 	                                                <td th:text="${elmt.CodeImportation.numCodFic}"></td >
 	                                                 <td th:text="${elmt.typeOp}"></td >
 	                                                <td th:text="${#dates.format(elmt.dateOp, 'dd-mm-yyyy')}"></td >

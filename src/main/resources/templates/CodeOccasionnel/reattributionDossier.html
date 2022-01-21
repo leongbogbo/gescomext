@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template2">
+<head>
+<meta charset="utf-8">
+<title>Liste des dossiers</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>RE-ATTRIBUTION</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            <div class="search_inner">
+                                                <form th:action="@{ReAttribution}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text" name="codeImportExportEntr" placeholder="Entrez N° Code Occa">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+								  
+				                <div class="row">				                
+				                    <div class="col-12">
+				                        <div class="page_title_box d-flex align-items-center justify-content-between">
+				                            <div class="page_title_left"></div>
+				                            <a th:if="${listeCode}" data-toggle="modal" href="#" data-target="#exampleModalCenter" class="white_btn3">ReAttribution</a  >
+				                        </div>
+				                    </div>
+				               
+				                    <div class="col-12 QA_section">
+				                        <div class="card QA_table">
+				                            <div class="card-header" th:each="infossfisco : ${listeCode}" th:if="${infossfisco.CodeImportation}" th:switch="${infossfisco.activeApprobationOp}" th:case="'actif'">
+				                            Code Occasionnel :
+				                                <strong th:text="${infossfisco.CodeImportation.numOcca}"></strong >
+				                                <span class="float-right"> Tarif re-attribution : <strong th:text="${infossfisco.montantOp+' FCFA'}"></strong > </span>
+				
+				                            </div>
+				                            <div class="card-body">
+				                                <div class="row mb-4" th:each="infofiscos : ${listeCode}">
+				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.nomEntr}"></div >
+				                                        <div th:text="'RCCM : '+${infofiscos.CodeImportation.Entreprise.regcommerceEntr}"></div >
+				                                        <div th:text="'CC : '+${infofiscos.CodeImportation.Entreprise.contribuableEntr}"></div >
+				                                        <div th:text="'Tel : '+${infofiscos.CodeImportation.Entreprise.telEntr}"></div >
+				                                        <div th:text="'E-Mail : '+${infofiscos.CodeImportation.Entreprise.emailEntr}"></div >
+				                                    </div>
+				
+				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nomProp} +' ' + ${infofiscos.CodeImportation.entreprise.proprietaires.prenomsProp}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.sexeProp}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.emailProp}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.telProp}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nationalite.titreNat}"></div >
+				                                    </div>
+				                                    <div class="col-sm-4" th:if="${infofiscos.CodeImportation.demandeur}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.demandeur.nomDem} +' ' + ${infofiscos.CodeImportation.demandeur.prenomsDem}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.demandeur.sexeDem}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.demandeur.emailDem}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.demandeur.telDem}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.demandeur.nationalite.titreNat}"></div >
+				                                    </div>
+				                                </div>				
+				                                <div class="table-responsive-sm">
+				                                <h5><strong>Historique des codes occasionnels</strong></h5>
+				                                    <table class="table table-striped">
+				                                        <thead>
+				                                            <tr>
+				                                            	<th class="right">#</th>
+				                                                <th class="center">Code Occasionnel</th>
+				                                                <th>Date Création</th>
+				                                                <th>Type Operation</th>
+				                                                <th>Prix</th>
+				                                                <th class="center">Statut</th>
+				                                            </tr >
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr th:each="infofisc : ${listeCode}">
+				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
+				                                                <td class="center" th:text="${infofisc.CodeImportation.numOcca}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-MMM-yyyy')}"></td>
+				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
+				                                                <td class="left" th:text="${infofisc.montantOp}"></td>
+				                                                <td th:switch="${infofisc.activeApprobationOp}">
+					                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIVER</a>
+					                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>
+					                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
+					                                                <a class="sm_btn" th:case="*">INACTIF</a>
+				                                                </td >
+				                                            </tr >
+				                                        </tbody>
+				                                    </table>
+				                                </div>
+				                                <div class="row">
+				                                    <div class="col-lg-4 col-sm-5">
+				
+				                                    </div>
+				                                    
+				                                </div>
+				
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+    <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">INFORMATION DU DOSSIER</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{Ville/new}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body">
+					<div class="mt-2">
+						<label for="inputPassword3" class="form-label">N° Facture <strong class="text-danger">*</strong></label>
+						<input name="numFactureOcca" type="text" class="form-control" id="numFactureOcca" placeholder="N° Facture">
+						<span th:each="idInfo : ${listeCode}" th:switch="${idInfo.codeImportation.statutDemandeurCodeImp}">
+							<input name="idSelect1" type="text" class="form-control" th:value="${idInfo.codeImportation.entreprise.idEntr}"  th:case="'oui'">
+							<input name="idSelect" type="text" class="form-control" th:value="${idInfo.codeImportation..entreprise.idEntr}"  th:case="'non'">
+						</span>
+					</div>
+					<div class="mt-2">
+						<label for="inputEmail3" class="form-label">Emetteur <strong class="text-danger">*</strong></label>
+            			<input name="emetteurOcca" type="text" class="form-control" id="emetteurOcca" placeholder="Emetteur">
+					</div>
+					<div class="mt-2">
+						<label for="inputEmail3" class="form-label">Date d'émission <strong class="text-danger">*</strong></label>
+            			<input type="date" name="dateEmisOcca"  class="form-control" id="dateEmisOcca" placeholder="Date d'émission">
+					</div>
+					<div class="mt-2">
+						<label class="form-label" for="inputState">Fiche de déclaration à l'importation ?</label>
+						<select name="declarationOcca" id="declarationOcca" class="form-control">
+							<option value="">Veuillez selectionner</option>
+							<option value="non">NON</option>
+							<option value="oui">OUI</option >
+						</select>
+					</div>
+					<div class="mt-2">
+						<label for="inputPassword3" class="form-label">Objet  <strong class="text-danger">*</strong></label>
+						<textarea name="objetOcca" class="form-control" id="objetOcca" placeholder="Objet"></textarea >
+					</div>
+					<div class="mt-2">
+						<label class="form-label" for="inputState">Pays d'origine<strong class="text-danger">*</strong></label>
+						<select name="paysorigine" id="paysorigine" class="form-control">
+							<option value="">Veuillez selectionner</option>
+							<th:block th:each="nat : ${listeNationalites}">
+								<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+							</th:block>
+						</select>
+					</div>
+				</div>
+        	</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Enregistrer</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+</div>
+</div>
+</body>

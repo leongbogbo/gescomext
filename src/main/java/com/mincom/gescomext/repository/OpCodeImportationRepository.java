@@ -26,6 +26,9 @@ public interface OpCodeImportationRepository extends JpaRepository<OpCodeImporta
 	@Query("select e from OpCodeImportation e JOIN e.codeImportation c where (c.numOcca = :code) or (c.numGag = :code)")
 	List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage (@Param("code") String code);
 	
+	@Query("select e from OpCodeImportation e JOIN e.codeImportation c where (e.numDocOp = :code)")
+	List<OpCodeImportation> findAllOpCodeImportationNUMDOC(@Param("code") Integer code);
+	
 	OpCodeImportation findFirstByOrderByIdOpDesc();
 	OpCodeImportation findBynumDocOp(Integer numDocOp);
 	List<OpCodeImportation> findByTypeCodeOp(String typeCodeOp);
