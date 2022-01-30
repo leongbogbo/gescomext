@@ -60,14 +60,13 @@ layout:decorator="template3">
 	                                            	<td th:text="${elmt.numDocOp}"></td >
 	                                                <td th:switch="${elmt.CodeImportation.statutDemandeurCodeImp}">
 	                                                <span th:case="oui" th:text="${elmt.CodeImportation.Entreprise.nomEntr}"></span  >
-	                                                <span th:case="*" th:text="${elmt.CodeImportation.Demandeur.nomDem}"></span  >
-	                                                </td >
-	                                                
+	                                                <span th:case="*" th:text="${elmt.CodeImportation.Demandeur.nomDem+' '+elmt.CodeImportation.Demandeur.prenomsDem}"></span  >
+	                                                </td >	                                                
 	                                                <td th:text="${elmt.CodeImportation.numGag}"></td >
 	                                                <td th:text="${elmt.CodeImportation.UsageGag}"></td >
-	                                                <td th:text="${elmt.CodeImportation.TypeTechGag}"></td >
+	                                                <td th:text="${elmt.CodeImportation.TypeGag}"></td >
 	                                                <td th:text="${elmt.typeOp}"></td >
-	                                                 <td th:text="${elmt.CodeImportation.dateGag}"></td >
+	                                                <td th:text="${#dates.format(elmt.CodeImportation.dateGag, 'dd-MM-yyyy')}"></td >
 	                                                <td th:switch="${elmt.activeApprobationOp}">
 		                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIF</a>
 		                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>

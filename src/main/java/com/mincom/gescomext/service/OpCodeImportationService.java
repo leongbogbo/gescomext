@@ -22,5 +22,7 @@ public interface OpCodeImportationService {
 	List<OpCodeImportation> findBynumDocOpPdf (Integer code);
 	List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage (String code);
 	List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code);
+	List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code);
+	List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code);
 }
 

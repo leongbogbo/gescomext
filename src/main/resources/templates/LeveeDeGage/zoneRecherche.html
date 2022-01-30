@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templaterech">
+<head>
+<meta charset="utf-8">
+<title>Liste des dossiers</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+            	<div class="col-12">
+                    <div class="white_card mb_30 ">
+                        <div class="white_card_header">
+                            <div class="bulder_tab_wrapper">
+                                <ul class="nav" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                      <a class="nav-link" th:classappend="${not #lists.isEmpty(infosEntr)?'active':''}" id="Themes-tab" data-toggle="tab" href="#Themes" role="tab" aria-controls="Themes" aria-selected="false">Demandeur moral</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" th:classappend="${not #lists.isEmpty(infosDem)?'active':''}" id="page-tab" data-toggle="tab" href="#page" role="tab" aria-controls="profile" aria-selected="true">Demandeur physique</a>
+                                    </li>
+                                 </ul>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane  fade" th:classappend="${not #lists.isEmpty(infosEntr)?'show active':''}" id="Themes" role="tabpanel" aria-labelledby="Themes-tab">
+                                    <div class="builder_select">
+                                        <div class="row">
+                                            <div class="serach_field_2">
+	                                            <div class="search_inner">
+	                                                <form th:action="@{ZoneDeRecherche}" method="POST">
+	                                                    <div class="search_field">
+	                                                        <input type="text" name="codeEntr" placeholder="ENTREZ CODE IMP/EXP ou NOM ou RCCM ou CC">
+	                                                    </div>
+	                                                    <button type="submit"> <i class="ti-search"></i> </button>
+	                                                </form>
+	                                            </div>
+	                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane  fade" th:classappend="${not #lists.isEmpty(infosDem)?'show active':''}" id="page" role="tabpanel" aria-labelledby="page-tab">
+                                    <div class="builder_select">
+                                        <div class="row">
+                                            <div class="serach_field_2">
+	                                            <div class="search_inner">
+	                                                <form th:action="@{ZoneDeRecherche}" method="POST">
+	                                                    <div class="search_field">
+	                                                        <input type="text" name="codeDem" placeholder="RECHERCHER PAR N° PIECE ou E-MAIL ou TEL">
+	                                                    </div>
+	                                                    <button type="submit"> <i class="ti-search"></i> </button>
+	                                                </form>
+	                                            </div>
+	                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_body">
+				                <div class="row">
+				                    <div class="col-12 QA_section">
+				                        <div class="card QA_table">
+				                            <div class="card-body">
+				                                <div class="row mb-4" th:each="infofiscos : ${infosEntr}">
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.nomEntr}"></div >
+				                                        <div th:text="'RCCM : '+${infofiscos.regcommerceEntr}"></div >
+				                                        <div th:text="'CC : '+${infofiscos.contribuableEntr}"></div >
+				                                        <div th:text="'IMP/EXP : '+${infofiscos.codeImportExportEntr}"></div >
+				                                        <div th:text="'Tel : '+${infofiscos.telEntr}"></div >
+				                                        <div th:text="'E-Mail : '+${infofiscos.emailEntr}"></div >
+				                                    </div>
+				
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.proprietaires.nomProp} +' ' + ${infofiscos.proprietaires.prenomsProp}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.proprietaires.sexeProp}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.proprietaires.emailProp}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.proprietaires.telProp}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.proprietaires.nationalite.titreNat}"></div >
+				                                    </div>
+				                                 </div>
+				                                <div class="row mb-4" th:if="${infosDem}">
+				                                    <div class="col-sm-4" th:each="infoDem : ${infosDem}" >				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infoDem.nomDem} +' ' + ${infoDem.prenomsDem}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infoDem.sexeDem}"></div >
+				                                        <div th:text="'Pièce : '+ ${infoDem.typePieceIdentite.titreTyp}"></div >
+				                                        <div th:text="'N° Pièce : '+ ${infoDem.numpieceDem}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infoDem.emailDem}"></div >
+				                                        <div th:text="'Tel : '+ ${infoDem.telDem}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infoDem.nationalite.titreNat}"></div >
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+</div>
+</body>

@@ -49,7 +49,7 @@ layout:decorator="template2">
                         </div>
                     </div>
                     <div class="white_card_body">
-                        <div class="table-responsive">
+                        <div class="table-responsive conteneurActivite">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -63,7 +63,7 @@ layout:decorator="template2">
                                     <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='actif' AND infofisc.activeSignatureOp=='non'}">
                                         <th scope="row" th:text="${infofisc.numDocOp}"></th>
                                         <td ><a th:href="@{'Signature?numDoc='+${infofisc.numDocOp}}" th:text="${infofisc.CodeImportation.numOcca}"></a ></td >
-                                        <td th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"><a href="" ></a ></td >
+                                        <td th:text="${#dates.format(infofisc.dateOp, 'dd-MM-yyyy')}"><a href="" ></a ></td >
                                         <td th:switch="${infofisc.CodeImportation.statutDemandeurCodeImp}">
                                             <span th:case="oui" th:text="${infofisc.CodeImportation.Entreprise.nomEntr}"></span  >
                                             <span th:case="*" th:text="${infofisc.CodeImportation.Demandeur.nomDem}"></span  >
@@ -149,7 +149,7 @@ layout:decorator="template2">
                         </div>
                     </div>
                     <div class="white_card_body">
-                      <div class="table-responsive m-b-30">
+                      <div class="table-responsive m-b-30 conteneurActivite">
                           <table class="table">
                               <thead>
                                     <tr>

@@ -213,7 +213,6 @@ public class OperationDossierController {
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		//------- GESTION DES ONGLLETS--------
-		
 		String codesExportation="";
 		String codesFiscals="";
 		Entreprise verifEntr = new Entreprise();
@@ -221,6 +220,8 @@ public class OperationDossierController {
 		Demandeur verifDemandeur = new Demandeur();
 		Beneficiaire verifBeneficiaire = new Beneficiaire();
 		CodeImportation verifcodeImportation = new CodeImportation();
+		OpCodeImportation verifOpCodeImportation = new OpCodeImportation();
+		
 		
 		if(entreprise.getIdEntr()!=null) {
 			verifEntr = entrepriseService.getEntrepriseById(entreprise.getIdEntr());		
@@ -233,27 +234,31 @@ public class OperationDossierController {
 		verifDemandeur = demandeurService.getDemandeurById(demandeur.getIdDem());
 		}
 		if(codeImportation!=null) {
+		verifOpCodeImportation = opCodeImportationService.findBynumDocOp(numDossier);	
 		verifcodeImportation = opCodeImportationService.findBynumDocOp(numDossier).getCodeImportation();	
 		}
-		
-		if(verifEntr!=null && verifProp!=null) {
-			if(entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr()!=null && entreprise.getContribuableEntr()!=null){
-				codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
-				codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
-			}else if((entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)
-					|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)){
-				codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
-				codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
-			}
+		if(category.equals("CodeImportExport")) {
+			if(verifEntr!=null && verifProp!=null) {
+				if(entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr()!=null && entreprise.getContribuableEntr()!=null){
+					codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
+					codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
+				}else if((entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)
+						|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)){
+					codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
+					codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+				}
 			
-			if(!codesExportation.isEmpty()) {
-				verifEntr.setCodeImportExportEntr(codesExportation);
-			}
-			
-			if(!codesFiscals.isEmpty()) {			
-				verifcodeImportation.setNumCodFic(codesFiscals);
+				
+				if(!codesExportation.isEmpty()) {
+					verifEntr.setCodeImportExportEntr(codesExportation);
+				}
+				
+				if(!codesFiscals.isEmpty()) {			
+					verifcodeImportation.setNumCodFic(codesFiscals);
+				}
 			}
 		}
+		
 		
 		if(verifDemandeur!=null) {
 			if(demandeur.getNomDem()!=null) {
@@ -266,6 +271,10 @@ public class OperationDossierController {
 			
 			if(demandeur.getSexeDem()!=null) {
 				verifDemandeur.setSexeDem(demandeur.getSexeDem());
+			}
+			
+			if(demandeur.getContribuableDem()!=null) {
+				verifDemandeur.setContribuableDem(demandeur.getContribuableDem());
 			}
 			
 			if(demandeur.getTypePieceIdentite()!=null) {
@@ -289,7 +298,7 @@ public class OperationDossierController {
 			}
 			demandeurService.saveDemandeur(verifDemandeur);
 		}
-		if(entreprise!=null) {
+		if(verifEntr!=null) {
 			if(entreprise.getNomEntr()!=null) {
 				verifEntr.setNomEntr(entreprise.getNomEntr());
 			}
@@ -410,7 +419,6 @@ public class OperationDossierController {
 				if(category.equals("CodeOccasionnel")) {
 					String codeStruc;
 					if(verifcodeImportation.getEntreprise()!=null) {
-						System.out.println("on est ici");
 						codeStruc = verifEntr.getTypeStructure().getCodeStruc();
 					}else{
 						codeStruc = "42000A";
@@ -421,34 +429,34 @@ public class OperationDossierController {
 						verifcodeImportation.setNumOcca(codesOccasionnel);
 					}
 					
-					if(verifcodeImportation.getNumFactureOcca()!=null) {
+					if(codeImportation.getNumFactureOcca()!=null) {
 						verifcodeImportation.setNumFactureOcca(codeImportation.getNumFactureOcca());
 					}	
 	
-					if(verifcodeImportation.getEmetteurOcca()!=null) {
+					if(codeImportation.getEmetteurOcca()!=null) {
 						verifcodeImportation.setEmetteurOcca(codeImportation.getEmetteurOcca());
 					}
-					if(verifcodeImportation.getDateEmisOcca()!=null) {
+					if(codeImportation.getDateEmisOcca()!=null) {
 						verifcodeImportation.setDateEmisOcca(codeImportation.getDateEmisOcca());
 					}
-					if(verifcodeImportation.getDeclarationOcca()!=null) {
+					if(codeImportation.getDeclarationOcca()!=null) {
 						verifcodeImportation.setDeclarationOcca(codeImportation.getDeclarationOcca());
 					}
-					if(verifcodeImportation.getObjetOcca()!=null) {
+					if(codeImportation.getObjetOcca()!=null) {
 						verifcodeImportation.setObjetOcca(codeImportation.getObjetOcca());
 					}
-					if(verifcodeImportation.getTypeCodeOcca()!=null) {
+					if(codeImportation.getTypeCodeOcca()!=null) {
 						verifcodeImportation.setTypeCodeOcca(codeImportation.getTypeCodeOcca());
 					}
 				}
 				
 				if(category.equals("LeveeDeGage")) {
 					
-					String dategag = codeImportation.getDateGag();
+					Date dategag = codeImportation.getDateGag();
 					
 					SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
 					String dateDuJours = formatGag.format(new Date());
-					LocalDate dates = LocalDate.parse(dategag, DateTimeFormatter.ISO_LOCAL_DATE);
+					LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
 					LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
 					
 					Period diffDate = Period.between(dJour, dates);
@@ -459,45 +467,48 @@ public class OperationDossierController {
 					
 					if((years == 2 && mois > 0) || (years > 2 )) {
 						typeGage = "ordinaire";
+						verifOpCodeImportation.setMontantOp("40000");
 					}else if((years == 2 && mois == 0) || (years < 2 )) {
-						typeGage = "exceptionnel";
+						typeGage = "exceptionnelle";
+						verifOpCodeImportation.setMontantOp("50000");
 					}
-
+					verifcodeImportation.setTypeGag(typeGage);
 					String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(), codeImportation.getNumChassisGag(), typeGage, numDossier);
 					
 					if(!codesLege.isEmpty()) {
 						verifcodeImportation.setNumGag(codesLege);
 					}
-					if(verifcodeImportation.getDateGag()!=null) {
+					if(codeImportation.getDateGag()!=null) {
 						verifcodeImportation.setDateGag(codeImportation.getDateGag());
 					}
-					if(verifcodeImportation.getNumImmatriculationtGag()!=null) {
+					if(codeImportation.getNumImmatriculationtGag()!=null) {
 						verifcodeImportation.setNumImmatriculationtGag(codeImportation.getNumImmatriculationtGag());
 					}							
-					if(verifcodeImportation.getNumCarteGriseGag()!=null) {
+					if(codeImportation.getNumCarteGriseGag()!=null) {
 						verifcodeImportation.setNumCarteGriseGag(codeImportation.getNumCarteGriseGag());
 					}
-					if(verifcodeImportation.getNumChassisGag()!=null) {
+					if(codeImportation.getNumChassisGag()!=null) {
 						verifcodeImportation.setNumChassisGag(codeImportation.getNumChassisGag());
 					}
-					if(verifcodeImportation.getDateMiseCirculationGag()!=null) {
+					if(codeImportation.getDateMiseCirculationGag()!=null) {
 						verifcodeImportation.setDateMiseCirculationGag(codeImportation.getDateMiseCirculationGag());
 					}
-					if(verifcodeImportation.getTypeTechGag()!=null) {
+					if(codeImportation.getTypeTechGag()!=null) {
 						verifcodeImportation.setTypeTechGag(codeImportation.getTypeTechGag());
-					}if(verifcodeImportation.getUsageGag()!=null) {
+					}if(codeImportation.getUsageGag()!=null) {
 						verifcodeImportation.setUsageGag(codeImportation.getUsageGag());
 					}
-					if(verifcodeImportation.getTypeGag()!=null) {
+					if(codeImportation.getTypeGag()!=null) {
 						verifcodeImportation.setTypeGag(codeImportation.getTypeGag());
 					}
-					if(verifcodeImportation.getMarque()!=null) {
+					if(codeImportation.getMarque()!=null) {
 						verifcodeImportation.setMarque(codeImportation.getMarque());
 					}
-					if(verifcodeImportation.getGenreMarque()!=null) {
+					if(codeImportation.getGenreMarque()!=null) {
 						verifcodeImportation.setGenreMarque(codeImportation.getGenreMarque());
 					}
 				}
+				opCodeImportationService.saveOpCodeImportation(verifOpCodeImportation);
 				codeImportationService.saveCodeImportation(verifcodeImportation);
 			}
 			
@@ -595,6 +606,26 @@ public class OperationDossierController {
 		List<OpCodeImportation> codeElmt = opCodeImportationService.findAllOpCodeImportationNUMDOC(numDoc);
 		modelMap.addAttribute("listeCode", codeElmt);
 		return "./"+category+"/doublonDossier";
+	}
+	
+	@RequestMapping("/{category}/ZoneDeRecherche")
+	public String rechercheDossier(@PathVariable("category") String category, String codeEntr, String codeDem, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
+		if (codeEntr != null && !codeEntr.isEmpty() && codeDem == null) {
+			List<Entreprise> infosEntr = entrepriseService.findEntrepriseByGeneralInfo(codeEntr);
+			modelMap.addAttribute("infosEntr", infosEntr);
+		} else if (codeEntr == null && codeDem != null && !codeDem.isEmpty()) {
+			List<Demandeur> infosDem = demandeurService.findDemandeurByGeneralInfo(codeDem);
+			modelMap.addAttribute("infosDem", infosDem);
+		}
+
+		return "./"+category+"/zoneRecherche";
 	}
 
 }

@@ -63,7 +63,7 @@ layout:decorator="template">
 	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.codeImportExportEntr}"></span  >
 	                                                </td>
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numCodFic}"></td >
-	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-mm-yyyy')}"></td >
+	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-MM-yyyy')}"></td >
 	                                                <td th:switch="${elmt.OpCodeImportation.activeApprobationOp}">
 		                                                	<span th:case="'actif'">
 			                                                	<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -25,11 +25,21 @@ layout:decorator="template2">
                                 <div class="white_box_tittle list_header">
                                     <h4>RE-ATTRIBUTION</h4>
                                     <div class="box_right d-flex lms_block">
-                                        <div class="serach_field_2">
+                                    	<div class="serach_field_2 most">
                                             <div class="search_inner">
                                                 <form th:action="@{ReAttribution}" method="POST">
                                                     <div class="search_field">
-                                                        <input type="text" name="codeImportExportEntr" placeholder="Entrez N° Code Occa">
+                                                        <input type="text" name="codeEntr" placeholder="ENTREZ RAISON SOCIALE">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="serach_field_2 most">
+                                            <div class="search_inner">
+                                                <form th:action="@{ReAttribution}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text" name="codeDem" placeholder="ENTREZ N° PIECE DEMANDEUR">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
                                                 </form>
@@ -40,13 +50,15 @@ layout:decorator="template2">
 								  
 				                <div class="row">				                
 				                    <div class="col-12">
-				                        <div class="page_title_box d-flex align-items-center justify-content-between">
+				                        <div class="page_title_box d-flex align-items-center justify-content-between" th:if="${listeCode}">
 				                            <div class="page_title_left"></div>
-				                            <a th:if="${listeCode}" data-toggle="modal" href="#" data-target="#exampleModalCenter" class="white_btn3">ReAttribution</a  >
+				                            <a th:if="${statuts=='entr'}"  data-toggle="modal" href="#" data-target="#exampleModalCenter" class="white_btn3">ReAttribution</a  >
+				                            <a th:if="${quotaOcca<=2 and statuts=='dem'}"  data-toggle="modal" href="#" data-target="#exampleModalCenter" class="white_btn3">ReAttribution</a  >
+				                            <a th:if="${quotaOcca==3 and statuts=='dem'}"  href="#"  class="btn btn-danger">Votre quota de cette année a été atteind</a  >
 				                        </div>
 				                    </div>
 				               
-				                    <div class="col-12 QA_section">
+				                    <div class="col-12 QA_section" th:if="${listeCode}">
 				                        <div class="card QA_table">
 				                            <div class="card-header" th:each="infossfisco : ${listeCode}" th:if="${infossfisco.CodeImportation}" th:switch="${infossfisco.activeApprobationOp}" th:case="'actif'">
 				                            Code Occasionnel :
@@ -55,37 +67,39 @@ layout:decorator="template2">
 				
 				                            </div>
 				                            <div class="card-body">
-				                                <div class="row mb-4" th:each="infofiscos : ${listeCode}">
-				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                  				<div class="row mb-4" th:each="infofiscos : ${infosEntr}">
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
 				                                        <div>
 				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
 				                                        </div>
-				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.nomEntr}"></div >
-				                                        <div th:text="'RCCM : '+${infofiscos.CodeImportation.Entreprise.regcommerceEntr}"></div >
-				                                        <div th:text="'CC : '+${infofiscos.CodeImportation.Entreprise.contribuableEntr}"></div >
-				                                        <div th:text="'Tel : '+${infofiscos.CodeImportation.Entreprise.telEntr}"></div >
-				                                        <div th:text="'E-Mail : '+${infofiscos.CodeImportation.Entreprise.emailEntr}"></div >
+				                                        <div th:text="'Nom : '+ ${infofiscos.nomEntr}"></div >
+				                                        <div th:text="'RCCM : '+${infofiscos.regcommerceEntr}"></div >
+				                                        <div th:text="'CC : '+${infofiscos.contribuableEntr}"></div >
+				                                        <div th:text="'Tel : '+${infofiscos.telEntr}"></div >
+				                                        <div th:text="'E-Mail : '+${infofiscos.emailEntr}"></div >
 				                                    </div>
 				
-				                                    <div class="col-sm-6" th:if="${infofiscos.CodeImportation.entreprise}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
 				                                        <div>
 				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
 				                                        </div>
-				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nomProp} +' ' + ${infofiscos.CodeImportation.entreprise.proprietaires.prenomsProp}"></div  >
-				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.sexeProp}"></div >
-				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.emailProp}"></div >
-				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.telProp}"></div >
-				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.entreprise.proprietaires.nationalite.titreNat}"></div >
+				                                        <div th:text="'Nom : '+ ${infofiscos.proprietaires.nomProp} +' ' + ${infofiscos.proprietaires.prenomsProp}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.proprietaires.sexeProp}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.proprietaires.emailProp}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.proprietaires.telProp}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.proprietaires.nationalite.titreNat}"></div >
 				                                    </div>
-				                                    <div class="col-sm-4" th:if="${infofiscos.CodeImportation.demandeur}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
+				                                 </div>
+				                                <div class="row mb-4" th:if="${infosDem}">
+				                                    <div class="col-sm-4" th:each="infoDem : ${infosDem}">				                                        
 				                                        <div>
-				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
 				                                        </div>
-				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.demandeur.nomDem} +' ' + ${infofiscos.CodeImportation.demandeur.prenomsDem}"></div  >
-				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.demandeur.sexeDem}"></div >
-				                                        <div th:text="'E-Mail : '+ ${infofiscos.CodeImportation.demandeur.emailDem}"></div >
-				                                        <div th:text="'Tel : '+ ${infofiscos.CodeImportation.demandeur.telDem}"></div >
-				                                        <div th:text="'Nationalité : '+ ${infofiscos.CodeImportation.demandeur.nationalite.titreNat}"></div >
+				                                        <div th:text="'Nom : '+ ${infoDem.nomDem} +' ' + ${infoDem.prenomsDem}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infoDem.sexeDem}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infoDem.emailDem}"></div >
+				                                        <div th:text="'Tel : '+ ${infoDem.telDem}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infoDem.nationalite.titreNat}"></div >
 				                                    </div>
 				                                </div>				
 				                                <div class="table-responsive-sm">
@@ -102,7 +116,7 @@ layout:decorator="template2">
 				                                            </tr >
 				                                        </thead>
 				                                        <tbody>
-				                                            <tr th:each="infofisc : ${listeCode}">
+				                                            <tr th:each="infofisc : ${listeCode}" th:if="${infofisc.typeCodeOp=='CodeOccasionnel'}">
 				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
 				                                                <td class="center" th:text="${infofisc.CodeImportation.numOcca}"></td>
 				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-MMM-yyyy')}"></td>
@@ -150,15 +164,15 @@ layout:decorator="template2">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form th:action="@{Ville/new}" method="POST">
+        <form th:action="@{valider/ReAttribution}" method="POST">
         	<div class="modal-body">
 		         <div class="white_card_body">
 					<div class="mt-2">
 						<label for="inputPassword3" class="form-label">N° Facture <strong class="text-danger">*</strong></label>
 						<input name="numFactureOcca" type="text" class="form-control" id="numFactureOcca" placeholder="N° Facture">
 						<span th:each="idInfo : ${listeCode}" th:switch="${idInfo.codeImportation.statutDemandeurCodeImp}">
-							<input name="idSelect1" type="text" class="form-control" th:value="${idInfo.codeImportation.entreprise.idEntr}"  th:case="'oui'">
-							<input name="idSelect" type="text" class="form-control" th:value="${idInfo.codeImportation..entreprise.idEntr}"  th:case="'non'">
+							<input name="codeEntr" type="hidden" class="form-control" th:value="${idInfo.codeImportation.entreprise.idEntr}"  th:case="'oui'">
+							<input name="codeDem" type="hidden" class="form-control" th:value="${idInfo.codeImportation.demandeur.idDem}"  th:case="'non'">
 						</span>
 					</div>
 					<div class="mt-2">

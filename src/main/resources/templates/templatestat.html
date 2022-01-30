@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Required meta tags -->    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GESCOMEXT</title>
+
+    <link rel="icon" href="../images/mini_logo1.png" type="image/png">
+ <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- themefy CSS -->
+    <link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+    <!-- select2 CSS -->
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.css}">
+    <!-- gijgo css -->
+    <link rel="stylesheet" th:href="@{/css/gijgo.min.css}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/tagsinput.css}">
+
+    <!-- date picker -->
+     <link rel="stylesheet" th:href="@{/css/date-picker.css}">
+
+     <link rel="stylesheet" th:href="@{/css/vectormap-2.0.2.css}">
+     
+     <!-- scrollabe  -->
+     <link rel="stylesheet" th:href="@{/css/scrollable.css}">
+    <!-- datatable CSS -->
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}">
+    <!-- text editor css -->
+    <link rel="stylesheet" th:href="@{/css/summernote-bs4.css}">
+    <!-- morris css -->
+    <link rel="stylesheet" th:href="@{/css/morris.css}">
+    <!-- metarial icon css -->
+    <link rel="stylesheet" th:href="@{/css/material-icons.css}">
+
+    <!-- menu css  -->
+    <link rel="stylesheet" th:href="@{/css/metisMenu.css}">
+    <!-- style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet"  id="colorSkinCSS" th:href="@{/css/default.css}">
+	<style type="text/css">
+	.apexcharts-canvas {
+	  position: relative;
+	  user-select: none;
+	  /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+	}
+	
+	/* scrollbar is not visible by default for legend, hence forcing the visibility */
+	.apexcharts-canvas ::-webkit-scrollbar {
+	  -webkit-appearance: none;
+	  width: 6px;
+	}
+	.apexcharts-canvas ::-webkit-scrollbar-thumb {
+	  border-radius: 4px;
+	  background-color: rgba(0,0,0,.5);
+	  box-shadow: 0 0 1px rgba(255,255,255,.5);
+	  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+	}
+	.apexcharts-canvas.dark {
+	  background: #343F57;
+	}
+	
+	.apexcharts-inner {
+	  position: relative;
+	}
+	
+	.legend-mouseover-inactive {
+	  transition: 0.15s ease all;
+	  opacity: 0.20;
+	}
+	
+	.apexcharts-series-collapsed {
+	  opacity: 0;
+	}
+	
+	.apexcharts-gridline, .apexcharts-text {
+	  pointer-events: none;
+	}
+	
+	.apexcharts-tooltip {
+	  border-radius: 5px;
+	  box-shadow: 2px 2px 6px -4px #999;
+	  cursor: default;
+	  font-size: 14px;
+	  left: 62px;
+	  opacity: 0;
+	  pointer-events: none;
+	  position: absolute;
+	  top: 20px;
+	  overflow: hidden;
+	  white-space: nowrap;
+	  z-index: 12;
+	  transition: 0.15s ease all;
+	}
+	.apexcharts-tooltip.light {
+	  border: 1px solid #e3e3e3;
+	  background: rgba(255, 255, 255, 0.96);
+	}
+	.apexcharts-tooltip.dark {
+	  color: #fff;
+	  background: rgba(30,30,30, 0.8);
+	}
+	.apexcharts-tooltip * {
+	  font-family: inherit;
+	}
+	
+	.apexcharts-tooltip .apexcharts-marker,
+	.apexcharts-area-series .apexcharts-area,
+	.apexcharts-line {
+	  pointer-events: none;
+	}
+	
+	.apexcharts-tooltip.active {
+	  opacity: 1;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-tooltip-title {
+	  padding: 6px;
+	  font-size: 15px;
+	  margin-bottom: 4px;
+	}
+	.apexcharts-tooltip.light .apexcharts-tooltip-title {
+	  background: #ECEFF1;
+	  border-bottom: 1px solid #ddd;
+	}
+	.apexcharts-tooltip.dark .apexcharts-tooltip-title {
+	  background: rgba(0, 0, 0, 0.7);
+	  border-bottom: 1px solid #333;
+	}
+	
+	.apexcharts-tooltip-text-value,
+	.apexcharts-tooltip-text-z-value {
+	  display: inline-block;
+	  font-weight: 600;
+	  margin-left: 5px;
+	}
+	
+	.apexcharts-tooltip-text-z-label:empty,
+	.apexcharts-tooltip-text-z-value:empty {
+	  display: none;
+	}
+	
+	.apexcharts-tooltip-text-value,
+	.apexcharts-tooltip-text-z-value {
+	  font-weight: 600;
+	}
+	
+	.apexcharts-tooltip-marker {
+	  width: 12px;
+	  height: 12px;
+	  position: relative;
+	  top: 0px;
+	  margin-right: 10px;
+	  border-radius: 50%;
+	}
+	
+	.apexcharts-tooltip-series-group {
+	  padding: 0 10px;
+	  display: none;
+	  text-align: left;
+	  justify-content: left;
+	  align-items: center;
+	}
+	
+	.apexcharts-tooltip-series-group.active .apexcharts-tooltip-marker {
+	  opacity: 1;
+	}
+	.apexcharts-tooltip-series-group.active, .apexcharts-tooltip-series-group:last-child {
+	  padding-bottom: 4px;
+	}
+	.apexcharts-tooltip-series-group-hidden {
+	  opacity: 0;
+	  height: 0;
+	  line-height: 0;
+	  padding: 0 !important;
+	}
+	.apexcharts-tooltip-y-group {
+	  padding: 6px 0 5px;
+	}
+	.apexcharts-tooltip-candlestick {
+	  padding: 4px 8px;
+	}
+	.apexcharts-tooltip-candlestick > div {
+	  margin: 4px 0;
+	}
+	.apexcharts-tooltip-candlestick span.value {
+	  font-weight: bold;
+	}
+	
+	.apexcharts-tooltip-rangebar {
+	  padding: 5px 8px;
+	}
+	
+	.apexcharts-tooltip-rangebar .category {
+	  font-weight: 600;
+	  color: #777;
+	}
+	
+	.apexcharts-tooltip-rangebar .series-name {
+	  font-weight: bold;
+	  display: block;
+	  margin-bottom: 5px;
+	}
+	
+	.apexcharts-xaxistooltip {
+	  opacity: 0;
+	  padding: 9px 10px;
+	  pointer-events: none;
+	  color: #373d3f;
+	  font-size: 13px;
+	  text-align: center;
+	  border-radius: 2px;
+	  position: absolute;
+	  z-index: 10;
+	  background: #ECEFF1;
+	  border: 1px solid #90A4AE;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-xaxistooltip.dark {
+	  background: rgba(0, 0, 0, 0.7);
+	  border: 1px solid rgba(0, 0, 0, 0.5);
+	  color: #fff;
+	}
+	
+	.apexcharts-xaxistooltip:after, .apexcharts-xaxistooltip:before {
+	  left: 50%;
+	  border: solid transparent;
+	  content: " ";
+	  height: 0;
+	  width: 0;
+	  position: absolute;
+	  pointer-events: none;
+	}
+	
+	.apexcharts-xaxistooltip:after {
+	  border-color: rgba(236, 239, 241, 0);
+	  border-width: 6px;
+	  margin-left: -6px;
+	}
+	.apexcharts-xaxistooltip:before {
+	  border-color: rgba(144, 164, 174, 0);
+	  border-width: 7px;
+	  margin-left: -7px;
+	}
+	
+	.apexcharts-xaxistooltip-bottom:after, .apexcharts-xaxistooltip-bottom:before {
+	  bottom: 100%;
+	}
+	
+	.apexcharts-xaxistooltip-top:after, .apexcharts-xaxistooltip-top:before {
+	  top: 100%;
+	}
+	
+	.apexcharts-xaxistooltip-bottom:after {
+	  border-bottom-color: #ECEFF1;
+	}
+	.apexcharts-xaxistooltip-bottom:before {
+	  border-bottom-color: #90A4AE;
+	}
+	
+	.apexcharts-xaxistooltip-bottom.dark:after {
+	  border-bottom-color: rgba(0, 0, 0, 0.5);
+	}
+	.apexcharts-xaxistooltip-bottom.dark:before {
+	  border-bottom-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	.apexcharts-xaxistooltip-top:after {
+	  border-top-color:#ECEFF1
+	}
+	.apexcharts-xaxistooltip-top:before {
+	  border-top-color: #90A4AE;
+	}
+	.apexcharts-xaxistooltip-top.dark:after {
+	  border-top-color:rgba(0, 0, 0, 0.5);
+	}
+	.apexcharts-xaxistooltip-top.dark:before {
+	  border-top-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	
+	.apexcharts-xaxistooltip.active {
+	  opacity: 1;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-yaxistooltip {
+	  opacity: 0;
+	  padding: 4px 10px;
+	  pointer-events: none;
+	  color: #373d3f;
+	  font-size: 13px;
+	  text-align: center;
+	  border-radius: 2px;
+	  position: absolute;
+	  z-index: 10;
+	  background: #ECEFF1;
+	  border: 1px solid #90A4AE;
+	}
+	
+	.apexcharts-yaxistooltip.dark {
+	  background: rgba(0, 0, 0, 0.7);
+	  border: 1px solid rgba(0, 0, 0, 0.5);
+	  color: #fff;
+	}
+	
+	.apexcharts-yaxistooltip:after, .apexcharts-yaxistooltip:before {
+	  top: 50%;
+	  border: solid transparent;
+	  content: " ";
+	  height: 0;
+	  width: 0;
+	  position: absolute;
+	  pointer-events: none;
+	}
+	.apexcharts-yaxistooltip:after {
+	  border-color: rgba(236, 239, 241, 0);
+	  border-width: 6px;
+	  margin-top: -6px;
+	}
+	.apexcharts-yaxistooltip:before {
+	  border-color: rgba(144, 164, 174, 0);
+	  border-width: 7px;
+	  margin-top: -7px;
+	}
+	
+	.apexcharts-yaxistooltip-left:after, .apexcharts-yaxistooltip-left:before {
+	  left: 100%;
+	}
+	
+	.apexcharts-yaxistooltip-right:after, .apexcharts-yaxistooltip-right:before {
+	  right: 100%;
+	}
+	
+	.apexcharts-yaxistooltip-left:after {
+	  border-left-color: #ECEFF1;
+	}
+	.apexcharts-yaxistooltip-left:before {
+	  border-left-color: #90A4AE;
+	}
+	.apexcharts-yaxistooltip-left.dark:after {
+	  border-left-color: rgba(0, 0, 0, 0.5);
+	}
+	.apexcharts-yaxistooltip-left.dark:before {
+	  border-left-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	.apexcharts-yaxistooltip-right:after {
+	  border-right-color: #ECEFF1;
+	}
+	.apexcharts-yaxistooltip-right:before {
+	  border-right-color: #90A4AE;
+	}
+	.apexcharts-yaxistooltip-right.dark:after {
+	  border-right-color: rgba(0, 0, 0, 0.5);
+	}
+	.apexcharts-yaxistooltip-right.dark:before {
+	  border-right-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	.apexcharts-yaxistooltip.active {
+	  opacity: 1;
+	}
+	.apexcharts-yaxistooltip-hidden {
+	  display: none;
+	}
+	
+	.apexcharts-xcrosshairs, .apexcharts-ycrosshairs {
+	  pointer-events: none;
+	  opacity: 0;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-xcrosshairs.active, .apexcharts-ycrosshairs.active {
+	  opacity: 1;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-ycrosshairs-hidden {
+	  opacity: 0;
+	}
+	
+	.apexcharts-zoom-rect {
+	  pointer-events: none;
+	}
+	.apexcharts-selection-rect {
+	  cursor: move;
+	}
+	
+	.svg_select_points, .svg_select_points_rot {
+	  opacity: 0;
+	  visibility: hidden;
+	}
+	.svg_select_points_l, .svg_select_points_r {
+	  cursor: ew-resize;
+	  opacity: 1;
+	  visibility: visible;
+	  fill: #888;
+	}
+	.apexcharts-canvas.zoomable .hovering-zoom {
+	  cursor: crosshair
+	}
+	.apexcharts-canvas.zoomable .hovering-pan {
+	  cursor: move
+	}
+	
+	.apexcharts-xaxis,
+	.apexcharts-yaxis {
+	  pointer-events: none;
+	}
+	
+	.apexcharts-zoom-icon,
+	.apexcharts-zoom-in-icon,
+	.apexcharts-zoom-out-icon,
+	.apexcharts-reset-zoom-icon,
+	.apexcharts-pan-icon,
+	.apexcharts-selection-icon,
+	.apexcharts-menu-icon,
+	.apexcharts-toolbar-custom-icon {
+	  cursor: pointer;
+	  width: 20px;
+	  height: 20px;
+	  line-height: 24px;
+	  color: #6E8192;
+	  text-align: center;
+	}
+	
+	
+	.apexcharts-zoom-icon svg,
+	.apexcharts-zoom-in-icon svg,
+	.apexcharts-zoom-out-icon svg,
+	.apexcharts-reset-zoom-icon svg,
+	.apexcharts-menu-icon svg {
+	  fill: #6E8192;
+	}
+	.apexcharts-selection-icon svg {
+	  fill: #444;
+	  transform: scale(0.76)
+	}
+	
+	.dark .apexcharts-zoom-icon svg,
+	.dark .apexcharts-zoom-in-icon svg,
+	.dark .apexcharts-zoom-out-icon svg,
+	.dark .apexcharts-reset-zoom-icon svg,
+	.dark .apexcharts-pan-icon svg,
+	.dark .apexcharts-selection-icon svg,
+	.dark .apexcharts-menu-icon svg,
+	.dark .apexcharts-toolbar-custom-icon svg{
+	  fill: #f3f4f5;
+	}
+	
+	.apexcharts-canvas .apexcharts-zoom-icon.selected svg,
+	.apexcharts-canvas .apexcharts-selection-icon.selected svg,
+	.apexcharts-canvas .apexcharts-reset-zoom-icon.selected svg {
+	  fill: #008FFB;
+	}
+	.light .apexcharts-selection-icon:not(.selected):hover svg,
+	.light .apexcharts-zoom-icon:not(.selected):hover svg,
+	.light .apexcharts-zoom-in-icon:hover svg,
+	.light .apexcharts-zoom-out-icon:hover svg,
+	.light .apexcharts-reset-zoom-icon:hover svg,
+	.light .apexcharts-menu-icon:hover svg {
+	  fill: #333;
+	}
+	
+	.apexcharts-selection-icon, .apexcharts-menu-icon {
+	  position: relative;
+	}
+	.apexcharts-reset-zoom-icon {
+	  margin-left: 5px;
+	}
+	.apexcharts-zoom-icon, .apexcharts-reset-zoom-icon, .apexcharts-menu-icon {
+	  transform: scale(0.85);
+	}
+	
+	.apexcharts-zoom-in-icon, .apexcharts-zoom-out-icon {
+	  transform: scale(0.7)
+	}
+	
+	.apexcharts-zoom-out-icon {
+	  margin-right: 3px;
+	}
+	
+	.apexcharts-pan-icon {
+	  transform: scale(0.62);
+	  position: relative;
+	  left: 1px;
+	  top: 0px;
+	}
+	.apexcharts-pan-icon svg {
+	  fill: #fff;
+	  stroke: #6E8192;
+	  stroke-width: 2;
+	}
+	.apexcharts-pan-icon.selected svg {
+	  stroke: #008FFB;
+	}
+	.apexcharts-pan-icon:not(.selected):hover svg {
+	  stroke: #333;
+	}
+	
+	.apexcharts-toolbar {
+	  position: absolute;
+	  z-index: 11;
+	  top: 0px;
+	  right: 3px;
+	  max-width: 176px;
+	  text-align: right;
+	  border-radius: 3px;
+	  padding: 0px 6px 2px 6px;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	}
+	
+	.apexcharts-toolbar svg {
+	  pointer-events: none;
+	}
+	
+	.apexcharts-menu {
+	  background: #fff;
+	  position: absolute;
+	  top: 100%;
+	  border: 1px solid #ddd;
+	  border-radius: 3px;
+	  padding: 3px;
+	  right: 10px;
+	  opacity: 0;
+	  min-width: 110px;
+	  transition: 0.15s ease all;
+	  pointer-events: none;
+	}
+	
+	.apexcharts-menu.open {
+	  opacity: 1;
+	  pointer-events: all;
+	  transition: 0.15s ease all;
+	}
+	
+	.apexcharts-menu-item {
+	  padding: 6px 7px;
+	  font-size: 12px;
+	  cursor: pointer;
+	}
+	.light .apexcharts-menu-item:hover {
+	  background: #eee;
+	}
+	.dark .apexcharts-menu {
+	  background: rgba(0, 0, 0, 0.7);
+	  color: #fff;
+	}
+	
+	@media screen and (min-width: 768px) {
+	  .apexcharts-toolbar {
+	    /*opacity: 0;*/
+	  }
+	
+	  .apexcharts-canvas:hover .apexcharts-toolbar {
+	    opacity: 1;
+	  }
+	}
+	
+	.apexcharts-datalabel.hidden {
+	  opacity: 0;
+	}
+	
+	.apexcharts-pie-label,
+	.apexcharts-datalabel, .apexcharts-datalabel-label, .apexcharts-datalabel-value {
+	  cursor: default;
+	  pointer-events: none;
+	}
+	
+	.apexcharts-pie-label-delay {
+	  opacity: 0;
+	  animation-name: opaque;
+	  animation-duration: 0.3s;
+	  animation-fill-mode: forwards;
+	  animation-timing-function: ease;
+	}
+	
+	.apexcharts-canvas .hidden {
+	  opacity: 0;
+	}
+	
+	.apexcharts-hide .apexcharts-series-points {
+	  opacity: 0;
+	}
+	
+	.apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+	.apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events, .apexcharts-radar-series path, .apexcharts-radar-series polygon {
+	  pointer-events: none;
+	}
+	
+	/* markers */
+	
+	.apexcharts-marker {
+	  transition: 0.15s ease all;
+	}
+	
+	@keyframes opaque {
+	  0% {
+	    opacity: 0;
+	  }
+	  100% {
+	    opacity: 1;
+	  }
+	}
+	
+	/* Resize generated styles */
+	@keyframes resizeanim {
+	  from {
+	    opacity: 0;
+	  }
+	  to {
+	    opacity: 0;
+	  }
+	}
+	
+	.resize-triggers {
+	  animation: 1ms resizeanim;
+	  visibility: hidden;
+	  opacity: 0;
+	}
+	
+	.resize-triggers, .resize-triggers > div, .contract-trigger:before {
+	  content: " ";
+	  display: block;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  height: 100%;
+	  width: 100%;
+	  overflow: hidden;
+	}
+	
+	.resize-triggers > div {
+	  background: #eee;
+	  overflow: auto;
+	}
+	
+	.contract-trigger:before {
+	  width: 200%;
+	  height: 200%;
+	}
+	</style>
+</head>
+<body class="crm_body_bg">
+<!-- MENU GAUCHE -->
+<nav class="sidebar">
+    <div class="logo d-flex justify-content-between">
+        <a class="large_logo" th:href="@{/}"><img th:src="@{/images/logo.jpg}" alt="pas logo"></a>
+        <a class="small_logo" href="@{/}"><img th:src="@{/images/mini_logo.jpg}" alt=""></a>
+        <div class="sidebar_close_icon d-lg-none">
+            <i class="ti-close"></i>
+        </div>
+    </div>
+   <ul id="sidebar_menu" class="metismenu">
+        <li class="mm-active">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Paramétrage</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li th:each="urlListeUser:${listeUrlUser}">
+		            <a th:href="@{'/'+${urlListeUser.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUser.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
+            </ul>
+        </li>
+        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Administration</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../parametre/listeUtilisateurs}">Utilisateur</a></li>
+              <li><a th:href="@{../parametre/listeRoles}">Roles</a></li>
+              <li><a th:href="@{../parametre/AttributionActions}">Attribution actions</a></li>
+            </ul>
+        </li>
+          <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Statistique</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../Statistique/Entreprise}">Entreprise</a></li>
+              <li><a th:href="@{../Statistique/listeRoles}">Roles</a></li>
+              <li><a th:href="@{../Statistique/AttributionActions}">Attribution actions</a></li>
+            </ul>
+        </li>
+      </ul>
+</nav>
+ <!--/ MENU GAUCHE  -->
+<section class="main_content dashboard_part large_header_bg">
+
+<!-- menu HAUT -->
+ <div class="container-fluid no-gutters">
+ 	<div class="row">
+ 		<div class="col-lg-12 btn btn-danger mt-3 " text-center style="font-size: 30px;">SYSTEME DE GESTION DES CODES DU COMMERCE EXTERIEUR</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 p-0 ">
+            <!-- BARRE DE CONNEXION HAUT -->
+            <div class="header_iner d-flex justify-content-between align-items-center">
+                <div class="sidebar_icon d-lg-none">
+                    <i class="ti-menu"></i>
+                </div>
+                <label class="switch_toggle d-none d-lg-block" for="checkbox">
+                    <input type="checkbox" id="checkbox">
+                    <div class="slider round open_miniSide"></div>
+                </label>
+                <h3>STATISTIQUE</h3>
+                <div class="header_right d-flex justify-content-between align-items-center">
+                    <div class="header_notification_warp d-flex align-items-center">
+                    
+                    </div>
+                    <div class="profile_info">
+                        <img src="../images/client_img.png" alt="#">
+                        <div class="profile_info_iner">
+                            <div class="profile_author_name">
+                                <p>Neurologist </p>
+                                <h5 sec:authentication="name"></h5>
+                            </div>
+                            <div class="profile_info_details">
+                                <a href="monProfile">Mon Profile </a>
+                                 <a href="../parametre/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
+                                <a href="/gescomext/logout">Déconnexion</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN BARRE DE CONNEXION HAUT -->
+        </div>
+    </div>
+</div>
+<!--/ FIN menu HAUT -->
+
+<!-- LE CORPS ICI -->
+<section layout:fragment="MyContent" ></section>
+<!-- FIN CORPS -->
+<!-- footer part -->
+<div class="footer_part">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer_iner text-center">
+                    <p>2021 © Système de Gestion des Document du Commerce Extérieur (GESCOMEXT) / <a href="#"> Ministère du commerce</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- main content part end -->
+
+<!-- footer  -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<!-- popper js -->
+<script th:src="@{/js/popper.min.js}"></script>
+<!-- bootstarp js -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- sidebar menu  -->
+<script th:src="@{/js/metisMenu.js}"></script>
+<!-- waypoints js -->
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<!-- waypoints js -->
+<script th:src="@{/js/Chart.min.js}"></script>
+<!-- counterup js -->
+<script th:src="@{/js/jquery.counterup.min.js}"></script>
+
+<!-- nice select -->
+<script th:src="@{/js/jquery.nice-select.min.js}"></script>
+<!-- owl carousel -->
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+
+<!-- responsive table -->
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.responsive.min.js}"></script>
+<script th:src="@{/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{/js/buttons.flash.min.js}"></script>
+<script th:src="@{/js/jszip.min.js}"></script>
+<script th:src="@{/js/pdfmake.min.js}"></script>
+<script th:src="@{/js/vfs_fonts.js}"></script>
+<script th:src="@{/js/buttons.html5.min.js}"></script>
+<script th:src="@{/js/buttons.print.min.js}"></script>
+
+<!-- datepicker  -->
+<script th:src="@{/js/datepicker.js}"></script>
+<script th:src="@{/js/datepicker.en.js}"></script>
+<script th:src="@{/js/datepicker.custom.js}"></script>
+
+<script th:src="@{/js/Chart.min (2).js}"></script>
+<script th:src="@{/js/roundedBar.min.js}"></script>
+
+<!-- progressbar js -->
+<script sth:src="@{/js/jquery.barfiller.js}"></script>
+<!-- tag input -->
+<script th:src="@{/js/tagsinput.js}"></script>
+<!-- text editor js -->
+<script th:src="@{/js/summernote-bs4.js}"></script>
+<script th:src="@{/js/amcharts.js}"></script>
+<!-- vector map  -->
+<script th:src="@{/js/vectormap-2.0.2.min.js}"></script>
+<script th:src="@{/js/vectormap-world-mill-en.js}"></script>
+
+<!-- apex chrat  -->
+<script th:src="@{/js/apex-chart2.js}"></script>
+<script th:src="@{/js/apex_dashboard.js}"></script>
+
+<script th:src="@{/js/echarts.min.js}"></script>
+
+
+<script th:src="@{/js/core.js}"></script>
+<script th:src="@{/js/charts.js}"></script><svg id="SvgjsSvg1098" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1099"></defs><polyline id="SvgjsPolyline1100" points="0,0"></polyline><path id="SvgjsPath1101" d="M-1 80L-1 80C-1 80 26.083333333333336 80 26.083333333333336 80C26.083333333333336 80 52.16666666666667 80 52.16666666666667 80C52.16666666666667 80 78.25 80 78.25 80C78.25 80 104.33333333333334 80 104.33333333333334 80C104.33333333333334 80 130.41666666666669 80 130.41666666666669 80C130.41666666666669 80 156.5 80 156.5 80C156.5 80 182.58333333333334 80 182.58333333333334 80C182.58333333333334 80 208.66666666666669 80 208.66666666666669 80C208.66666666666669 80 234.75 80 234.75 80C234.75 80 260.83333333333337 80 260.83333333333337 80C260.83333333333337 80 286.9166666666667 80 286.9166666666667 80C286.9166666666667 80 313 80 313 80C313 80 313 80 313 80 "></path></svg>
+<script th:src="@{/js/animated.js}"></script>
+<script th:src="@{/js/kelly.js}"></script>
+<script th:src="@{/js/chart-custom.js}"></script>
+<!-- custom js -->
+<script th:src="@{/js/dashboard_init.js}"></script><div class="jvectormap-tip"></div>
+<script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script th:src="@{/js/custom.js}"></script>
+<script th:src="@{/js/static-forms.js}"></script>
+</body>
+</html>

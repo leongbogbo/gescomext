@@ -35,7 +35,7 @@ layout:decorator="template2">
 				                    <div class="col-12">
 				                        <div class="page_title_box d-flex align-items-center justify-content-between">
 				                            <div class="page_title_left"></div>
-				                            <a th:href="@{'/LeveeDeGage/Operation/Valider/Suppression/'+${numDoc}}" class="white_btn3">Supprimer</a >
+				                            <a th:href="@{'/LeveeDeGage/Operation/Valider/Suppression/'+${numDoc}}" class="white_btn3" onclick="return confirm('Etes-vous sûr ?')">Supprimer</a >
 				                        </div>
 				                    </div>
 				               
@@ -98,7 +98,7 @@ layout:decorator="template2">
 				                                            <tr th:each="infofisc : ${listeCode}">
 				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
 				                                                <td class="center" th:text="${infofisc.CodeImportation.numGag}"></td>
-				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-MM-yyyy')}"></td>
 				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
 				                                                <td class="left" th:text="${infofisc.montantOp}"></td>
 				                                                <td th:switch="${infofisc.activeApprobationOp}">

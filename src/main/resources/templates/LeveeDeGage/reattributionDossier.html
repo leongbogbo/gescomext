@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template3">
+<head>
+<meta charset="utf-8">
+<title>Liste des dossiers</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                               <div class="white_box_tittle list_header">
+                                    <h4>RE-ATTRIBUTION</h4>
+                                    <div class="box_right d-flex lms_block">
+                                    	<div class="serach_field_2 most">
+                                            <div class="search_inner">
+                                                <form th:action="@{ReAttribution}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text" name="codeEntr" placeholder="ENTREZ RAISON SOCIALE">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="serach_field_2 most">
+                                            <div class="search_inner">
+                                                <form th:action="@{ReAttribution}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text" name="codeDem" placeholder="ENTREZ N° PIECE DEMANDEUR">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+								  
+				                <div class="row">				                
+				                    <div class="col-12">
+				                        <div class="page_title_box d-flex align-items-center justify-content-between">
+				                            <div class="page_title_left"></div>
+				                            <a th:if="${not #lists.isEmpty(listeCode)}" data-toggle="modal" href="#" data-target="#exampleModalCenter" class="white_btn3">ReAttribution</a  >
+				                        </div>
+				                    </div>
+				               
+				                    <div class="col-12 QA_section" th:if="${not #lists.isEmpty(listeCode)}">
+				                        <div class="card QA_table">
+				                            <div class="card-header" >
+				                            Levee Gage
+				                            </div>
+				                            <div class="card-body">
+				                                <div class="row mb-4" th:each="infofiscos : ${infosEntr}">
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.nomEntr}"></div >
+				                                        <div th:text="'RCCM : '+${infofiscos.regcommerceEntr}"></div >
+				                                        <div th:text="'CC : '+${infofiscos.contribuableEntr}"></div >
+				                                        <div th:text="'Tel : '+${infofiscos.telEntr}"></div >
+				                                        <div th:text="'E-Mail : '+${infofiscos.emailEntr}"></div >
+				                                    </div>
+				
+				                                    <div class="col-sm-6" th:if="${infofiscos}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infofiscos.proprietaires.nomProp} +' ' + ${infofiscos.proprietaires.prenomsProp}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infofiscos.proprietaires.sexeProp}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infofiscos.proprietaires.emailProp}"></div >
+				                                        <div th:text="'Tel : '+ ${infofiscos.proprietaires.telProp}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infofiscos.proprietaires.nationalite.titreNat}"></div >
+				                                    </div>
+				                                 </div>
+				                                <div class="row mb-4" th:if="${infosDem}">
+				                                    <div class="col-sm-4" th:each="infoDem : ${infosDem}">				                                        
+				                                        <div>
+				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
+				                                        </div>
+				                                        <div th:text="'Nom : '+ ${infoDem.nomDem} +' ' + ${infoDem.prenomsDem}"></div  >
+				                                        <div th:text="'Civilité : '+ ${infoDem.sexeDem}"></div >
+				                                        <div th:text="'E-Mail : '+ ${infoDem.emailDem}"></div >
+				                                        <div th:text="'Tel : '+ ${infoDem.telDem}"></div >
+				                                        <div th:text="'Nationalité : '+ ${infoDem.nationalite.titreNat}"></div >
+				                                    </div>
+				                                </div>				
+				                                <div class="table-responsive-sm">
+				                                <h5><strong>Historique des levee de gage</strong></h5>
+				                                    <table class="table table-striped">
+				                                        <thead>
+				                                            <tr>
+				                                            	<th class="right">#</th>
+				                                                <th class="center">Levées de Gage</th>
+				                                                <th>Date Création</th>
+				                                                <th>Type Operation</th>
+				                                                <th>Prix</th>
+				                                                <th class="center">Statut</th>
+				                                            </tr >
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr th:each="infofisc : ${listeCode}" th:if="${infofisc.typeCodeOp=='LeveeDeGage'}">
+				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
+				                                                <td class="center" th:text="${infofisc.codeImportation.numGag}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"></td>
+				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
+				                                                <td class="left" th:text="${infofisc.montantOp}"></td>
+				                                                <td th:switch="${infofisc.activeApprobationOp}">
+					                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIVER</a>
+					                                                <a href="#" class="btn btn-outline-warning mb-3" th:case="'bloquer'">BLOQUER</a>
+					                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
+					                                                <a class="sm_btn" th:case="*">INACTIF</a>
+				                                                </td >
+				                                            </tr >
+				                                        </tbody>
+				                                    </table>
+				                                </div>
+				                                <div class="row">
+				                                    <div class="col-lg-4 col-sm-5">
+				
+				                                    </div>
+				                                    
+				                                </div>
+				
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+     <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered largeModal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="col-sm-6 modal-title text-center" id="exampleModalLongTitle"><strong>INFORMATION DU DOSSIER</strong></h5>
+          <h5 class="col-sm-5 modal-title text-center" id="exampleModalLongTitle"><strong>INFORMATION DU BENEFICIAIRE</strong></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{valider/ReAttribution}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body row">
+						<div class="col-lg-6">
+                            <div class="form-group row">                                                
+								<label class="col-sm-4 col-form-label" for="inputState">Marque</label>
+								<div class="col-sm-8">
+									<select name="marque" id="inputState" class="form-control">
+										<option value="">Veuillez selectionner</option >
+										<th:block th:each="nat : ${listemarques}">
+											<option th:text="${nat.nomMarque}" th:value="${nat.idMarque}"></option >
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">                                                
+								<label class="col-sm-4 col-form-label" for="inputState">Genre</label>
+								<div class="col-sm-8">
+									<select name="genreMarque" id="inputState" class="form-control">
+										<option value="">Veuillez selectionner</option >
+										<th:block th:each="nats : ${listegenreMarques}">
+											<option th:text="${nats.nomGen}" th:value="${nats.idGen}"></option >
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputPassword3" class="col-sm-4 col-form-label">N° immatriculation*</label>
+								<div class="col-sm-8">
+									<input name="numImmatriculationtGag" type="text" class="form-control" id="inputPassword3">
+									<input name="codeEntr" type="hidden" class="form-control" th:if="${infosEntr}" th:each="infoentre : ${infosEntr}" th:value="${infoentre.idEntr}">
+									<input name="codeDem" type="hidden" class="form-control" th:if="${infosDem}" th:each="infodem : ${infosDem}" th:value="${infodem.idDem}">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">Date mise en circulation*</label>
+								<div class="col-sm-8">
+									<input type="date" name="dateMiseCirculationGag" onchange="ageCalculate()"   class="form-control" id="dateMiseCirculationGag">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">Age véhicule *</label>
+								<div class="col-sm-8">
+									<div class="form-row">
+										<div class="col-sm-4">
+											<div class="form-row">
+												<input type="text" name="anLGage"  class="col-sm-6 form-control" id="anLGage" placeholder="An">
+												<label for="inputEmail3" class="col-sm-6">An</label>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="form-row">
+												<input type="text" name="moisLGage"  class="col-sm-6 form-control" id="moisLGage" placeholder="Ms">
+												<label for="inputEmail3" class="col-sm-6">Ms</label>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="form-row">
+												<input type="text" name="joursLGage"  class="col-sm-6 form-control" id="joursLGage" placeholder="Jr">
+												<label for="inputEmail3" class="col-sm-6">Jrs</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">N° carte grise*</label>
+								<div class="col-sm-8">
+									<input name="numCarteGriseGag" type="text" class="form-control" id="inputEmail3">
+								</div>
+							</div>
+							 <div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">Date gage *</label>
+								<div class="col-sm-8">
+									<input type="date" name="dateGag"  class="form-control" id="inputEmail3">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">N° chassis *</label>
+								<div class="col-sm-8">
+									<input name="numChassisGag" type="text" class="form-control" id="inputEmail3">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-sm-4 col-form-label">Type technique *</label>
+								<div class="col-sm-8">
+									<input name="TypeTechGag" type="text" class="form-control" id="inputEmail3">
+								</div>
+							</div>
+							 <div class="form-group row">                                                
+								<label class="col-sm-4 col-form-label" for="inputState">Usage</label>
+								<div class="col-sm-8">                                 
+									<select name="UsageGag" id="inputState" class="form-control">
+										<option value="">Veuillez selectionner</option >
+										<option value="personnel">Personnel</option>
+										<option value="commercial">Commercial</option >
+									</select>
+								</div>
+							</div>
+	                    </div>
+	                    <div class="col-lg-6"> 
+	                    	<div class="form-group row">                                              
+	                        	<label class="col-sm-4 col-form-label" for="inputState">Civilité*</label>
+	                        	<div class="col-sm-8">                                                         
+	                            <select name="sexeBen" id="sexeBen" class="form-control">
+	                            	<option value="">Veuillez selectionner</option >
+	                                <option value="monsieur">Monsieur</option>
+	                                <option value="madame">Madame</option >
+	                                <option value="mademoiselle">Mademoiselle</option >
+	                            </select>
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                        	<label for="inputPassword3" class="col-sm-4 col-form-label">Nom*</label>
+	                        	<div class="col-sm-8"> 
+	                            <input name="nomBen" type="text" class="form-control" id="nomBen" >
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                        	<label for="inputEmail3" class="col-sm-4 col-form-label">Prénom*</label>
+	                        	<div class="col-sm-8"> 
+	                            <input name="prenomsBen" type="text" class="form-control" id="prenomsBen" >
+	                            </div>
+	                        </div>                   
+	                        <div class="form-group row">
+	                        	<label class="col-sm-4 col-form-label" for="pieceBeneficiaire">Type pièces*</label>
+	                        	<div class="col-sm-8"> 
+	                            <select name="pieceBeneficiaire" id="pieceBeneficiaire" class="form-control">
+	                            	<option value="">Veuillez selectionner</option >
+	                                <th:block th:each="typiec : ${listetypePieceIdentite}">
+	                                    <option th:value="${typiec.idTyp}" th:text="${typiec.titreTyp}"></option >
+	                                </th:block>
+	                            </select>
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                        	<label for="inputPassword3" class="col-sm-4 col-form-label">N° de la pièce*</label>
+	                        	<div class="col-sm-8"> 
+	                            <input name="numpieceBen" type="text" class="form-control" id="numpieceBen" >
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                            <label for="inputPassword3" class="col-sm-4 col-form-label">Date validité *</label>
+	                            <div class="col-sm-8"> 
+	                                <input type="Date" name="validitePieceBen" class="form-control" id="validitePieceBen">
+	                            </div>
+	                        </div>                              
+	                        <div class="form-group row">
+	                            <label class="col-sm-4 col-form-label" for="inputState">Nationalité*</label>
+	                            <div class="col-sm-8"> 
+	                                <select name="natBeneficiaire" id="natBeneficiaire" class="form-control">
+	                                	<option value="">Veuillez selectionner</option >
+	                                    <th:block th:each="nat : ${listeNationalites}">
+	                                        <option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+	                                    </th:block>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                        	<label for="inputPassword3" class="col-sm-4 col-form-label">N° Tel *</label>
+	                        	<div class="col-sm-8"> 
+	                            	<input name="telBen" type="text" class="form-control" id="inputPassword3">
+	                            </div>
+	                        </div>
+	                        <div class="form-group row">
+	                        	<label for="inputPassword3" class="col-sm-4 col-form-label">E-Mail</label>
+	                        	<div class="col-sm-8"> 
+	                            	<input name="emailBen" type="email" class="form-control" id="inputPassword3">
+	                            </div>
+	                        </div>					                
+		                </div>
+	                </div>	
+				</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Enregistrer</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+</div>
+</body>

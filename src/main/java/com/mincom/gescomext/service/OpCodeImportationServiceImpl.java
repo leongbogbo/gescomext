@@ -90,6 +90,16 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 		return opCodeImportationRepository.findAllOpCodeImportationNUMDOC(code);
 	}
 
+	@Override
+	public List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code) {
+		return opCodeImportationRepository.findOpCodeImportationNOMeNTR(code);
+	}
+
+	@Override
+	public List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code) {
+		return opCodeImportationRepository.findOpCodeImportationNUMpIECEdEMANDEUR(code);
+	}
+
 
 	
 

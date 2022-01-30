@@ -28,7 +28,7 @@ layout:decorator="template3">
                                     <div class="box_right d-flex lms_block">
                                         <div class="serach_field_2">
                                             <div class="search_inner">
-                                                <form th:action="@{EditionFiches}" method="POST">
+                                                <form th:action="@{../Rechercher/Dossier}" method="POST">
                                                     <div class="search_field">
                                                         <input type="text" name="numDoc" placeholder="N° DOSSIER">
                                                     </div>
@@ -57,7 +57,7 @@ layout:decorator="template3">
 	                                        </thead>
                                         	<tbody>
 	                                            <tr role="row" class="odd" th:each="elmt:${listeCode}">
-	                                                 <td th:text="${#dates.format(elmt.dateOp, 'dd-mm-yyyy')}"></td >
+	                                                 <td th:text="${#dates.format(elmt.dateOp, 'dd-MM-yyyy')}"></td >
 	                                            	<td th:text="${elmt.numDocOp}"></td >
 	                                                <td th:switch="${elmt.CodeImportation.statutDemandeurCodeImp}">
 		                                                <span th:case="oui" th:text="${elmt.CodeImportation.Entreprise.nomEntr}"></span  >
@@ -66,9 +66,9 @@ layout:decorator="template3">
 	                                                
 	                                                <td th:text="${elmt.CodeImportation.numGag}"></td >
 	                                                <td th:text="${elmt.CodeImportation.UsageGag}"></td >
-	                                                <td th:text="${elmt.CodeImportation.TypeTechGag}"></td >
+	                                                <td th:text="${elmt.CodeImportation.TypeGag}"></td >
 	                                                <td><a th:href="@{'../../Operation/Update/Dossier/'+${elmt.numDocOp}}" class="btn_21"><i class="ti-pencil"></i></a></td>
-	                                                <td><a th:href="@{'../../Operation/Suppression/Dossier/'+${elmt.idOp}}" class="btn_2"><i class="ti-trash"></i></a></td>
+	                                                <td><a th:href="@{'../../Operation/Suppression/Dossier/'+${elmt.idOp}}" class="btn_2" onclick="return confirm('Etes-vous sûr ?')"><i class="ti-trash"></i></a></td>
 	                                            </tr>
                                            </tbody>
                                     	</table>

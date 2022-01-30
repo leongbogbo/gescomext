@@ -65,8 +65,8 @@ layout:decorator="template3">
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numGag}"></td >
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.UsageGag}"></td >
 	                                                
-	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.TypeTechGag}"></td >
-	                                                 <td th:text="${elmt.OpCodeImportation.CodeImportation.dateGag}"></td >
+	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.TypeGag}"></td >
+	                                                <td th:text="${#dates.format(elmt.OpCodeImportation.CodeImportation.dateGag, 'dd-MM-yyyy')}"></td>
 	                                                <td th:switch="${elmt.OpCodeImportation.activeApprobationOp}">
 		                                                	<span th:case="'actif'">
 		                                                	<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

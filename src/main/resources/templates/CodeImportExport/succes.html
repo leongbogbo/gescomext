@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head>
+<meta charset="utf-8">
+<title>Success</title>
+</head>
+<body class="crm_body_bg">
+    
+
+
+<!-- main content part here -->
+ 
+
+
+<div layout:fragment="MyContent">
+
+    <div class="main_content_iner overly_inner ">
+        <div class="container-fluid p-0 ">
+            <!-- page title  -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h3 class="f_s_25 f_w_700 dark_text"></h3>
+                            
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button">
+                                <span th:text="${dateDuJour}"> </span >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-xl-12 ">
+                    <div class="white_card card_height_100 mb_30 sales_succes_wrapper">
+                        <div class="white_card_header d-flex justify-content-end">
+                            <a th:href="@{/CodeImportExport/CreationDossier}" class="export_btn_green">NOUVEAU</a>
+                      	</div>
+                        <!-- <div class="media_thumb ml_25">
+                            <img src="img/plane_thumb.svg" alt="">
+                        </div> -->
+                        <div class="sales_card_body">
+                            <div class="single_sales">
+                                <h2 class="text-center"> <strong> <u> Félicitation!!! </u></strong></h2 > 
+                                <p> <span>Le dossier << <strong> N° <strong th:text="${numDossiers}"></strong></strong> >> a été validé avec succès</span></p>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -4,8 +4,11 @@ const progress = (value) => {
 }
 
    let step = document.getElementsByClassName('step');
+   let benefDispa = document.getElementsByClassName('benefDispa');
    let prevBtn = document.getElementById('prev-btn');
    let nextBtn = document.getElementById('next-btn');
+   let UsageGagBtn = document.getElementById('UsageGag');
+   let UsageGag2Btn = document.getElementById('UsageGag2');
    let submitBtn = document.getElementById('submit-btn');
    let form = document.getElementsByTagName('form')[0];
    let preloader = document.getElementById('preloader-wrapper');
@@ -14,6 +17,7 @@ const progress = (value) => {
  
    //form.onsubmit = () => { return false }
 
+   let countClick = 0;
    let current_step = 0;
    var count= $('div.step').length;
    let stepCount =count-1
@@ -24,9 +28,23 @@ const progress = (value) => {
 	      submitBtn.classList.add('d-none');
 	      nextBtn.classList.add('d-inline-block');
 	   }
-	
-
-	
+	   
+	   if($('#UsageGag').is(':checked') || $('#UsageGag2').is(':checked')){	
+		UsageGag2Btn.addEventListener('click', () => {		
+			countClick= $('div.step').length -3;
+			count= countClick;
+	   		stepCount =count-1
+		});
+		
+		UsageGagBtn.addEventListener('click', () => {
+			if(countClick!=0){
+				count= countClick +3;
+		   		stepCount =count-1
+			}		
+			
+		});
+	}
+   
    nextBtn.addEventListener('click', () => {
 	var struc = "";
 	

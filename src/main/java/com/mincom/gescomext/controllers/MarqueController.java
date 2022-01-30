@@ -11,9 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Marque;
 import com.mincom.gescomext.entities.Role;
+import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.repository.MarqueRepository;
+import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.MarqueService;
 
 @Controller
@@ -23,10 +28,19 @@ public class MarqueController {
 	MarqueService marqueService;
 	@Autowired
 	MarqueRepository marqueRepo;
+	@Autowired
+	UserRepository	userRepo;
 	
 	@RequestMapping("/parametre/listeMarques")
 	public String listeMarques(ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		List<Marque> elmt = marqueService.getAllMarque();
 		modelMap.addAttribute("marques", elmt);
 		modelMap.addAttribute("marqueVide", new Marque());

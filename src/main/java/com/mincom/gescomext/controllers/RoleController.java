@@ -8,8 +8,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Role;
+import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.repository.RoleRepository;
+import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.RoleService;
 
 @Controller
@@ -19,10 +24,19 @@ public class RoleController {
 	RoleService roleService;
 	@Autowired
 	RoleRepository roleRepo;
+	@Autowired
+	UserRepository	userRepo;
 	
 	@RequestMapping("/parametre/listeRoles")
 	public String listeUtilisateurs(ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		List<Role> elmts = roleService.getAllRole();
 		modelMap.addAttribute("roles", elmts);
 		modelMap.addAttribute("rolesVide", new Role());

@@ -49,7 +49,7 @@ layout:decorator="template2">
                         </div>
                     </div>
                     <div class="white_card_body">
-                        <div class="table-responsive">
+                        <div class="table-responsive conteneurActivite">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -63,7 +63,7 @@ layout:decorator="template2">
                                     <tr th:each="infofisc : ${listeCodes}" th:if="${infofisc.activePaimentOp==1 AND infofisc.activeApprobationOp=='inactif'}">
                                         <th scope="row" th:text="${infofisc.numDocOp}"></th>
                                         <td ><a th:href="@{'Approbation?numDoc='+${infofisc.numDocOp}}" th:text="${infofisc.CodeImportation.numOcca}"></a ></td >
-                                        <td th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"><a href="" ></a ></td >
+                                        <td th:text="${#dates.format(infofisc.dateOp, 'dd-MM-yyyy')}"><a href="" ></a ></td >
                                         <td th:switch="${infofisc.CodeImportation.statutDemandeurCodeImp}">
                                             <span th:case="oui" th:text="${infofisc.CodeImportation.Entreprise.nomEntr}"></span  >
                                             <span th:case="*" th:text="${infofisc.CodeImportation.Demandeur.nomDem}"></span  >
@@ -113,7 +113,7 @@ layout:decorator="template2">
                                 </tr>
                                 <tr>
                                     <td class="payment-title">DRE LE</td>
-                                    <td class="text-dark"><strong th:text="${#dates.format(infoCodefics.dateOp, 'dd-mm-yyyy')}"></strong ></td>
+                                    <td class="text-dark"><strong th:text="${#dates.format(infoCodefics.dateOp, 'dd-MM-yyyy')}"></strong ></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" th:switch="${infoCodefics.activeApprobationOp}">
@@ -141,7 +141,7 @@ layout:decorator="template2">
                         </div>
                     </div>
                     <div class="white_card_body">
-                      <div class="table-responsive m-b-30">
+                      <div class="table-responsive m-b-30 conteneurActivite">
                           <table class="table">
                               <thead>
                                     <tr>
@@ -155,7 +155,7 @@ layout:decorator="template2">
                                     <tr th:each="infofisco : ${listeCodes}" th:if="${infofisco.activePaimentOp==1 AND infofisco.activeApprobationOp=='actif' }">
                                         <th scope="row" th:text="${infofisco.numDocOp}"></th>
                                         <td ><a th:href="@{'Approbation?numDoc='+${infofisco.numDocOp}}" th:text="${infofisco.CodeImportation.numOcca}"></a ></td >
-                                        <td th:text="${#dates.format(infofisco.dateOp, 'dd-mm-yyyy')}"><a href="" ></a ></td >
+                                        <td th:text="${#dates.format(infofisco.dateOp, 'dd-MM-yyyy')}"><a href="" ></a ></td >
                                         <td th:switch="${infofisco.CodeImportation.statutDemandeurCodeImp}">
                                             <span th:case="oui" th:text="${infofisco.CodeImportation.Entreprise.nomEntr}"></span  >
                                             <span th:case="*" th:text="${infofisco.CodeImportation.Demandeur.nomDem}"></span  >

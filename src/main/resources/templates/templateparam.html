@@ -59,7 +59,7 @@
         </div>
     </div>
     <ul id="sidebar_menu" class="metismenu">
-        <li class="mm-active" sec:authorize="hasRole('ADMIN')">
+        <li class="mm-active">
             <a class="has-arrow" href="#" aria-expanded="true">
               <div class="nav_icon_small">
                 <img src="../svg/16.svg" alt="">
@@ -69,16 +69,16 @@
             </div>
             </a>
             <ul class="mm-collapse mm-show" style="">
-              <li><a th:href="@{../parametre/listeVilles}">Liste des villes</a></li>
-              <li><a th:href="@{../parametre/listeCommune}">Liste des communes</a></li>
-              <li><a th:href="@{../parametre/listeNationalites}">Liste des nationalités</a></li>
-              <li><a th:href="@{../parametre/listeFormeJuridiques}">Liste des Formes juriques</a></li>
-              <li><a th:href="@{../parametre/listeDepartements}">Liste des départements administratifs</a></li>
-              <li><a th:href="@{../parametre/listeDomaineActivites}">Liste des Domaines Activités</a></li>
-              <li><a th:href="@{../parametre/listeFonctions}">Liste des Fonctions</a></li>
-              <li><a th:href="@{../parametre/listeTypePieces}">Liste des types pièces</a></li>
-              <li><a th:href="@{../parametre/listeMarques}">Liste des Marques</a></li>
-              <li><a th:href="@{../parametre/listeGenres}">Liste des genres</a></li>
+              <li th:each="urlListeUser:${listeUrlUser}">
+		            <a th:href="@{'/'+${urlListeUser.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUser.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
             </ul>
         </li>
         <li class="mm-active" sec:authorize="hasRole('ADMIN')">
@@ -96,6 +96,21 @@
               <li><a th:href="@{../parametre/AttributionActions}">Attribution actions</a></li>
             </ul>
         </li>
+          <!--<li class="mm-active" sec:authorize="hasRole('ADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Statistique</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li><a th:href="@{../Statistique/Entreprise}">Entreprise</a></li>
+              <li><a th:href="@{../Statistique/listeRoles}">Roles</a></li>
+              <li><a th:href="@{../Statistique/AttributionActions}">Attribution actions</a></li>
+            </ul>
+        </li>-->
       </ul>
 </nav>
  <!--/ MENU GAUCHE  -->

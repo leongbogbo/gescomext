@@ -3447,6 +3447,22 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child::befor
   border: 0;
 }
 
+.export_btn_green {
+    background-color: #76d255;
+    border: 1px solid #76d255;
+    display: inline-block;
+    padding: 11px 23px;
+    text-transform: capitalize;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 5px;
+    white-space: nowrap;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    color: #fff;
+  }
+
 /* line 610, G:/admin_project/8 admin/Analytic/scss/_button.scss */
 .export_btn:focus {
   outline: none;
@@ -4041,6 +4057,13 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child::befor
 /* line 478, G:/admin_project/8 admin/Analytic/scss/_header.scss */
 .serach_field_2 {
   width: 430px;
+  position: relative;
+  margin-right: 0px;
+}
+
+.serach_field_2.most {
+  width: 250px;
+  margin-left: 25px;
   position: relative;
   margin-right: 0px;
 }
@@ -9524,7 +9547,54 @@ canvas#highlights {
 }
 
 /* line 674, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
-.sales_card_wrapper {
+.sales_succes_wrapper {
+  background-color: rgb(62, 165, 27);
+  position: relative;
+  background-image: url(../img/plane_thumb.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 100% 58%;
+  background-position: top left;
+}
+
+
+/* line 682, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
+.sales_succes_wrapper .sales_card_body {
+  background: #fff;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 40px;
+  padding: 30px 70px;
+  position: relative;
+  margin: 50px 15px 0px 15px;
+  bottom: 15px;
+}
+
+.sales_succes_wrapper .sales_card_body .single_sales {
+	width:100%;
+}
+
+/* line 693, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
+.sales_succes_wrapper .sales_card_body .single_sales span {
+  font-size: 25px;
+  font-weight: 700;
+  color: #757575;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+/* line 700, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
+.sales_succes_wrapper .sales_card_body .single_sales h3, .sales_succes_wrapper .sales_card_body .single_sales strong {
+  font-size: 25px;
+  color: #474D58;
+  font-weight: 900;
+  margin-bottom: 0;
+}
+
+.sales_card_wrappers {
   background-color: #F65365;
   position: relative;
   background-image: url(../img/plane_thumb.svg);
@@ -9533,6 +9603,7 @@ canvas#highlights {
   background-size: 100% 58%;
   background-position: top left;
 }
+
 
 /* line 682, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
 .sales_card_wrapper .sales_card_body {
@@ -9557,7 +9628,7 @@ canvas#highlights {
 }
 
 /* line 700, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
-.sales_card_wrapper .sales_card_body .single_sales h3 {
+.sales_card_wrapper .sales_card_body .single_sales h3, .sales_card_wrapper .sales_card_body .single_sales strong {
   font-size: 25px;
   color: #474D58;
   font-weight: 900;
@@ -13538,6 +13609,18 @@ a.pswp__share--download:hover {
   .custom-card .card-footer > div {
     padding: 15px 13px;
   }
+}
+
+@media (min-width: 576px){
+	.modal-dialog.largeModal {
+	    max-width: 972px;
+	    margin: 1.75rem auto;
+	}	
+}
+
+.white_card_body .table-responsive.conteneurActivite{
+	height: 450px;
+	overflow: auto;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -20,7 +20,12 @@ import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.entities.ActionListe;
+import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.entities.Ville;
+import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.repository.VilleRepository;
 import com.mincom.gescomext.service.VilleService;
 
@@ -40,10 +45,19 @@ public class VilleController {
 	VilleService villeService;
 	@Autowired
 	VilleRepository villeRepo;
+	@Autowired
+	UserRepository	userRepo;
 	
 	@RequestMapping("/parametre/listeVilles")
 	public String listeVilles(ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		List<Ville> vills = villeService.getAllVille();
 		modelMap.addAttribute("villes", vills);
 		modelMap.addAttribute("villeVide", new Ville());

@@ -63,7 +63,7 @@ layout:decorator="template">
 	                                                <td th:text="${elmt.CodeImportation.Entreprise.codeImportExportEntr}"></td >
 	                                                <td th:text="${elmt.CodeImportation.numCodFic}"></td >
 	                                                 <td th:text="${elmt.typeOp}"></td >
-	                                                <td th:text="${#dates.format(elmt.dateOp, 'dd-mm-yyyy')}"></td >
+	                                                <td th:text="${#dates.format(elmt.dateOp, 'dd-MM-yyyy')}"></td >
 	                                                <td th:text="${elmt.montantOp}"></td >
 	                                                <td th:switch="${elmt.activeApprobationOp}">
 		                                                <a href="#" class="btn btn-outline-success mb-3" th:case="'actif'">ACTIF</a>

@@ -99,15 +99,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 		}*/
 		
-		http.authorizeRequests().antMatchers("/login").permitAll();
-		http.authorizeRequests().antMatchers("/css/**").permitAll();
-		http.authorizeRequests().antMatchers("/images/**").permitAll();
-		http.authorizeRequests().antMatchers("/js/**").permitAll();
-		http.authorizeRequests().antMatchers("/svg/**").permitAll();
-		http.authorizeRequests().antMatchers("/classes/**").permitAll();
-		http.authorizeRequests().antMatchers("/pdf/**").permitAll();
-		http.authorizeRequests().antMatchers("/WEB-INF/**").permitAll();
-		http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/login").permitAll()
+		.antMatchers("/css/**").permitAll()
+		.antMatchers("/images/**").permitAll()
+		.antMatchers("/js/**").permitAll()
+		.antMatchers("/svg/**").permitAll()
+		.antMatchers("/classes/**").permitAll()
+		.antMatchers("/pdf/**").permitAll()
+		.antMatchers("/WEB-INF/**").permitAll()
+		.anyRequest().authenticated();
 		http.formLogin().loginPage("/login");
 		http.exceptionHandling().accessDeniedPage("/accessDenied");
 	}

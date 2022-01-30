@@ -69,7 +69,17 @@
                 </div>
             </a>
         </li >
-      </ul>
+       	<li >
+            <a th:href="@{'/LeveeDeGage/ReAttribution'}" aria-expanded="false">
+                <div class="nav_icon_small">
+                    <img src="../svg/3.svg" alt="">
+                </div>
+                <div class="nav_title">
+                    <span th:text="${'ReAttribution'}"></span >
+                </div>
+            </a>
+        </li >
+     </ul>
 </nav>
  <!--/ MENU GAUCHE  -->
 <section class="main_content dashboard_part large_header_bg">
@@ -90,10 +100,10 @@
                     <input type="checkbox" id="checkbox">
                     <div class="slider round open_miniSide"></div>
                 </label>
-                <h3>CODE OCCASIONNEL</h3>
+                <h3>ZONE DE RECHERCHE</h3>
                 <div class="header_right d-flex justify-content-between align-items-center">
                     <div class="header_notification_warp d-flex align-items-center">
-                     
+                    
                     </div>
                     <div class="profile_info">
                         <img src="../images/client_img.png" alt="#">
@@ -104,7 +114,7 @@
                             </div>
                             <div class="profile_info_details">
                                 <a href="monProfile">Mon Profile </a>
-                                <a href="../parametre/listeUtilisateurs">Parametre</a>
+                                 <a href="../parametre/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
                                 <a href="/gescomext/logout">Déconnexion</a>
                             </div>
                         </div>
@@ -134,7 +144,6 @@
 </div>
 </section>
 <!-- main content part end -->
-
 
 <!-- footer  -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
@@ -185,5 +194,6 @@
 <script th:src="@{/js/custom.js}"></script>
 <script th:src="@{/js/stepByStep.js}"></script>
 <script th:src="@{/js/static-forms.js}"></script>
+<script th:src="@{/js/ageCalculate.js}"></script>
 </body>
 </html>
