@@ -73,28 +73,28 @@
 			<textField>
 				<reportElement x="260" y="149" width="294" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.sigleEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="262" y="211" width="292" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.codeImportExportEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="264" y="273" width="290" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.numCodFic}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="261" y="335" width="293" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.contribuableEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -108,14 +108,14 @@
 			<textField>
 				<reportElement x="261" y="77" width="293" height="60" uuid="83d80bc9-db80-488b-b900-63a65261fded"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{opCodeImportation.codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{opCodeImportation.codeImportation.entreprise.nomEntr}.toUpperCase() : $F{opCodeImportation.codeImportation.demandeur.nomDem}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="260" y="390" width="294" height="30" uuid="4732903a-8c11-4b6b-8aba-a530752afd55"/>
 				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dateTrait}]]></textFieldExpression>
 			</textField>

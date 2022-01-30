@@ -2,6 +2,8 @@ package com.mincom.gescomext.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.mincom.gescomext.entities.Entreprise;
 
 public interface EntrepriseService {
@@ -17,5 +19,6 @@ public interface EntrepriseService {
 	Entreprise findByNomEntr(String nomEntr);
 	Entreprise findByRegcommerceEntr(String regcommerceEntr);
 	Entreprise findByNumIduEntr(String numIduEntr);
+	List<Entreprise> findEntrepriseByGeneralInfo (String code);
 
 }

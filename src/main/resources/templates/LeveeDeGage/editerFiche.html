@@ -51,12 +51,13 @@ layout:decorator="template3">
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Levee Gage</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Usage</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Type</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Signataire</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Statut</th>
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
 	                                            <tr role="row" class="odd" th:each="elmt:${listecodes}" th:if="${elmt.statutTrait=='signature' AND elmt.OpCodeImportation.activeSignatureOp=='oui'}">
-	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-mm-yyyy')}"></td >
+	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-MM-yyyy')}"></td >
 	                                            	<td th:text="${elmt.OpCodeImportation.numDocOp}"></td >
 	                                                <td th:switch="${elmt.OpCodeImportation.CodeImportation.statutDemandeurCodeImp}">
 		                                                <span th:case="oui" th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr}"></span  >
@@ -66,7 +67,8 @@ layout:decorator="template3">
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numGag}"></td >
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.UsageGag}"></td >
 	                                                
-	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.TypeTechGag}"></td >
+	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.TypeGag}"></td >
+	                                                <td th:text="${elmt.user.nomUser}"></td >
 	                                                <td >
 		                                                <a target="_blank" th:href="@{'EditionFiche?numDoc='+${elmt.OpCodeImportation.numDocOp}}" class="btn btn-outline-info mb-3">Editer Fiche</a>
 	                                                </td >

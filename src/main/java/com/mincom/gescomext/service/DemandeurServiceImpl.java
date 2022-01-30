@@ -27,13 +27,11 @@ public class DemandeurServiceImpl implements DemandeurService {
 	@Override
 	public void deleteDemandeur(Demandeur elmt) {
 		demandeurRepository.delete(elmt);
-		
 	}
 
 	@Override
 	public void deleteDemandeurById(Long id) {
-		demandeurRepository.deleteById(id);;
-		
+		demandeurRepository.deleteById(id);
 	}
 
 	@Override
@@ -44,6 +42,11 @@ public class DemandeurServiceImpl implements DemandeurService {
 	@Override
 	public List<Demandeur> getAllDemandeur() {
 		return demandeurRepository.findAll();
+	}
+
+	@Override
+	public List<Demandeur> findDemandeurByGeneralInfo(String code) {
+		return demandeurRepository.findDemandeurByGeneralInfo(code);
 	}
 
 	

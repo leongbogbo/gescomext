@@ -76,6 +76,11 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 		return entrepriseRepository.findByNomEntr(nomEntr);
 	}
 
+	@Override
+	public List<Entreprise> findEntrepriseByGeneralInfo(String code) {
+		return entrepriseRepository.findEntrepriseByGeneralInfo(code);
+	}
+
 	
 
 }

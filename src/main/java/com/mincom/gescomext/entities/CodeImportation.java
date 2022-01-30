@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,17 +37,23 @@ public class CodeImportation {
 	private String numOcca;
 	private String numFactureOcca;
 	private String emetteurOcca;
-	private String dateEmisOcca;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dateEmisOcca;
 	private String declarationOcca;
 	private String objetOcca;
 	private String typeCodeOcca;	
 	
 	private String numGag;
-	private String dateGag;
-	private String numImmatriculationtGag;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dateGag;
+	private String numImmatriculationtGag;	
 	private String numCarteGriseGag;
 	private String numChassisGag;
-	private String dateMiseCirculationGag;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dateMiseCirculationGag;
 	private String typeTechGag;
 	private String usageGag;
 	private String typeGag;

@@ -62,6 +62,12 @@ layout:decorator="template2" xml:lang="">
 						                                        <input name="prenomsDem" type="text" class="form-control" id="inputEmail3" th:value="${verifDemandeur.prenomsDem}" required="required">
 						                                    </div>
 						                                </div>
+						                                  <div class="form-group row">
+						                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Compte contribuable <strong class="text-danger">*</strong></label>
+						                                    <div class="col-sm-8">
+						                                        <input name="contribuableDem" type="text" class="form-control" id="inputEmail3" th:value="${verifDemandeur.contribuableDem}" required="required">
+						                                    </div>
+						                                </div>
 														<div class="form-group row">
 															<label class="col-sm-4 col-form-label" for="inputState">Fonction <strong class="text-danger">*</strong></label>
 															<div class="col-sm-8">
@@ -142,7 +148,7 @@ layout:decorator="template2" xml:lang="">
 														</div><br>
 														<div class="form-group row">
 															<label for="inputEmail3" class="col-sm-4 col-form-label">Date d'émission <strong class="text-danger">*</strong></label> <div class="col-sm-8">
-															<input type="date" name="dateEmisOcca"  class="form-control" id="inputEmail3" th:value="${verifCodeImportation.dateEmisOcca}" required="required"></div>
+															<input type="date" name="dateEmisOcca"  class="form-control" id="inputEmail3" th:value="${#dates.format(verifCodeImportation.dateEmisOcca, 'yyyy-MM-dd')}" required="required"></div>
 														</div><br>
 														<div class="form-group row">
 															<label class="col-sm-4 col-form-label" for="inputState">Fiche déclaration?</label><div class="col-sm-8">

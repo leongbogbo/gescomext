@@ -51,7 +51,7 @@ layout:decorator="template" xml:lang="">
 			                                    <select name="typeStructure" id="typeStructure" class="form-control" required>
 			                                    	<option value="">Veuillez selectionner</option>
 			                                        <th:block th:each="struc : ${listetypeStructure}">
-						                            	<option th:value="${struc.idStruc}" th:if="${struc.idStruc==7 or struc.idStruc==8 or struc.idStruc==10}" th:text="${struc.titreStruc}" ></option >
+						                            	<option th:value="${struc.idStruc}" th:if="${struc.idStruc==7 or struc.idStruc==8 or struc.idStruc==10 or struc.idStruc==11}" th:text="${struc.titreStruc}" ></option >
 						                            </th:block>
 			                                    </select>
 			                                </div>
@@ -91,11 +91,12 @@ layout:decorator="template" xml:lang="">
 			                                <div class="mt-2" id="exoregcomBody">                                          
 			                                	<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
 			                                    <select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
-			                                        <option value="non">NON</option>
+			                                        <option value="">Veuillez selectionner</option>
+			                                        <option value="non" selected>NON</option>
 			                                        <option value="oui">OUI</option >
 			                                    </select>
 			                                </div>
-			                                 <div class="mt-2" id="typeRCCM">                                          
+			                                 <div class="mt-2" id="typeRCCMEntrBody">                                          
 			                                	<label class="form-label" for="inputState">TYPE RCCM</label>						                                    
 			                                    <select name="typeRCCMEntr" id="typeRCCMEntr" class="form-control">
 			                                        <option value="ancien">ANCIEN</option >

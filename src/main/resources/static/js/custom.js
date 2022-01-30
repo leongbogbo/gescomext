@@ -405,13 +405,13 @@ $('.spin_icon_clicker').on('click', function(e) {
     //GESTION PERSONNEL
     $('#typeStructure').change(function(){
 	    var nbre = $(this).val();
-	    if(nbre == 7){
+	    if(nbre == 7 || nbre == 11){
 			$("#numIduEntr").removeAttr('disabled');
-            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#typeRCCM").show();
+            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#typeRCCMEntrBody").show();
             $("#departementBody").hide();
 		}else{
 	    	$('#numIduEntr').val("").attr('disabled','disabled');
-            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#nouvauselect,#typeRCCM").hide();
+            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#nouvauselect,#typeRCCMEntrBody").hide();
             $("#departementBody").show();		
 		}
 	});
@@ -487,6 +487,15 @@ $('.spin_icon_clicker').on('click', function(e) {
 		$("#commune").empty();
 		listeCommuneByVille()    
   	});
+  	
+  	$("#role_id").on('change', function(e) {
+		$("#importBody").empty();
+		$("#occaBody").empty();
+		$("#gageBody").empty();
+		$("#paramBody").empty();
+		listeActionByRole();
+  	});
+  	
   	$("#nomEntr").on('keyup', function(e) {
 		verificationRaisonSociale()    
   	});
@@ -516,6 +525,7 @@ $('.spin_icon_clicker').on('click', function(e) {
 	
 }(jQuery));
 
+/*********==========================--------------------FONCTION------------------=================================*/
 function listeCommuneByVille(){
 	villeId = $("#ville").val();
 	urlString = "../api/"+villeId;
@@ -525,6 +535,68 @@ function listeCommuneByVille(){
 			$.each(responseJson, function(index, commune){				
 				$("<option>").val(commune.idCommune).text(commune.nomCommune).appendTo(designeCommune);
 			});
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+			
+		});
+}
+
+function listeActionByRole(){
+	roleId = $("#role_id").val();
+	urlString = "../api/profile/action/"+roleId;
+	urlAction = "../api/profile/listeAction";
+	//LISTE DES ACTIONS PAR ROLE
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designeElmt = $("#occaBody");
+			//LISTE DES ACTIONS
+			$.ajax({metod: "GET", url: urlAction})
+				.done(function(responsesJson){
+					//designeElmt = $("#occaBody");
+					var cop;					
+					$.each(responsesJson, function(index, actionListe){
+						var reponse="non";
+						$.each(responseJson, function(index, actionListes){							
+							if(actionListe.lienActPro == actionListes.lienActPro){
+								reponse="oui";
+							}
+						});
+						cop = actionListe.lienActPro.split("/");
+						if(reponse=="oui"){
+							if(cop[0]=='CodeImportExport'){
+								$("#importBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='CodeOccasionnel'){
+								$("#occaBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='LeveeDeGage'){
+								$("#gageBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='parametre'){
+								$("#paramBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}
+						}else if(reponse=="non"){
+							if(cop[0]=='CodeImportExport'){
+								$("#importBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='CodeOccasionnel'){
+								$("#occaBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='LeveeDeGage'){
+								$("#gageBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='parametre'){
+								$("#paramBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}
+						}
+					});
+				});
+			
 		})
 		.fail(function(){
 			console.log("Erreur pendant le chargement");

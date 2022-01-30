@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mincom.gescomext.config.CalculeCodesExportation;
 import com.mincom.gescomext.config.GetCurrentUser;
 import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.config.TableauCorrespondance;
 import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Beneficiaire;
 import com.mincom.gescomext.entities.CodeImportation;
@@ -129,7 +130,7 @@ public class CodeImportationController {
 	SimpleDateFormat formater = new SimpleDateFormat("dd MMMM yyyy 'à' hh:mm:ss");
 	String dateDuJour = formater.format(aujourdhui);
 
-	@RequestMapping("")
+	@RequestMapping("/")
 	public String idex(ModelMap modelMap) throws IOException {
 		/*
 		 * ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser(); String
@@ -138,6 +139,28 @@ public class CodeImportationController {
 		 * classGestionUrl.getListeAcctions(user,category);
 		 * //modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		 */
+
+		  /*List<TableauCorrespondance> listesd =
+		  TableauCorrespondance.getAlphaBaseDix(); listesd.forEach(voir ->{
+		  System.out.println(" BaseDix => "+voir.getBaseDix()+" Lettre => "+voir.
+		  getLettreAncien()+" Correpondance => "+voir.getKey()); });
+		  
+		  List<TableauCorrespondance> listesds =
+		  TableauCorrespondance.getContribuableCode(); listesds.forEach(voir ->{
+		  System.out.println(" BaseDix => "+voir.getBaseDix()+" Lettre => "+voir.
+		  getContriKey()+" Correpondance => "+voir.getKey()); });
+		 */
+		
+		/*SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+		String dateDuJours = formatGag.format(new Date());
+		LocalDate dates = LocalDate.parse("2021-10-04", DateTimeFormatter.ISO_LOCAL_DATE);
+		LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+
+		Period diffDate = Period.between(dJour, dates);
+		int years = Math.abs(diffDate.getYears());
+		int mois = Math.abs(diffDate.getMonths());
+		System.out.println(diffDate);
+		System.out.println(years);*/
 
 		return "index";
 	}
@@ -267,7 +290,21 @@ public class CodeImportationController {
 			System.out.println("ANCIEN " + regcommerceEntrAnc);
 			entreprise.setRegcommerceEntr(regcommerceEntrAnc);
 		}
+		if(codeImportation.getDateMiseCirculationGag()!=null) {
+			Date dategag = codeImportation.getDateMiseCirculationGag();
+			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDuJours = formatGag.format(new Date());
+			LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
 
+			Period diffDate = Period.between(dJour, dates);
+			int jours = Math.abs(diffDate.getDays());
+			int mois = Math.abs(diffDate.getMonths());
+			int years = Math.abs(diffDate.getYears());
+			modelMap.addAttribute("jours", jours);
+			modelMap.addAttribute("mois", mois);
+			modelMap.addAttribute("years", years);
+		}
 		String pageselect = "confirmerDossierMoral";
 		List<Commune> coms = communeService.getAllCommune();
 		List<Ville> vils = villeService.getAllVille();
@@ -336,7 +373,7 @@ public class CodeImportationController {
 			Entreprise verifByContriEntreprise = entrepriseService
 					.findByContribuableEntr(entreprise.getContribuableEntr());
 			Entreprise verifByRaisonEntreprise = entrepriseService.findByNomEntr(entreprise.getNomEntr());
-
+			System.out.println(entreprise.getExoregcomEntr());
 			if ((verifByRaisonEntreprise == null) && (verifByContriEntreprise == null)) {
 
 				if (entreprise.getExoregcomEntr().equals("non") && !entreprise.getRegcommerceEntr().isEmpty()
@@ -442,14 +479,14 @@ public class CodeImportationController {
 			}
 		} else if (category.equals("LeveeDeGage")) {
 
-			String dategag = codeImportation.getDateGag();
+			Date dategag = codeImportation.getDateGag();
 
 			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
 			String dateDuJours = formatGag.format(new Date());
-			LocalDate dates = LocalDate.parse(dategag, DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dategags = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
 			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
 
-			Period diffDate = Period.between(dJour, dates);
+			Period diffDate = Period.between(dJour, dategags);
 			int years = Math.abs(diffDate.getYears());
 			int mois = Math.abs(diffDate.getMonths());
 
@@ -458,7 +495,7 @@ public class CodeImportationController {
 			if ((years == 2 && mois > 0) || (years > 2)) {
 				typeGage = "ordinaire";
 			} else if ((years == 2 && mois == 0) || (years < 2)) {
-				typeGage = "exceptionnel";
+				typeGage = "exceptionnellele";
 			}
 
 			String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(),
@@ -492,7 +529,7 @@ public class CodeImportationController {
 
 				if (typeGage.equals("ordinaire")) {
 					opCodeImportation.setMontantOp("40000");
-				} else if (typeGage.equals("exceptionnel")) {
+				} else if (typeGage.equals("exceptionnellele")) {
 					opCodeImportation.setMontantOp("50000");
 				}
 
@@ -515,7 +552,7 @@ public class CodeImportationController {
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
 
-		return "./" + category + "/creationDossierMoral";
+		return "./" + category + "/succes";
 	}
 
 	// ZONE RENOUVELLEMENT
@@ -721,11 +758,11 @@ public class CodeImportationController {
 		}
 		if (category.equals("LeveeDeGage")) {
 
-			String dategag = codeImportation.getDateGag();
+			Date dategag = codeImportation.getDateGag();
 
 			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
 			String dateDuJours = formatGag.format(new Date());
-			LocalDate dates = LocalDate.parse(dategag, DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
 			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
 
 			Period diffDate = Period.between(dJour, dates);
@@ -737,7 +774,7 @@ public class CodeImportationController {
 			if ((years == 2 && mois > 0) || (years > 2)) {
 				typeGage = "ordinaire";
 			} else if ((years == 2 && mois == 0) || (years < 2)) {
-				typeGage = "exceptionnel";
+				typeGage = "exceptionnellele";
 			}
 
 			String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(),
@@ -771,7 +808,7 @@ public class CodeImportationController {
 
 				if (typeGage.equals("ordinaire")) {
 					opCodeImportation.setMontantOp("40000");
-				} else if (typeGage.equals("exceptionnel")) {
+				} else if (typeGage.equals("exceptionnellele")) {
 					opCodeImportation.setMontantOp("50000");
 				}
 
@@ -796,9 +833,14 @@ public class CodeImportationController {
 		return "./" + category + "/creationDossierMoral";
 	}
 
+	Entreprise infosEntr = new Entreprise();
+	Proprietaire infosProp = new Proprietaire();
+	Demandeur infosDem = new Demandeur();
+	Beneficiaire infosBen = new Beneficiaire();
+
 	// ZONE REATTRIBUTION
 	@RequestMapping("/{category}/ReAttribution")
-	public String reattributionCode(@PathVariable("category") String category, String codeImportExportEntr,
+	public String reattributionCode(@PathVariable("category") String category, String codeEntr, String codeDem,
 			ModelMap modelMap) {
 		// User connecté
 		String username = GetCurrentUser.getUserConnected();
@@ -807,13 +849,184 @@ public class CodeImportationController {
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 
-		if (codeImportExportEntr != null) {			
-				List<OpCodeImportation> fgg = opCodeImportationService
-						.findAllCodeImportationByCodeOccaOrCodeLeveeGage(codeImportExportEntr);
-				modelMap.addAttribute("listeCode", fgg);
-				modelMap.addAttribute("codeImportExportEntr", codeImportExportEntr);
+		List<OpCodeImportation> listecodeImp = new ArrayList<>();
+		Integer quotaOcca = 0;
+		String statuts="";
+		if (codeEntr != null && !codeEntr.isEmpty() && codeDem == null) {
+			listecodeImp = opCodeImportationService.findOpCodeImportationNOMeNTR(codeEntr);
+			listecodeImp.forEach(listes -> {
+				infosEntr = listes.getCodeImportation().getEntreprise();
+				infosBen = listes.getCodeImportation().getBeneficiaire();
+			});
+			statuts = "entr";
+			quotaOcca = infosEntr.getQuotaOccaEntr();
+			modelMap.addAttribute("listeCode", listecodeImp);
+			modelMap.addAttribute("infosEntr", infosEntr);
+			modelMap.addAttribute("infosBen", infosBen);
+		} else if (codeEntr == null && codeDem != null && !codeDem.isEmpty()) {
+			listecodeImp = opCodeImportationService.findOpCodeImportationNUMpIECEdEMANDEUR(codeDem);
+			listecodeImp.forEach(listes -> {
+				infosDem = listes.getCodeImportation().getDemandeur();
+				infosBen = listes.getCodeImportation().getBeneficiaire();
+			});
+			statuts = "dem";
+			quotaOcca = infosDem.getQuotaOccaDem();
+			modelMap.addAttribute("listeCode", listecodeImp);
+			modelMap.addAttribute("infosDem", infosDem);
+			modelMap.addAttribute("infosBen", infosBen);
 		}
+		List<Nationalite> paysOrigine = natService.getAllNationalite();
+		List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
+		List<TypeStructure> typeStructure = typeStructureService.getAllTypeStructure();
+		List<Fonction> fonction = fonctionService.getAllFonction();
+		List<Marque> marques = marqueService.getAllMarque();
+		List<GenreMarque> genreMarques = genreMarqueService.getAllGenreMarque();
+
+		modelMap.addAttribute("listetypePieceIdentite", typePieceIdentite);
+		modelMap.addAttribute("listefonction", fonction);
+		modelMap.addAttribute("listemarques", marques);
+		modelMap.addAttribute("listegenreMarques", genreMarques);
+		modelMap.addAttribute("listetypeStructure", typeStructure);
+		modelMap.addAttribute("listeNationalites", paysOrigine);
+		modelMap.addAttribute("quotaOcca", quotaOcca);
+		modelMap.addAttribute("statuts", statuts);
 		return "./" + category + "/reattributionDossier";
+	}
+
+	@RequestMapping("/{category}/valider/ReAttribution")
+	public String reattributionCode(@PathVariable("category") String category,
+			@ModelAttribute("codeImportation") CodeImportation codeImportation,
+			@ModelAttribute("beneficiaire") Beneficiaire beneficiaire, Long codeEntr, Long codeDem, ModelMap modelMap) {
+		String codeStruc = "";
+
+		// User connecté
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+
+		OpCodeImportation oPCodeImportations = new OpCodeImportation();
+		// calcul du dernier dossier
+		Integer numDossier = 1001001;
+		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
+		if (elmt != null) {
+			numDossier = 1 + elmt.getNumDocOp();
+		}
+		if (category.equals("CodeOccasionnel")) {
+			if (codeEntr != null && codeEntr.SIZE != 0 && codeDem == null) {
+				Entreprise entrFound = entrepriseService.getEntrepriseById(codeEntr);
+				if (entrFound != null) {
+					entrFound.setQuotaOccaEntr(entrFound.getQuotaOccaEntr()+1);
+					entrepriseService.saveEntreprise(entrFound);
+					codeStruc = entrFound.getTypeStructure().getCodeStruc();
+					codeImportation.setEntreprise(entrFound);
+					codeImportation.setStatutDemandeurCodeImp("oui");
+					oPCodeImportations.setMontantOp("0");
+					oPCodeImportations.setActivePaimentOp(1);
+					oPCodeImportations.setActiveApprobationOp("inactif");
+				}
+
+			} else if (codeEntr == null && codeDem != null && codeDem.SIZE != 0) {
+				Demandeur demFound = demandeurService.getDemandeurById(codeDem);
+				if (demFound != null) {
+					demFound.setQuotaOccaDem(demFound.getQuotaOccaDem()+1);
+					demandeurService.saveDemandeur(demFound);
+					codeImportation.setDemandeur(demFound);
+					codeImportation.setStatutDemandeurCodeImp("non");
+					codeStruc = "42000A";
+					oPCodeImportations.setMontantOp("50000");
+					oPCodeImportations.setActivePaimentOp(0);
+					oPCodeImportations.setActiveApprobationOp("inactif");
+				}
+			}
+
+			if (codeEntr != null || codeDem != null) {
+				String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
+				codeImportation.setNumOcca(codesOccasionnel);
+				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+
+				oPCodeImportations.setTypeOp("Attribution");
+				oPCodeImportations.setCodeImportation(codeImportationSave);
+
+				oPCodeImportations.setActiveSignatureOp("non");
+				oPCodeImportations.setTypeCodeOp(category);
+				oPCodeImportations.setNumDocOp(numDossier);
+				oPCodeImportations.setDateOp(new Date());
+				oPCodeImportations.setUser(user);
+				opCodeImportationService.saveOpCodeImportation(oPCodeImportations);
+			}
+		} else if (category.equals("LeveeDeGage")) {
+			Date dategag = codeImportation.getDateGag();
+
+			SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDuJours = formatGag.format(new Date());
+			LocalDate dategags = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
+			LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+
+			Period diffDate = Period.between(dJour, dategags);
+			int years = Math.abs(diffDate.getYears());
+			int mois = Math.abs(diffDate.getMonths());
+
+			String typeGage = "";
+
+			if (codeEntr != null && codeEntr.SIZE != 0 && codeDem == null) {
+				Entreprise entrFound = entrepriseService.getEntrepriseById(codeEntr);
+				if (entrFound != null) {
+					codeStruc = entrFound.getTypeStructure().getCodeStruc();
+					codeImportation.setEntreprise(entrFound);
+					codeImportation.setStatutDemandeurCodeImp("oui");
+				}
+
+			} else if (codeEntr == null && codeDem != null && codeDem.SIZE != 0) {
+				Demandeur demFound = demandeurService.getDemandeurById(codeDem);
+				if (demFound != null) {
+					codeImportation.setDemandeur(demFound);
+					codeImportation.setStatutDemandeurCodeImp("non");
+				}
+			}
+
+			if (codeEntr != null || codeDem != null) {
+				if ((years == 2 && mois > 0) || (years > 2)) {
+					typeGage = "ordinaire";
+				} else if ((years == 2 && mois == 0) || (years < 2)) {
+					typeGage = "exceptionnelle";
+				}
+
+				String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(),
+						codeImportation.getNumChassisGag(), typeGage, numDossier);
+				codeImportation.setNumGag(codesLege);
+				
+				if (codeImportation.getUsageGag().equals("commercial")) {
+					Beneficiaire saveBeneficiaire = beneficiaireService.saveBeneficiaire(beneficiaire);
+					codeImportation.setBeneficiaire(saveBeneficiaire);
+				}
+
+				codeImportation.setNumGag(codesLege);
+				codeImportation.setTypeGag(typeGage);
+				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
+
+				if (typeGage.equals("ordinaire")) {
+					oPCodeImportations.setMontantOp("40000");
+				} else if (typeGage.equals("exceptionnelle")) {
+					oPCodeImportations.setMontantOp("50000");
+				}
+
+				oPCodeImportations.setCodeImportation(codeImportationSave);
+				oPCodeImportations.setTypeOp("Attribution");
+				oPCodeImportations.setActiveApprobationOp("inactif");
+				oPCodeImportations.setActivePaimentOp(0);
+				oPCodeImportations.setActiveSignatureOp("non");
+
+				oPCodeImportations.setTypeCodeOp(category);
+				oPCodeImportations.setNumDocOp(numDossier);
+				oPCodeImportations.setDateOp(new Date());
+				oPCodeImportations.setUser(user);
+				opCodeImportationService.saveOpCodeImportation(oPCodeImportations);
+			}
+		}
+
+		return "redirect:../../" + category + "/Liste";
 	}
 
 	// ZONE DUPLICATA
@@ -845,6 +1058,9 @@ public class CodeImportationController {
 			} else if (category.equals("CodeOccasionnel") || category.equals("LeveeDeGage")) {
 				List<OpCodeImportation> fgg = opCodeImportationService
 						.findAllCodeImportationByCodeOccaOrCodeLeveeGage(codeImportExportEntr);
+				fgg.forEach(voir->{
+					System.out.println(voir.getCodeImportation().getNumGag());					
+				});
 				modelMap.addAttribute("listeCode", fgg);
 			}
 
@@ -1200,7 +1416,7 @@ public class CodeImportationController {
 				fichiers = "ficheCodeOccasionnel";
 			} else if (category.equals("LeveeDeGage")) {
 				LocalDate dates = LocalDate.parse(
-						opCodes.getOpCodeImportation().getCodeImportation().getDateMiseCirculationGag(),
+						formatGag.format(opCodes.getOpCodeImportation().getCodeImportation().getDateMiseCirculationGag()),
 						DateTimeFormatter.ISO_LOCAL_DATE);
 				Period diffDate = Period.between(dJour, dates);
 				years = Math.abs(diffDate.getYears());
@@ -1223,7 +1439,6 @@ public class CodeImportationController {
 			JasperPrint report = JasperFillManager.fillReport(compileReport, map, beanCollectionDataSource);
 			data = JasperExportManager.exportReportToPdf(report);
 			headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=" + fichiers + numDoc + ".pdf");
-
 		}
 		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
 	}

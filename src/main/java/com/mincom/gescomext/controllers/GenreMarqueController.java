@@ -11,9 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.GenreMarque;
 import com.mincom.gescomext.entities.Marque;
+import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.repository.GenreMarqueRepository;
+import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.GenreMarqueService;
 
 @Controller
@@ -23,10 +28,19 @@ public class GenreMarqueController {
 	GenreMarqueService genreMarqueService;
 	@Autowired
 	GenreMarqueRepository genreMarqueRepo;
+	@Autowired
+	UserRepository	userRepo;
 	
 	@RequestMapping("/parametre/listeGenres")
 	public String listeGenreMarques(ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		List<GenreMarque> elmt = genreMarqueService.getAllGenreMarque();
 		modelMap.addAttribute("genreMarques", elmt);
 		modelMap.addAttribute("genreMarqueVide", new GenreMarque());

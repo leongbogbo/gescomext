@@ -45,16 +45,18 @@ layout:decorator="template">
                                     	<table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1302px;">
 	                                        <thead>
 	                                        	<tr role="row">
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Date</th>
 	                                            	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-sort="ascending" aria-label="title: activate to sort column descending">Dossier</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Demandeur</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Import Export</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Fiscal</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Date</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Signataire</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Edition</th>
 	                                            </tr>
 	                                        </thead>
 	                                        <tbody>
 	                                           <tr role="row" class="odd" th:each="elmt:${listecodes}" th:if="${elmt.statutTrait=='signature' AND elmt.OpCodeImportation.activeSignatureOp=='oui'}">
+	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-MM-yyyy')}"></td >
 	                                            	<td th:text="${elmt.OpCodeImportation.numDocOp}"></td >
 	                                                <td>
 	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr}"></span  >
@@ -63,7 +65,7 @@ layout:decorator="template">
 	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.codeImportExportEntr}"></span  >
 	                                                </td>
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numCodFic}"></td >
-	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-mm-yyyy')}"></td >
+	                                                <td th:text="${elmt.user.nomUser}"></td >
 	                                                <td>
 		                                               <a target="_blank" th:href="@{'EditionFiche?numDoc='+${elmt.OpCodeImportation.numDocOp}}" class="btn btn-outline-info mb-3">Editer Fiche</a>
 	                                                </td >

@@ -164,7 +164,7 @@ layout:decorator="template3" xml:lang="">
 														<div class="form-group row">
 															<label for="inputEmail3" class="col-sm-4 col-form-label">Date mise en circulation*</label>
 															<div class="col-sm-8">
-																<input type="date" name="dateMiseCirculationGag" onchange="ageCalculate()"   class="form-control" id="dateMiseCirculationGag" th:value="${verifCodeImportation.dateMiseCirculationGag}">
+																<input type="date" name="dateMiseCirculationGag" onchange="ageCalculate()"   class="form-control" id="dateMiseCirculationGag" th:value="${#dates.format(verifCodeImportation.dateMiseCirculationGag, 'yyyy-MM-dd')}">
 															</div>
 														</div>
 														<div class="form-group row">
@@ -173,19 +173,19 @@ layout:decorator="template3" xml:lang="">
 																<div class="form-row">
 																	<div class="col-sm-4">
 																		<div class="form-row">
-																			<input type="text" name="anLGage"  class="col-sm-6 form-control" id="anLGage" placeholder="An">
-																			<label for="inputEmail3" class="col-sm-6">An</label>
+																			<input readonly type="text" name="anLGage"  class="col-sm-6 form-control" id="anLGage" th:value="${years}">
+																			<label for="inputEmail3" class="col-sm-6">An(s)</label>
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
 																		<div class="form-row">
-																			<input type="text" name="moisLGage"  class="col-sm-6 form-control" id="moisLGage" placeholder="Ms">
+																			<input readonly type="text" name="moisLGage"  class="col-sm-6 form-control" id="moisLGage" th:value="${mois}">
 																			<label for="inputEmail3" class="col-sm-6">Ms</label>
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
 																		<div class="form-row">
-																			<input type="text" name="joursLGage"  class="col-sm-6 form-control" id="joursLGage" placeholder="Jr">
+																			<input readonly type="text" name="joursLGage"  class="col-sm-6 form-control" id="joursLGage" th:value="${jours}">
 																			<label for="inputEmail3" class="col-sm-6">Jrs</label>
 																		</div>
 																	</div>
@@ -201,7 +201,7 @@ layout:decorator="template3" xml:lang="">
 														 <div class="form-group row">
 															<label for="inputEmail3" class="col-sm-4 col-form-label">Date gage *</label>
 															<div class="col-sm-8">
-																<input type="date" name="dateGag"  class="form-control" id="inputEmail3" th:value="${verifCodeImportation.dateGag}">
+																<input type="date" name="dateGag"  class="form-control" id="inputEmail3" th:value="${#dates.format(verifCodeImportation.dateGag, 'yyyy-MM-dd')}">
 															</div>
 														</div>
 														<div class="form-group row">
@@ -229,7 +229,7 @@ layout:decorator="template3" xml:lang="">
 													</div>
 							                    </div>
 							                </div>
-							                <div class="col-lg-12">						                    
+							                <div class="col-lg-12" th:if="*{verifCodeImportation.UsageGag=='commercial'}">						                    
 							                    <div class="white_card card_height_100 mb_30">
 							                        <div class="white_card_header">
 							                            <div class="box_header m-0">
@@ -292,15 +292,16 @@ layout:decorator="template3" xml:lang="">
 	                                                            <input name="emailBen" type="email" class="form-control" id="inputPassword3" th:value="${verifBeneficiaire.emailBen}">
 	                                                        </div>
 	                                                    </div>
-	                                                <div class="form-group row mt-4 ">
-														<div class="offset-sm-10 col-sm-2">
-															<button type="submit" class="btn btn-primary pull-right">Valider</button>
-														</div>
-													</div>
+	                                                
 	                                            	</div>
 							                    </div>										                
 							                </div>
 						            </div>
+						            <div class="form-group row mt-4 ">
+														<div class="offset-sm-10 col-sm-2">
+															<button type="submit" class="btn btn-primary pull-right">Valider</button>
+														</div>
+													</div>
 										</form>						                						                
                                 </div>
                             </div>

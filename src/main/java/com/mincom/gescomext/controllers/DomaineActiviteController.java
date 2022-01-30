@@ -12,8 +12,13 @@ import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mincom.gescomext.config.GetCurrentUser;
+import com.mincom.gescomext.config.ListeRolesActionsUser;
+import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Departement;
 import com.mincom.gescomext.entities.DomaineActivite;
+import com.mincom.gescomext.entities.User;
+import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.DomaineActiviteService;
 
 
@@ -22,10 +27,19 @@ public class DomaineActiviteController {
 
 	@Autowired
 	DomaineActiviteService domaineActiviteService;
+	@Autowired
+	UserRepository	userRepo;
 	
 	@RequestMapping("/parametre/listeDomaineActivites")
 	public String listeVilles(ModelMap modelMap)
 	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		
 		List<DomaineActivite> deps = domaineActiviteService.getAllDomaineActivite();
 		modelMap.addAttribute("deps", deps);
 		return "autres/listeDomaineActivite";

@@ -1,6 +1,8 @@
 package com.mincom.gescomext.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +19,9 @@ public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
 	
 	@Query("select e from Entreprise e where (e.codeImportExportEntr = :code) or (e.contribuableEntr = :code)")
 	Entreprise findByCodeImportExportEntrAndContribuableEntr (@Param("code") String code);
+	
+	@Query("select e from Entreprise e where (e.codeImportExportEntr = :code) or (e.nomEntr = :code) or (e.regcommerceEntr = :code) or (e.contribuableEntr = :code)")
+	List<Entreprise> findEntrepriseByGeneralInfo (@Param("code") String code);
 	
 	Entreprise findByNomEntr(String nomEntr);
 	Entreprise findByRegcommerceEntr(String regcommerceEntr);

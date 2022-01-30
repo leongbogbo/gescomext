@@ -140,7 +140,7 @@ layout:decorator="templateparam">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-light" type="button">Profile</button>
                                 </div>
-                                <select class="custom-select" name="role_id" id="inputGroupSelect03" aria-label="Example select with button addon" required>
+                                <select class="custom-select" name="role_id" id="role_id" aria-label="Example select with button addon" required>
                                     <option value="">Selectionner un profile</option>
                                    <th:block th:each="roles : ${roleList}">
 		                            	<option  th:value="${roles.role_id}" th:text="${roles.role}"></option >
@@ -157,15 +157,8 @@ layout:decorator="templateparam">
 	                                </div>
 	
 	                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion_ex">
-	                                    <div class="card-body form-row align-items-center">	                                    
-	                                    	<th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeImportExport'}">
-					                                <div class="form-check mb-2" >
-					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
-					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
-					                                </div>
-					                            </div>
-				                        	</th:block>
+	                                    <div class="card-body form-row align-items-center" id="importBody">	                                    
+	                                    	
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -178,15 +171,8 @@ layout:decorator="templateparam">
 	                                    </h2>
 	                                </div>
 	                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion_ex">
-	                                    <div class="card-body form-row align-items-center">
-	                                      	<th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'CodeOccasionnel'}">
-					                                <div class="form-check mb-2">
-					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
-					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
-					                                </div>
-					                            </div>
-				                        	</th:block>
+	                                    <div class="card-body form-row align-items-center" id="occaBody">
+	                                      	
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -199,15 +185,8 @@ layout:decorator="templateparam">
 	                                    </h2>
 	                                </div>
 	                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion_ex">
-	                                    <div class="card-body form-row align-items-center">
-	                                        <th:block th:each="action : ${actionListes}">
-		                                    	<div class="col-md-6" th:if="${#strings.arraySplit(action.lienActPro, '/')[0] == 'LeveeDeGage'}">
-					                                <div class="form-check mb-2">
-					                                    <input type="checkbox" class="form-check-input" name="actionListe[]" th:value="${action.idActPro}" id="exampleCheck">
-					                                    <label class="form-check-label" th:text="${action.titreActPro}"></label>
-					                                </div>
-					                            </div>
-				                        	</th:block>
+	                                    <div class="card-body form-row align-items-center" id="gageBody">
+	                                        
 				                        </div>
 	                                </div>
 	                            </div>
@@ -220,8 +199,8 @@ layout:decorator="templateparam">
 	                                    </h2>
 	                                </div>
 	                                <div id="collapseThree3" class="collapse" aria-labelledby="headingThree3" data-parent="#accordion_ex">
-	                                    <div class="card-body form-row align-items-center">
-	                                       
+	                                    <div class="card-body form-row align-items-center" id="paramBody">
+	                                         
 	                                    </div>
 	                                </div>
 	                            </div>

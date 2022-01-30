@@ -58,7 +58,7 @@ layout:decorator="template2" xml:lang>
 																			<select name="typeStructures" id="typeStructure" class="form-control" required>
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="struc : ${listetypeStructure}">
-																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc==1 or struc.idStruc==2 or struc.idStruc==3 or struc.idStruc==4 or struc.idStruc==5 or struc.idStruc==6}" th:text="${struc.titreStruc}"></option >
+																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc==1}" th:text="${struc.titreStruc}"></option >
 																				</th:block>
 																			</select>
 																		</div>
@@ -82,6 +82,10 @@ layout:decorator="template2" xml:lang>
 																			<div class="mt-2">
 																				<label for="inputEmail3" class="form-label">Prénom <strong class="text-danger">*</strong></label>                              
 																				<input name="prenomsDem" type="text" class="form-control" id="prenomsDem">
+																			</div>
+																			<div class="mt-2">
+																				<label for="inputEmail3" class="form-label">Compte contribuable <strong class="text-danger">*</strong></label>                              
+																				<input name="contribuableDem" type="text" class="form-control" id="contribuableDem">
 																			</div>
 																			<div class="mt-2">
 																				<label class="form-label" for="inputState">Fonction</label>

@@ -25,6 +25,7 @@ public class Demandeur {
 	private String prenomsDem;
 	private String sexeDem;
 	private String pieceidentDem;
+	private String contribuableDem;
 	private String validitePieceDem;
 	private String numpieceDem;
 	private String telDem;

@@ -2,6 +2,8 @@ package com.mincom.gescomext.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.mincom.gescomext.entities.Demandeur;
 
 public interface DemandeurService {
@@ -11,4 +13,5 @@ public interface DemandeurService {
 	void deleteDemandeurById(Long id);
 	Demandeur getDemandeurById(Long id);
 	List<Demandeur> getAllDemandeur();
+	List<Demandeur> findDemandeurByGeneralInfo (String code);
 }

@@ -46,7 +46,7 @@ layout:decorator="template2">
 				                        </div>
 				                    </div>
 				               
-				                    <div class="col-12 QA_section">
+				                    <div class="col-12 QA_section" th:if="${listeCode}">
 				                        <div class="card QA_table">
 				                            <div class="card-header" th:each="infossfisco : ${listeCode}" th:if="${infossfisco.CodeImportation}" th:switch="${infossfisco.activeApprobationOp}" th:case="'actif'">
 				                            Code Occasionnel :
@@ -79,7 +79,7 @@ layout:decorator="template2">
 				                                    </div>
 				                                    <div class="col-sm-4" th:if="${infofiscos.CodeImportation.demandeur}" th:switch="${infofiscos.activeApprobationOp}" th:case="'actif'">				                                        
 				                                        <div>
-				                                            <strong>INFORMATION SUR LE PROPRIETAIRE</strong>
+				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
 				                                        </div>
 				                                        <div th:text="'Nom : '+ ${infofiscos.CodeImportation.demandeur.nomDem} +' ' + ${infofiscos.CodeImportation.demandeur.prenomsDem}"></div  >
 				                                        <div th:text="'Civilité : '+ ${infofiscos.CodeImportation.demandeur.sexeDem}"></div >
@@ -105,7 +105,7 @@ layout:decorator="template2">
 				                                            <tr th:each="infofisc : ${listeCode}">
 				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
 				                                                <td class="center" th:text="${infofisc.CodeImportation.numOcca}"></td>
-				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-mm-yyyy')}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-MM-yyyy')}"></td>
 				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
 				                                                <td class="left" th:text="${infofisc.montantOp}"></td>
 				                                                <td th:switch="${infofisc.activeApprobationOp}">
