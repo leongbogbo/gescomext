@@ -1,13 +1,8 @@
 package com.mincom.gescomext.config;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-
-import groovyjarjarpicocli.CommandLine.ExitCode;
 
 public class CalculeCodesExportation {
 
