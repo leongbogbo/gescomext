@@ -111,7 +111,7 @@ layout:decorator="template2" xml:lang="">
                                                     
                                                         <div class="col-sm-4">                                                
                                                             <label class="col-form-label" for="inputState">Domaine Activité <strong class="text-danger">*</strong></label>
-                                                            <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntreprise.DomaineActivite.idDomAct}" required="required">
+                                                            <select name="domaineActivite" id="inputState" class="form-control" th:field="*{verifEntreprise.DomaineActivite.idDomAct}" required="required">
                                                                 <th:block th:each="dom : ${listedomaineActivite}">
                                                                     <option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
                                                                 </th:block>

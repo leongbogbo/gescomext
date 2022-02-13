@@ -62,10 +62,10 @@ layout:decorator="template">
 	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr}"></span  >
 	                                                </td >
 	                                                <td>
-	                                                <span th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.codeImportExportEntr}"></span  >
+	                                                <span th:text="${#strings.toUpperCase(elmt.OpCodeImportation.CodeImportation.Entreprise.codeImportExportEntr)}"></span  >
 	                                                </td>
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numCodFic}"></td >
-	                                                <td th:text="${elmt.user.nomUser}"></td >
+	                                                <td th:text="${#strings.toUpperCase(elmt.user.nomUser)}"></td >
 	                                                <td>
 		                                               <a target="_blank" th:href="@{'EditionFiche?numDoc='+${elmt.OpCodeImportation.numDocOp}}" class="btn btn-outline-info mb-3">Editer Fiche</a>
 	                                                </td >

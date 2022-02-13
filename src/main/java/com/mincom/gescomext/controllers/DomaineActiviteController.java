@@ -38,7 +38,9 @@ public class DomaineActiviteController {
 		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
 		
 		List<DomaineActivite> deps = domaineActiviteService.getAllDomaineActivite();
 		modelMap.addAttribute("deps", deps);

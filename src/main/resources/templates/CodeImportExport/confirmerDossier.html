@@ -129,7 +129,7 @@ layout:decorator="template">
                                 <div class="form-group row">                                                
                                     <label class="col-sm-4 col-form-label" for="inputState">Domaine Activité*</label>
                                     <div class="col-sm-8">
-                                        <select name="typeStructure" id="inputState" class="form-control" th:field="*{verifEntreprise.DomaineActivite.idDomAct}">
+                                        <select name="domaineActivite" id="inputState" class="form-control" th:field="*{verifEntreprise.DomaineActivite.idDomAct}">
                                             <th:block th:each="dom : ${listedomaineActivite}">
 				                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
 				                            </th:block>

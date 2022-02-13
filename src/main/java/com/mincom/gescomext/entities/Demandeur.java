@@ -30,6 +30,7 @@ public class Demandeur {
 	private String numpieceDem;
 	private String telDem;
 	private String emailDem;
+	private String codeIdexDem;
 	private Integer quotaOccaDem;
 
 	

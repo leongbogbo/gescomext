@@ -440,41 +440,82 @@ $('.spin_icon_clicker').on('click', function(e) {
 		}
 	});
 	
-	 $(":input").inputmask();
-	 
-	 $("#numIduEntr").inputmask({
-		mask: 'CI 9999 9999999 A',
-		placeholder: '__-____-_______-_',
-		showMaskOnHover: true,
-		showMaskOnFocus: false
+	//if(typeof input != 'undefined'){
+		 $(":input").inputmask();
+		 
+		 $("#numIduEntr").inputmask({
+			mask: 'CI 9999 9999999 A',
+			placeholder: '__-____-_______-_',
+			showMaskOnHover: true,
+			showMaskOnFocus: false
+		});
+		
+		$("input").inputmask({
+			casing:'upper'
+		});
+		
+		 $("#regcommerceEntrNBV").inputmask({
+			mask: 'AA-AAA-99-9999-A99-999999',
+			placeholder: '__-___-__-____-___-______',
+			showMaskOnHover: true,
+			showMaskOnFocus: true
+		});
+		
+		$("#contribuableEntr").inputmask({
+			mask: '9999999A',
+			placeholder: '________',
+			showMaskOnHover: true,
+			showMaskOnFocus: false
+		});
+		
+		 $(".maskPhone").inputmask({
+			mask: '99 99 99 99 99',
+			placeholder: '__ __ __ __ __',
+			showMaskOnHover: true,
+			showMaskOnFocus: true
+		});
+		$(".maskEmail").inputmask("email");
+	//}
+	/**************************--------------- VALIDATION DE CODE---------------------****************** */
+	
+	$("#regcommerceEntr").on("blur", function () {
+		var convert=0;
+	  	var regCode = $("#regcommerceEntr").val().split("-");
+	  	if(regCode.length !=6){
+			$("#regcommerceEntr").val("");
+			$("#infoRccm").text("Format non conforme");
+			alert("Format non conforme");	
+		}else{
+			convert = parseInt(regCode[2]);			
+			if(isNaN(convert) || $.isNumeric(regCode[2]) == false){
+				$("#regcommerceEntr").val("");
+				$("#infoRccm").text("Le code juridique doit être un nombre : "+regCode[2]);	
+				alert("Le code juridique doit être un nombre : "+regCode[2]);	
+			}
+		}
 	});
 	
-	$("input").inputmask({
-		casing:'upper'
+	$("#contribuableEntr").on("blur", function () {
+		var convert=0;
+	  	var regCode = $("#contribuableEntr").val();
+	  	if(regCode.length !=8){
+			$("#contribuableEntr").val("");
+			$("#infoContri").text("Format non conforme");
+			alert("Format non conforme");	
+		}else if(regCode.substr(7, 8) === "_" || $.isNumeric(regCode.substr(7, 8)) == true){
+				$("#contribuableEntr").val("");
+				$("#infoContri").text("Le dernier caractere n'est pas correcte : "+regCode.substr(7, 8));	
+				alert("Le dernier caractere n'est pas correcte : "+regCode.substr(7, 8));
+		}else{
+			convert = parseInt(regCode.substr(0, 7));			
+			if(isNaN(convert) || $.isNumeric(regCode.substr(0, 7)) == false){
+				$("#contribuableEntr").val("");
+				$("#infoContri").text("Les 7 premiers caracteres doivent être des nombres : "+regCode.substr(0, 7));	
+				alert("Les 7 premiers caracteres doivent être des nombres : "+regCode.substr(0, 7));	
+			}
+		}
 	});
 	
-	 $("#regcommerceEntrNBV").inputmask({
-		mask: 'AA-AAA-99-9999-A99-999999',
-		placeholder: '__-___-__-____-___-______',
-		showMaskOnHover: true,
-		showMaskOnFocus: true
-	});
-	
-	$("#contribuableEntr").inputmask({
-		mask: '9999999A',
-		placeholder: '________',
-		showMaskOnHover: true,
-		showMaskOnFocus: true
-	});
-	
-	 $(".maskPhone").inputmask({
-		mask: '99 99 99 99 99',
-		placeholder: '__ __ __ __ __',
-		showMaskOnHover: true,
-		showMaskOnFocus: true
-	});
-	
-	$(".maskEmail").inputmask("email");
 	
 	$("#ville").on('change', function(e) {
 		$("#commune").empty();
@@ -494,6 +535,11 @@ $('.spin_icon_clicker').on('click', function(e) {
 		$("#gageBody").empty();
 		$("#paramBody").empty();
 		listeActionByRole();
+  	});
+  	
+  	$("#site_id").on('change', function(e) {
+		$("#userBody").empty();
+		listeUserBySite();
   	});
   	
   	$("#nomEntr").on('keyup', function(e) {
@@ -606,6 +652,44 @@ function listeActionByRole(){
 		});
 }
 
+function listeUserBySite(){
+	elmtId = $("#site_id").val();
+	urlString = "../api/parametre/site/"+elmtId;
+	urlUser = "../api/parametre/listeUser";
+	//LISTE DES ACTIONS PAR ROLE
+	$.ajax({metod: "GET", url: urlString})
+		.done(function(responseJson){
+			designeElmt = $("#userBody");
+			//LISTE DES USER
+			$.ajax({metod: "GET", url: urlUser})
+				.done(function(responsesJson){
+					$.each(responsesJson, function(index, actionListe){
+						var reponse="non";
+						console.log(actionListe);
+						$.each(responseJson, function(index, actionListes){							
+							if(actionListe.user_id == actionListes.user_id){
+								reponse="oui";
+							}
+						});
+						if(reponse=="oui"){
+								$("#userBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='user[]' value='"+actionListe.user_id+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.nomUser+" "+actionListe.prenomsUser+"</label></div></div>");
+						}else if(reponse=="non" && actionListe.site == null){
+								$("#userBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='user[]' value='"+actionListe.user_id+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.nomUser+" "+actionListe.prenomsUser+"</label></div></div>");
+						}
+					});
+				});
+			
+		})
+		.fail(function(){
+			console.log("Erreur pendant le chargement");
+		})
+		.always(function(){
+			
+		});
+}
+
 function verificationRaisonSociale(){
 	valeur = $("#nomEntr").val();
 	urlString = "../api/raisonSociale/"+valeur;
@@ -615,6 +699,7 @@ function verificationRaisonSociale(){
 			designechp = $("#infoRaison");
 			//$.each(responseJson, function(index, elmt){
 				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#nomEntr").val("");
 					$("#infoRaison").text("element  présent dans la base");				
 				}else{
 					$("#infoRaison").text(" ");
@@ -637,6 +722,7 @@ function verificationRCCM(){
 			designechp = $("#infoRccm");
 			//$.each(responseJson, function(index, elmt){
 				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#regcommerceEntr").val("");
 					$("#infoRccm").text("element  présent dans la base");				
 				}else{
 					$("#infoRccm").text(" ");
@@ -659,6 +745,7 @@ function verificationContribuable(){
 			designechp = $("#infoContri");
 			//$.each(responseJson, function(index, elmt){
 				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#contribuableEntr").val("");
 					$("#infoContri").text("element  présent dans la base");				
 				}else{
 					$("#infoContri").text(" ");
@@ -681,6 +768,7 @@ function verificationnumIdu(){
 			designechp = $("#infoIdu");
 			//$.each(responseJson, function(index, elmt){
 				if(typeof responseJson.nomEntr != "undefined" && responseJson.nomEntr !=""){
+					$("#numIduEntr").val("");
 					$("#infoIdu").text("element  présent dans la base");				
 				}else{
 					$("#infoIdu").text(" ");
@@ -693,3 +781,4 @@ function verificationnumIdu(){
 		.always(function(){
 		});
 }
+
