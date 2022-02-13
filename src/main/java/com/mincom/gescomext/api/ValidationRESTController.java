@@ -15,11 +15,14 @@ import com.mincom.gescomext.entities.ActionListe;
 import com.mincom.gescomext.entities.Commune;
 import com.mincom.gescomext.entities.Entreprise;
 import com.mincom.gescomext.entities.Role;
+import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.entities.Ville;
 import com.mincom.gescomext.repository.EntrepriseRepository;
 import com.mincom.gescomext.repository.RoleRepository;
 import com.mincom.gescomext.service.ActionListeService;
 import com.mincom.gescomext.service.EntrepriseService;
+import com.mincom.gescomext.service.SiteService;
+import com.mincom.gescomext.service.UserService;
 import com.mincom.gescomext.service.VilleService;
 
 @RestController
@@ -37,6 +40,10 @@ public class ValidationRESTController {
 	RoleRepository roleRepository;
 	@Autowired
 	ActionListeService actionListeService;
+	@Autowired
+	SiteService siteService;
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(value="/form/listeVille", method = RequestMethod.GET)
 	public List<Ville> getAllVilles() {
@@ -85,6 +92,16 @@ public class ValidationRESTController {
 	@RequestMapping(value="/profile/listeAction", method = RequestMethod.GET)
 	public List<ActionListe> getActions() {
 		return actionListeService.getAllActionListe();
+	}
+	
+	@RequestMapping(value="/parametre/listeUser", method = RequestMethod.GET)
+	public List<User> getUser() {
+		return userService.getAllUser();
+	}
+	
+	@RequestMapping(value="/parametre/site/{id}", method = RequestMethod.GET)
+	public List<User> getUserByIdSite(@PathVariable("id") Long id) {
+		return siteService.getSiteById(id).getUser();
 	}
 
 }

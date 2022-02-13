@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 import com.mincom.gescomext.entities.TraitementOpCodeImportation;
 
 public interface TraitementOpCodeImportationRepository extends JpaRepository<TraitementOpCodeImportation, Long> {
-	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o  where (o.typeCodeOp = :code)")
-	List<TraitementOpCodeImportation> findAllTraitementOpCodeImportationByTypeCodeOp (@Param("code") String code);
-	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o  where (t.statutTrait = :statut and o.numDocOp = :numDocOp)")
-	TraitementOpCodeImportation findTraitementOpCodeImportationByStatut (@Param("numDocOp") Integer numDocOp, @Param("statut") String statut);
-	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o  where (t.statutTrait = :statut and o.idOp = :idOp)")
-	TraitementOpCodeImportation findTraitementOpCodeImportationByIDoP (@Param("idOp") Long idOp, @Param("statut") String statut);
+	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o JOIN o.user u JOIN u.site s where (o.typeCodeOp = :code and s.nomSite = :site)")
+	List<TraitementOpCodeImportation> findAllTraitementOpCodeImportationByTypeCodeOp (@Param("code") String code, @Param("site") String site);
+	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o JOIN o.user u JOIN u.site s where (t.statutTrait = :statut and o.numDocOp = :numDocOp and s.nomSite = :site)")
+	TraitementOpCodeImportation findTraitementOpCodeImportationByStatut (@Param("numDocOp") Integer numDocOp, @Param("statut") String statut, @Param("site") String site);
+	@Query("select t from TraitementOpCodeImportation t JOIN t.opCodeImportation o JOIN o.user u JOIN u.site s where (t.statutTrait = :statut and o.idOp = :idOp and s.nomSite = :site)")
+	TraitementOpCodeImportation findTraitementOpCodeImportationByIDoP (@Param("idOp") Long idOp, @Param("statut") String statut, @Param("site") String site);
 }

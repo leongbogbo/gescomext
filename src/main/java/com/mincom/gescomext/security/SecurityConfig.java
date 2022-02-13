@@ -1,8 +1,5 @@
 package com.mincom.gescomext.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,9 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mincom.gescomext.entities.ActionListe;
-import com.mincom.gescomext.entities.Role;
-import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.service.RoleService;
 import com.mincom.gescomext.service.UserService;
 

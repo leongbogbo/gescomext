@@ -59,6 +59,10 @@ import com.mincom.gescomext.service.TraitementOpCodeImportationService;
 import com.mincom.gescomext.service.TypePieceIdentiteService;
 import com.mincom.gescomext.service.TypeStructureService;
 import com.mincom.gescomext.service.VilleService;
+import com.mincom.gescomext.validator.DemandeurValidator;
+import com.mincom.gescomext.validator.EntrepriseValidator;
+import com.mincom.gescomext.validator.LeveeGageValidator;
+import com.mincom.gescomext.validator.ProprietaireValidator;
 
 @Controller
 public class OperationDossierController {
@@ -103,7 +107,7 @@ public class OperationDossierController {
 	@Autowired
 	BeneficiaireService beneficiaireService;
 	
-	
+	List<String> errorsList = new ArrayList<>();
 	//INJECTION DES REPOSITORY
 	@Autowired
 	EntrepriseRepository entrepriseRepo;
@@ -116,10 +120,11 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category,site);
 		modelMap.addAttribute("listeCode", codfs);
 		return "./"+category+"/operationDossier";
 	}
@@ -130,10 +135,11 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		OpCodeImportation codeElmt = opCodeImportationService.findBynumDocOp(numDoc);
+		OpCodeImportation codeElmt = opCodeImportationService.findBynumDocOp(numDoc,category,site);
 		modelMap.addAttribute("listeCode", codeElmt);
 		return "./"+category+"/operationDossier";
 	}
@@ -146,6 +152,7 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
@@ -164,16 +171,16 @@ public class OperationDossierController {
 		Proprietaire verifProp = new Proprietaire();
 		Demandeur verifDemandeur = new Demandeur();
 		Beneficiaire verifBeneficiaire = new Beneficiaire();
-		Entreprise verifEntr = opCodeImportationService.findBynumDocOp(numDoc).getCodeImportation().getEntreprise();
+		Entreprise verifEntr = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getEntreprise();
 		if(verifEntr!=null) {
-			verifProp = opCodeImportationService.findBynumDocOp(numDoc).getCodeImportation().getEntreprise().getProprietaires();
+			verifProp = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getEntreprise().getProprietaires();
 			if(category.equals("LeveeDeGage")) {
-				verifBeneficiaire = opCodeImportationService.findBynumDocOp(numDoc).getCodeImportation().getBeneficiaire();
+				verifBeneficiaire = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getBeneficiaire();
 			}
 		}else {
-			verifDemandeur = opCodeImportationService.findBynumDocOp(numDoc).getCodeImportation().getDemandeur();
+			verifDemandeur = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getDemandeur();
 		}
-		CodeImportation verifCodeImportation = opCodeImportationService.findBynumDocOp(numDoc).getCodeImportation();
+		CodeImportation verifCodeImportation = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation();
 		
 		modelMap.addAttribute("listeCommunes", coms);
 		modelMap.addAttribute("listeVilles", vils);
@@ -210,11 +217,14 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		//------- GESTION DES ONGLLETS--------
+		errorsList.clear();
 		String codesExportation="";
 		String codesFiscals="";
+		
 		Entreprise verifEntr = new Entreprise();
 		Proprietaire verifProp = new Proprietaire();
 		Demandeur verifDemandeur = new Demandeur();
@@ -224,196 +234,213 @@ public class OperationDossierController {
 		
 		
 		if(entreprise.getIdEntr()!=null) {
-			verifEntr = entrepriseService.getEntrepriseById(entreprise.getIdEntr());		
-			verifProp = proprietaireService.getProprietaireById(proprietaire.getIdProp());
-			if(category.equals("LeveeDeGage")) {
-				verifBeneficiaire = beneficiaireService.getBeneficiaireById(beneficiaire.getIdBen());
+			EntrepriseValidator.validate(entreprise).forEach(error -> {
+				errorsList.add(error);
+			});
+			ProprietaireValidator.validate(proprietaire).forEach(error -> {
+				errorsList.add(error);
+			});
+			if (errorsList.size() == 0) {
+				verifEntr = entrepriseService.getEntrepriseById(entreprise.getIdEntr());		
+				verifProp = proprietaireService.getProprietaireById(proprietaire.getIdProp());
+				if(category.equals("LeveeDeGage")) {
+					verifBeneficiaire = beneficiaireService.getBeneficiaireById(beneficiaire.getIdBen());
+				}
 			}
 		}
 		if(demandeur.getIdDem()!=null) {
-		verifDemandeur = demandeurService.getDemandeurById(demandeur.getIdDem());
+			DemandeurValidator.validate(demandeur).forEach(error -> {
+				errorsList.add(error);
+			});
+			if (errorsList.size() == 0) {
+				verifDemandeur = demandeurService.getDemandeurById(demandeur.getIdDem());
+			}
 		}
 		if(codeImportation!=null) {
-		verifOpCodeImportation = opCodeImportationService.findBynumDocOp(numDossier);	
-		verifcodeImportation = opCodeImportationService.findBynumDocOp(numDossier).getCodeImportation();	
+			LeveeGageValidator.validate(codeImportation).forEach(error -> {
+				errorsList.add(error);
+			});
+		verifOpCodeImportation = opCodeImportationService.findBynumDocOp(numDossier,category,site);	
+		verifcodeImportation = opCodeImportationService.findBynumDocOp(numDossier,category,site).getCodeImportation();	
 		}
-		if(category.equals("CodeImportExport")) {
-			if(verifEntr!=null && verifProp!=null) {
-				if(entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr()!=null && entreprise.getContribuableEntr()!=null){
-					codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
-					codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
-				}else if((entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)
-						|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)){
-					codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
-					codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+		if (errorsList.size() == 0) {
+			if(category.equals("CodeImportExport")) {
+				if(verifEntr!=null && verifProp!=null) {
+					if(entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr()!=null && entreprise.getContribuableEntr()!=null){
+						codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
+						codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
+					}else if((entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)
+							|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)){
+						codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
+						codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+					}
+					
+					
+					if(!codesExportation.isEmpty()) {
+						verifEntr.setCodeImportExportEntr(codesExportation);
+					}
+					
+					if(!codesFiscals.isEmpty()) {			
+						verifcodeImportation.setNumCodFic(codesFiscals);
+					}
 				}
-			
-				
-				if(!codesExportation.isEmpty()) {
-					verifEntr.setCodeImportExportEntr(codesExportation);
-				}
-				
-				if(!codesFiscals.isEmpty()) {			
-					verifcodeImportation.setNumCodFic(codesFiscals);
-				}
-			}
-		}
-		
-		
-		if(verifDemandeur!=null) {
-			if(demandeur.getNomDem()!=null) {
-				verifDemandeur.setNomDem(demandeur.getNomDem());
-			}
-
-			if(demandeur.getPrenomsDem()!=null) {
-				verifDemandeur.setPrenomsDem(demandeur.getPrenomsDem());
 			}
 			
-			if(demandeur.getSexeDem()!=null) {
-				verifDemandeur.setSexeDem(demandeur.getSexeDem());
-			}
 			
-			if(demandeur.getContribuableDem()!=null) {
-				verifDemandeur.setContribuableDem(demandeur.getContribuableDem());
-			}
-			
-			if(demandeur.getTypePieceIdentite()!=null) {
-				verifDemandeur.setTypePieceIdentite(demandeur.getTypePieceIdentite());
-			}
-			
-			if(demandeur.getValiditePieceDem()!=null) {
-				verifDemandeur.setValiditePieceDem(demandeur.getValiditePieceDem());
-			}
-			
-			if(demandeur.getNationalite()!=null) {
-				verifDemandeur.setNationalite(demandeur.getNationalite());
-			}
-			
-			if(demandeur.getTelDem()!=null) {
-				verifDemandeur.setTelDem(demandeur.getTelDem());
-			}
-			
-			if(demandeur.getEmailDem()!=null) {
-				verifDemandeur.setEmailDem(demandeur.getEmailDem());
-			}
-			demandeurService.saveDemandeur(verifDemandeur);
-		}
-		if(verifEntr!=null) {
-			if(entreprise.getNomEntr()!=null) {
-				verifEntr.setNomEntr(entreprise.getNomEntr());
-			}
-			
-			if(entreprise.getSigleEntr()!=null) {
-				verifEntr.setSigleEntr(entreprise.getSigleEntr());
-			}
-			
-			if(entreprise.getNumIduEntr()!=null) {
-				verifEntr.setNumIduEntr(entreprise.getNumIduEntr());
-			}
-			
-			if(entreprise.getDepartement()!=null) {
-				verifEntr.setDepartement(entreprise.getDepartement());
-			}
-			
-			if(entreprise.getExoregcomEntr() !=null) {
-				verifEntr.setExoregcomEntr(entreprise.getExoregcomEntr());
-			}
-			
-			if(entreprise.getRegcommerceEntr()!=null) {
-				verifEntr.setRegcommerceEntr(entreprise.getRegcommerceEntr());
-			}
-			
-			if(entreprise.getCommune()!=null) {
-				verifEntr.setCommune(entreprise.getCommune());
-			}
-			
-			if(entreprise.getPostaleEntr()!=null) {
-				verifEntr.setPostaleEntr(entreprise.getPostaleEntr());
-			}
-			
-			if(entreprise.getEmailEntr()!=null) {
-				verifEntr.setEmailEntr(entreprise.getEmailEntr());
-			}
-			
-			if(entreprise.getFormeJuridique()!=null) {
-				verifEntr.setFormeJuridique(entreprise.getFormeJuridique());
-			}
-			
-			if(entreprise.getDomaineActivite()!=null) {
-				verifEntr.setDomaineActivite(entreprise.getDomaineActivite());
-			}
-			
-			if(entreprise.getContribuableEntr()!=null) {
-				verifEntr.setContribuableEntr(entreprise.getContribuableEntr());
-			}
-			
-			if(proprietaire.getNomProp()!=null) {
-				verifProp.setNomProp(proprietaire.getNomProp());
-			}
-			
-			if(proprietaire.getPrenomsProp()!=null) {
-				verifProp.setPrenomsProp(proprietaire.getPrenomsProp());
-			}
-			
-			if(proprietaire.getSexeProp()!=null) {
-				verifProp.setSexeProp(proprietaire.getSexeProp());
-			}
-			
-			if(proprietaire.getTypePieceIdentite()!=null) {
-				verifProp.setTypePieceIdentite(proprietaire.getTypePieceIdentite());
-			}
-			
-			if(proprietaire.getValiditePieceProp()!=null) {
-				verifProp.setValiditePieceProp(proprietaire.getValiditePieceProp());
-			}
-			
-			if(proprietaire.getNationalite()!=null) {
-				verifProp.setNationalite(proprietaire.getNationalite());
-			}
-			
-			if(proprietaire.getTelProp()!=null) {
-				verifProp.setTelProp(proprietaire.getTelProp());
-			}
-			
-			if(proprietaire.getEmailProp()!=null) {
-				verifProp.setEmailProp(proprietaire.getEmailProp());
-			}
-			
-			if(category.equals("LeveeDeGage")) {
-				if(beneficiaire.getNomBen()!=null) {
-					verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
-				}
-				if(beneficiaire.getPrenomsBen()!=null) {
-					verifBeneficiaire.setPrenomsBen(beneficiaire.getPrenomsBen());
-				}
-				if(beneficiaire.getSexeBen()!=null) {
-					verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
-				}
-				if(beneficiaire.getNumpieceBen()!=null) {
-					verifBeneficiaire.setNumpieceBen(beneficiaire.getNumpieceBen());
-				}
-				if(beneficiaire.getPieceidentBen()!=null) {
-					verifBeneficiaire.setPieceidentBen(beneficiaire.getPieceidentBen());
-				}
-				if(beneficiaire.getValiditePieceBen()!=null) {
-					verifBeneficiaire.setValiditePieceBen(beneficiaire.getValiditePieceBen());
-				}
-				if(beneficiaire.getNatBeneficiaire()!=null) {
-					verifBeneficiaire.setNatBeneficiaire(beneficiaire.getNatBeneficiaire());
-				}
-				if(beneficiaire.getTelBen()!=null) {
-					verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
-				}
-				if(beneficiaire.getEmailBen()!=null) {
-					verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
+			if(verifDemandeur!=null) {
+				if(demandeur.getNomDem()!=null) {
+					verifDemandeur.setNomDem(demandeur.getNomDem());
 				}
 				
-				beneficiaireService.saveBeneficiaire(verifBeneficiaire);
+				if(demandeur.getPrenomsDem()!=null) {
+					verifDemandeur.setPrenomsDem(demandeur.getPrenomsDem());
+				}
+				
+				if(demandeur.getSexeDem()!=null) {
+					verifDemandeur.setSexeDem(demandeur.getSexeDem());
+				}
+				
+				if(demandeur.getContribuableDem()!=null) {
+					verifDemandeur.setContribuableDem(demandeur.getContribuableDem());
+				}
+				
+				if(demandeur.getTypePieceIdentite()!=null) {
+					verifDemandeur.setTypePieceIdentite(demandeur.getTypePieceIdentite());
+				}
+				
+				if(demandeur.getValiditePieceDem()!=null) {
+					verifDemandeur.setValiditePieceDem(demandeur.getValiditePieceDem());
+				}
+				
+				if(demandeur.getNationalite()!=null) {
+					verifDemandeur.setNationalite(demandeur.getNationalite());
+				}
+				
+				if(demandeur.getTelDem()!=null) {
+					verifDemandeur.setTelDem(demandeur.getTelDem());
+				}
+				
+				if(demandeur.getEmailDem()!=null) {
+					verifDemandeur.setEmailDem(demandeur.getEmailDem());
+				}
+				demandeurService.saveDemandeur(verifDemandeur);
 			}
-			
-			entrepriseService.saveEntreprise(verifEntr);
-			proprietaireService.saveProprietaire(verifProp);
-		}	
+			if(verifEntr!=null) {
+				if(entreprise.getNomEntr()!=null) {
+					verifEntr.setNomEntr(entreprise.getNomEntr());
+				}
+				
+				if(entreprise.getSigleEntr()!=null) {
+					verifEntr.setSigleEntr(entreprise.getSigleEntr());
+				}
+				
+				if(entreprise.getNumIduEntr()!=null) {
+					verifEntr.setNumIduEntr(entreprise.getNumIduEntr());
+				}
+				
+				if(entreprise.getDepartement()!=null) {
+					verifEntr.setDepartement(entreprise.getDepartement());
+				}
+				
+				if(entreprise.getExoregcomEntr() !=null) {
+					verifEntr.setExoregcomEntr(entreprise.getExoregcomEntr());
+				}
+				
+				if(entreprise.getRegcommerceEntr()!=null) {
+					verifEntr.setRegcommerceEntr(entreprise.getRegcommerceEntr());
+				}
+				
+				if(entreprise.getCommune()!=null) {
+					verifEntr.setCommune(entreprise.getCommune());
+				}
+				
+				if(entreprise.getPostaleEntr()!=null) {
+					verifEntr.setPostaleEntr(entreprise.getPostaleEntr());
+				}
+				
+				if(entreprise.getEmailEntr()!=null) {
+					verifEntr.setEmailEntr(entreprise.getEmailEntr());
+				}
+				
+				if(entreprise.getFormeJuridique()!=null) {
+					verifEntr.setFormeJuridique(entreprise.getFormeJuridique());
+				}
+				
+				if(entreprise.getDomaineActivite()!=null) {
+					verifEntr.setDomaineActivite(entreprise.getDomaineActivite());
+				}
+				
+				if(entreprise.getContribuableEntr()!=null) {
+					verifEntr.setContribuableEntr(entreprise.getContribuableEntr());
+				}
+				
+				if(proprietaire.getNomProp()!=null) {
+					verifProp.setNomProp(proprietaire.getNomProp());
+				}
+				
+				if(proprietaire.getPrenomsProp()!=null) {
+					verifProp.setPrenomsProp(proprietaire.getPrenomsProp());
+				}
+				
+				if(proprietaire.getSexeProp()!=null) {
+					verifProp.setSexeProp(proprietaire.getSexeProp());
+				}
+				
+				if(proprietaire.getTypePieceIdentite()!=null) {
+					verifProp.setTypePieceIdentite(proprietaire.getTypePieceIdentite());
+				}
+				
+				if(proprietaire.getValiditePieceProp()!=null) {
+					verifProp.setValiditePieceProp(proprietaire.getValiditePieceProp());
+				}
+				
+				if(proprietaire.getNationalite()!=null) {
+					verifProp.setNationalite(proprietaire.getNationalite());
+				}
+				
+				if(proprietaire.getTelProp()!=null) {
+					verifProp.setTelProp(proprietaire.getTelProp());
+				}
+				
+				if(proprietaire.getEmailProp()!=null) {
+					verifProp.setEmailProp(proprietaire.getEmailProp());
+				}
+				
+				if(category.equals("LeveeDeGage")) {
+					if(beneficiaire.getNomBen()!=null) {
+						verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
+					}
+					if(beneficiaire.getPrenomsBen()!=null) {
+						verifBeneficiaire.setPrenomsBen(beneficiaire.getPrenomsBen());
+					}
+					if(beneficiaire.getSexeBen()!=null) {
+						verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
+					}
+					if(beneficiaire.getNumpieceBen()!=null) {
+						verifBeneficiaire.setNumpieceBen(beneficiaire.getNumpieceBen());
+					}
+					if(beneficiaire.getPieceidentBen()!=null) {
+						verifBeneficiaire.setPieceidentBen(beneficiaire.getPieceidentBen());
+					}
+					if(beneficiaire.getValiditePieceBen()!=null) {
+						verifBeneficiaire.setValiditePieceBen(beneficiaire.getValiditePieceBen());
+					}
+					if(beneficiaire.getNatBeneficiaire()!=null) {
+						verifBeneficiaire.setNatBeneficiaire(beneficiaire.getNatBeneficiaire());
+					}
+					if(beneficiaire.getTelBen()!=null) {
+						verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
+					}
+					if(beneficiaire.getEmailBen()!=null) {
+						verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
+					}
+					
+					beneficiaireService.saveBeneficiaire(verifBeneficiaire);
+				}
+				
+				entrepriseService.saveEntreprise(verifEntr);
+				proprietaireService.saveProprietaire(verifProp);
+			}	
 			
 			if(verifcodeImportation!=null) {
 				if(category.equals("CodeOccasionnel")) {
@@ -432,7 +459,7 @@ public class OperationDossierController {
 					if(codeImportation.getNumFactureOcca()!=null) {
 						verifcodeImportation.setNumFactureOcca(codeImportation.getNumFactureOcca());
 					}	
-	
+					
 					if(codeImportation.getEmetteurOcca()!=null) {
 						verifcodeImportation.setEmetteurOcca(codeImportation.getEmetteurOcca());
 					}
@@ -510,8 +537,14 @@ public class OperationDossierController {
 				}
 				opCodeImportationService.saveOpCodeImportation(verifOpCodeImportation);
 				codeImportationService.saveCodeImportation(verifcodeImportation);
-			}
 			
+				}
+			}
+		
+		if (errorsList.size() != 0) {
+			modelMap.addAttribute("errorsList", errorsList);
+			return "./errorsPage";
+		}			
 		return "redirect:../Dossier/Liste";
 	}
 	
@@ -561,12 +594,13 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		List<OpCodeImportation> tries = new ArrayList<>()
 				;
 		//List<Proprietaire> proprietaire = proprietaireService.getAllProprietaire();
-		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category);
+		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category,site);
 		codfs.forEach(trier ->{
 			System.out.println("nbreTrie= "+nbreTrie+" trier.getNumDocOp "+trier.getNumDocOp());
 			/*if(nbreTrie == trier.getNumDocOp()) {
@@ -600,10 +634,11 @@ public class OperationDossierController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		List<OpCodeImportation> codeElmt = opCodeImportationService.findAllOpCodeImportationNUMDOC(numDoc);
+		List<OpCodeImportation> codeElmt = opCodeImportationService.findAllOpCodeImportationNUMDOC(numDoc,site);
 		modelMap.addAttribute("listeCode", codeElmt);
 		return "./"+category+"/doublonDossier";
 	}

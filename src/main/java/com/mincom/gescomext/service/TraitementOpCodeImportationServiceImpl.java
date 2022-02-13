@@ -50,19 +50,19 @@ public class TraitementOpCodeImportationServiceImpl implements TraitementOpCodeI
 	}
 
 	@Override
-	public List<TraitementOpCodeImportation> findAllTraitementOpCodeImportationByTypeCodeOp(String code) {
-		return reposy.findAllTraitementOpCodeImportationByTypeCodeOp(code);
+	public List<TraitementOpCodeImportation> findAllTraitementOpCodeImportationByTypeCodeOp(String code, String site) {
+		return reposy.findAllTraitementOpCodeImportationByTypeCodeOp(code,site);
 	}
 
 	@Override
-	public TraitementOpCodeImportation findTraitementOpCodeImportationByStatut(Integer numDocOp, String statut) {
-		return reposy.findTraitementOpCodeImportationByStatut(numDocOp, statut);
+	public TraitementOpCodeImportation findTraitementOpCodeImportationByStatut(Integer numDocOp, String statut, String site) {
+		return reposy.findTraitementOpCodeImportationByStatut(numDocOp, statut,site);
 	}
 
 	@Override
-	public TraitementOpCodeImportation findTraitementOpCodeImportationByIDoP(Long idOp, String statut) {
+	public TraitementOpCodeImportation findTraitementOpCodeImportationByIDoP(Long idOp, String statut, String site) {
 
-		return reposy.findTraitementOpCodeImportationByIDoP(idOp, statut);
+		return reposy.findTraitementOpCodeImportationByIDoP(idOp, statut, site);
 	}
 
 }

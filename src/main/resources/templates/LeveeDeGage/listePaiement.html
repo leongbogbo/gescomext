@@ -85,7 +85,7 @@ layout:decorator="template3">
                             </div>
                         </div>
                     </div>
-                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}">
+                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'LeveeDeGage'}">
                         <table class="table">
                             <tbody>
                                 <tr>

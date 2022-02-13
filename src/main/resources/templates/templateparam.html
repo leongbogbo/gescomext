@@ -91,12 +91,19 @@
             </div>
             </a>
             <ul class="mm-collapse mm-show" style="">
-              <li><a th:href="@{../parametre/listeUtilisateurs}">Utilisateur</a></li>
-              <li><a th:href="@{../parametre/listeRoles}">Roles</a></li>
-              <li><a th:href="@{../parametre/AttributionActions}">Attribution actions</a></li>
+              	<li th:each="urlListeUsers:${listeUrlUserAdmin}">
+		            <a th:href="@{'/'+${urlListeUsers.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUsers.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
             </ul>
         </li>
-          <!--<li class="mm-active" sec:authorize="hasRole('ADMIN')">
+         <!--<li class="mm-active" sec:authorize="hasRole('ADMIN')">
             <a class="has-arrow" href="#" aria-expanded="true">
               <div class="nav_icon_small">
                 <img src="../svg/16.svg" alt="">
@@ -144,8 +151,8 @@
                             </div>
                             <div class="profile_info_details">
                                 <a href="monProfile">Mon Profile </a>
-                                <a href="../parametre/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
-                                <a href="/gescomext/logout">Déconnexion</a>
+                                <a href="../administration/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
+                                <a th:href="@{../logout}">Déconnexion</a>
                             </div>
                         </div>
                     </div>

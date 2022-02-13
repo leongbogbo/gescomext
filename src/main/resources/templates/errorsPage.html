@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zxx"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Error Page</title>
+
+    <!-- <link rel="icon" href="img/favicon.png" type="image/png"> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- themefy CSS -->
+    <link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+    <!-- select2 CSS -->
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.css}">
+    <!-- gijgo css -->
+    <link rel="stylesheet" th:href="@{/css/gijgo.min.css}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/tagsinput.css}">
+
+    <!-- date picker -->
+     <link rel="stylesheet" th:href="@{/css/date-picker.css}">
+
+     <link rel="stylesheet" th:href="@{/css/vectormap-2.0.2.css}">
+     
+     <!-- scrollabe  -->
+     <link rel="stylesheet" th:href="@{/css/scrollable.css}">
+    <!-- datatable CSS -->
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}">
+    <!-- text editor css -->
+    <link rel="stylesheet" th:href="@{/css/summernote-bs4.css}">
+    <!-- morris css -->
+    <link rel="stylesheet" th:href="@{/css/morris.css}">
+    <!-- metarial icon css -->
+    <link rel="stylesheet" th:href="@{/css/material-icons.css}">
+
+    <!-- menu css  -->
+    <link rel="stylesheet" th:href="@{/css/metisMenu.css}">
+    <!-- style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet"  id="colorSkinCSS" th:href="@{/css/default.css}">
+</head>
+<body>
+    
+<div class="erroe_page_wrapper">
+    <div class="errow_wrap">
+        <div class="container text-center">
+            <img src="./Analytic55_files/sad.png" alt="">
+            <div class="error_heading  text-center">
+                <h4 class="headline color_parpel2">Erreur : Veuillez valider tous ces champs </h4>
+            </div>
+            <div class="col-md-8 offset-md-2" th:each="elmt:${errorsList}">
+                <p th:text="${elmt}">La page que vous essayez d'atteindre n'est pas disponible actuellement. Cela peut être dû au fait que la page n'existe pas ou a été déplacée.</p >
+            </div>
+            <div class="error_btn  text-center">
+                <a class=" default_btn parpel_bg2 " th:href="@{/}">Retour</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer  -->
+<!-- jquery slim -->
+<script src="./Analytic55_files/jquery-3.4.1.min.js.téléchargement"></script>
+<!-- popper js -->
+<script src="./Analytic55_files/popper.min.js.téléchargement"></script>
+<!-- bootstarp js -->
+<script src="./Analytic55_files/bootstrap.min.js.téléchargement"></script>
+<!-- sidebar menu  -->
+
+
+</body></html>

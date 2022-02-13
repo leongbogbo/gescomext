@@ -50,6 +50,8 @@
 	<field name="opCodeImportation.codeImportation.beneficiaire.prenomsBen" class="java.lang.String"/>
 	<field name="opCodeImportation.codeImportation.demandeur.prenomsDem" class="java.lang.String"/>
 	<field name="dateTrait" class="java.util.Date"/>
+	<field name="opCodeImportation.codeImportation.entreprise.codeIdexEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.demandeur.codeIdexDem" class="java.lang.String"/>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>
@@ -399,6 +401,13 @@
 				<reportElement mode="Opaque" x="16" y="40" width="364" height="41" backcolor="#FFFFFF" uuid="7b4d2ae2-1d43-4c04-9b3b-2e3932a1b798"/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="14" y="41" width="328" height="30" forecolor="#EB1410" uuid="2b7c0ca6-a0e0-4612-9144-84fface6b18a"/>
+				<textElement verticalAlignment="Top">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["mci/dgce_"+$F{dateTrait}.toString().substring( 0, 4)+"_"+($F{opCodeImportation.codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{opCodeImportation.codeImportation.entreprise.codeIdexEntr}.toUpperCase() : $F{opCodeImportation.codeImportation.demandeur.codeIdexDem}.toUpperCase())]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 </jasperReport>

@@ -27,7 +27,7 @@ public class RoleController {
 	@Autowired
 	UserRepository	userRepo;
 	
-	@RequestMapping("/parametre/listeRoles")
+	@RequestMapping("/administration/listeRoles")
 	public String listeUtilisateurs(ModelMap modelMap)
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
@@ -35,7 +35,9 @@ public class RoleController {
 		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
 		
 		List<Role> elmts = roleService.getAllRole();
 		modelMap.addAttribute("roles", elmts);
@@ -43,22 +45,22 @@ public class RoleController {
 		return "autres/listeRole";
 	}
 	
-	@RequestMapping("/parametre/Role/new")
+	@RequestMapping("/administration/Role/new")
 	public String saveRole(String role){
 		Role roles = new Role();
 		roles.setRole(role);
 		roleRepo.save(roles);
-		return "redirect:/parametre/listeRoles";
+		return "redirect:/administration/listeRoles";
 	}
 	
-	@RequestMapping("/parametre/Role/{role_id}")
+	@RequestMapping("/administration/Role/{role_id}")
 	public String AfficheRole(@PathVariable("role_id") Long role_id, ModelMap modelMap){
 		Role roles = roleService.getRoleById(role_id);
 		modelMap.addAttribute("roles", roles);
 		return "/autres/updateRole";
 	}
 	
-	@RequestMapping("/parametre/updateRole")
+	@RequestMapping("/administration/updateRole")
 	public String updateRole(String role, Long role_id, ModelMap modelMap){
 		Role roles = new Role();
 		roles.setRole_id(role_id);
@@ -66,7 +68,7 @@ public class RoleController {
 		roleService.saveRole(roles);
 		List<Role> listeRole = roleService.getAllRole();
 		modelMap.addAttribute("listeRole", listeRole);
-		return "redirect:/parametre/listeRoles";
+		return "redirect:/administration/listeRoles";
 	}
 	
 }

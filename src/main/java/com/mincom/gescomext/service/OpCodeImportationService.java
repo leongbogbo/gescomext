@@ -14,15 +14,18 @@ public interface OpCodeImportationService {
 	OpCodeImportation getOpCodeImportationById(Long id);
 	List<OpCodeImportation> getAllOpCodeImportation();
 	OpCodeImportation findFirstByOrderByIdOpDesc();
-	List<OpCodeImportation> findAllCodeImportationByTypeCodeOp (String code);
-	OpCodeImportation findBynumDocOp(Integer numDocOp);
+	OpCodeImportation findBynumDocOp(Integer numDocOp, String typecode, String site);
 	List<OpCodeImportation> findByTypeCodeOp(String typeCodeOp);
-	List<OpCodeImportation> findAllCodeImportationByCodeImportExport (String code);
-	List<OpCodeImportation> findCodeImportationByTypecodeAndByCodeRccmOrCc (String code, String typecode);
-	List<OpCodeImportation> findBynumDocOpPdf (Integer code);
-	List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage (String code);
-	List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code);
-	List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code);
-	List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code);
+	
+	List<OpCodeImportation> findAllCodeImportationByTypeCodeOp (String code, String site);
+	List<OpCodeImportation> findAllCodeImportationByCodeImportExport (String code, String site);
+	List<OpCodeImportation> findCodeImportationByTypecodeAndByCodeRccmOrCc (String code, String typecode, String site);
+	List<OpCodeImportation> findBynumDocOpPdf (Integer code, String site);
+	List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage (String code, String site);
+	List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code, String site);
+	List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code, String site);
+	List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code, String site);
+	//POUR LISTE UNIQUEMENT
+	List<OpCodeImportation> findOpCodeImportationsByTypeCodeOp (String code);
 }
 

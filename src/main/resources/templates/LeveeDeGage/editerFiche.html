@@ -60,15 +60,15 @@ layout:decorator="template3">
 	                                                 <td th:text="${#dates.format(elmt.dateTrait, 'dd-MM-yyyy')}"></td >
 	                                            	<td th:text="${elmt.OpCodeImportation.numDocOp}"></td >
 	                                                <td th:switch="${elmt.OpCodeImportation.CodeImportation.statutDemandeurCodeImp}">
-		                                                <span th:case="oui" th:text="${elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr}"></span  >
-		                                                <span th:case="*" th:text="${elmt.OpCodeImportation.CodeImportation.Demandeur.nomDem}"></span  >
+		                                                <span th:case="oui" th:text="${#strings.toUpperCase(elmt.OpCodeImportation.CodeImportation.Entreprise.nomEntr)}"></span  >
+		                                                <span th:case="*" th:text="${#strings.toUpperCase(elmt.OpCodeImportation.CodeImportation.Demandeur.nomDem)}"></span  >
 	                                                </td >
 	                                                
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.numGag}"></td >
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.UsageGag}"></td >
 	                                                
 	                                                <td th:text="${elmt.OpCodeImportation.CodeImportation.TypeGag}"></td >
-	                                                <td th:text="${elmt.user.nomUser}"></td >
+	                                                <td th:text="${#strings.toUpperCase(elmt.user.nomUser)}"></td >
 	                                                <td >
 		                                                <a target="_blank" th:href="@{'EditionFiche?numDoc='+${elmt.OpCodeImportation.numDocOp}}" class="btn btn-outline-info mb-3">Editer Fiche</a>
 	                                                </td >

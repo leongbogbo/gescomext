@@ -21,6 +21,7 @@
 	<field name="opCodeImportation.codeImportation.entreprise.contribuableEntr" class="java.lang.String"/>
 	<field name="opCodeImportation.codeImportation.demandeur.prenomsDem" class="java.lang.String"/>
 	<field name="dateTrait" class="java.util.Date"/>
+	<field name="opCodeImportation.codeImportation.entreprise.codeIdexEntr" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -190,6 +191,13 @@
 				<reportElement mode="Opaque" x="22" y="32" width="478" height="20" backcolor="#FFFFFF" uuid="72f7843f-65c6-4c89-a80a-4bf8ad73b8e4"/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="43" y="34" width="326" height="30" forecolor="#EB1410" uuid="0cee4880-3252-4ecf-bf45-3f84d9a6fb09"/>
+				<textElement verticalAlignment="Top">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["mci/dgce_"+$F{dateTrait}.toString().substring( 0, 4)+"_"+$F{opCodeImportation.codeImportation.entreprise.codeIdexEntr}.toUpperCase()]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 </jasperReport>

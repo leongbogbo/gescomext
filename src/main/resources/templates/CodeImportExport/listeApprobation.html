@@ -82,7 +82,7 @@ layout:decorator="template">
                             </div>
                         </div>
                     </div>
-                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}">
+                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'CodeImportExport'}">
                         <table class="table">
                             <tbody>
                                 <tr>

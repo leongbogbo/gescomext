@@ -50,13 +50,13 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 	}
 
 	@Override
-	public List<OpCodeImportation> findAllCodeImportationByTypeCodeOp(String code) {
-		return opCodeImportationRepository.findAllCodeImportationByTypeCodeOp(code);
+	public List<OpCodeImportation> findAllCodeImportationByTypeCodeOp(String code, String site) {
+		return opCodeImportationRepository.findAllCodeImportationByTypeCodeOp(code, site);
 	}
 
 	@Override
-	public OpCodeImportation findBynumDocOp(Integer numDocOp) {
-		return opCodeImportationRepository.findBynumDocOp(numDocOp);
+	public OpCodeImportation findBynumDocOp(Integer numDocOp, String typecode, String site) {
+		return opCodeImportationRepository.findBynumDocOp(numDocOp,typecode,site);
 	}
 
 	@Override
@@ -65,39 +65,44 @@ public class OpCodeImportationServiceImpl implements OpCodeImportationService {
 	}
 
 	@Override
-	public List<OpCodeImportation> findAllCodeImportationByCodeImportExport(String code) {
-		return opCodeImportationRepository.findAllCodeImportationByCodeImportExport(code);
+	public List<OpCodeImportation> findAllCodeImportationByCodeImportExport(String code, String site) {
+		return opCodeImportationRepository.findAllCodeImportationByCodeImportExport(code, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findCodeImportationByTypecodeAndByCodeRccmOrCc(String code, String typecode) {
-		return opCodeImportationRepository.findCodeImportationByTypecodeAndByCodeRccmOrCc(code, typecode);
+	public List<OpCodeImportation> findCodeImportationByTypecodeAndByCodeRccmOrCc(String code, String typecode, String site) {
+		return opCodeImportationRepository.findCodeImportationByTypecodeAndByCodeRccmOrCc(code, typecode, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findBynumDocOpPdf(Integer code) {
-		return opCodeImportationRepository.findBynumDocOpPdf(code);
+	public List<OpCodeImportation> findBynumDocOpPdf(Integer code, String site) {
+		return opCodeImportationRepository.findBynumDocOpPdf(code, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage(String code) {
-		return opCodeImportationRepository.findAllCodeImportationByCodeOccaOrCodeLeveeGage(code);
+	public List<OpCodeImportation> findAllCodeImportationByCodeOccaOrCodeLeveeGage(String code, String site) {
+		return opCodeImportationRepository.findAllCodeImportationByCodeOccaOrCodeLeveeGage(code, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code) {
+	public List<OpCodeImportation> findAllOpCodeImportationNUMDOC(Integer code, String site) {
 		// TODO Auto-generated method stub
-		return opCodeImportationRepository.findAllOpCodeImportationNUMDOC(code);
+		return opCodeImportationRepository.findAllOpCodeImportationNUMDOC(code, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code) {
-		return opCodeImportationRepository.findOpCodeImportationNOMeNTR(code);
+	public List<OpCodeImportation> findOpCodeImportationNOMeNTR(String code, String site) {
+		return opCodeImportationRepository.findOpCodeImportationNOMeNTR(code, site);
 	}
 
 	@Override
-	public List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code) {
-		return opCodeImportationRepository.findOpCodeImportationNUMpIECEdEMANDEUR(code);
+	public List<OpCodeImportation> findOpCodeImportationNUMpIECEdEMANDEUR(String code, String site) {
+		return opCodeImportationRepository.findOpCodeImportationNUMpIECEdEMANDEUR(code, site);
+	}
+
+	@Override
+	public List<OpCodeImportation> findOpCodeImportationsByTypeCodeOp(String code) {
+		return opCodeImportationRepository.findOpCodeImportationsByTypeCodeOp(code);
 	}
 
 

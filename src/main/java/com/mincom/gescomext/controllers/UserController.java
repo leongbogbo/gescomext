@@ -30,7 +30,7 @@ public class UserController{
 	@Autowired
 	UserRepository userRepo;
 	
-	@RequestMapping("/parametre/listeUtilisateurs")
+	@RequestMapping("/administration/listeUtilisateurs")
 	public String listeUtilisateurs(ModelMap modelMap)
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
@@ -38,7 +38,9 @@ public class UserController{
 		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
 		
 		List<User> elmts = userService.getAllUser();
 		List<Role> roleList = roleService.getAllRole();
@@ -49,7 +51,7 @@ public class UserController{
 	}
 	
 	
-	@RequestMapping("/parametre/Utilisateurs/new")
+	@RequestMapping("/administration/Utilisateurs/new")
 	public String saveUser(User user, String passconfirm)
 	{
 		PasswordEncoder passwordEncoder = passwordEncoders();
@@ -67,10 +69,10 @@ public class UserController{
 			System.out.println("Pseudo deja occupé");
 		}
 		
-		return "redirect:/parametre/listeUtilisateurs";
+		return "redirect:/administration/listeUtilisateurs";
 	}
 	
-	@RequestMapping("/parametre/Utilisateurs/Activation/{idUser}")
+	@RequestMapping("/administration/Utilisateurs/Activation/{idUser}")
 	public String activeUser(@PathVariable("idUser") Long idUser)
 	{		
 		User verifUser = userService.getUserById(idUser);
@@ -88,7 +90,7 @@ public class UserController{
 			System.out.println("Pseudo deja occupé");
 		}
 		
-		return "redirect:/parametre/listeUtilisateurs";
+		return "redirect:/administration/listeUtilisateurs";
 	}
 	
 	@Bean

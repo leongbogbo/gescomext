@@ -104,8 +104,8 @@
                             </div>
                             <div class="profile_info_details">
                                 <a href="monProfile">Mon Profile </a>
-                                 <a href="../parametre/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
-                                <a href="/gescomext/logout">Déconnexion</a>
+                                <a href="../administration/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
+                                <a th:href="@{../logout}">Déconnexion</a>
                             </div>
                         </div>
                     </div>

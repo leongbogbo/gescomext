@@ -66,7 +66,6 @@ layout:decorator="templateparam">
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">NOM & PRENOMS</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">CONTACT</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">E-MAIL</th>
-	                                            	
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="2" style="width: 151px;" aria-label="Status: activate to sort column ascending">Options</th>
 	                                            </tr>
 	                                        </thead>
@@ -79,12 +78,11 @@ layout:decorator="templateparam">
 	                                                <td th:text="${elmt.emailUser}"></td >
 	                                                <td>
 	                                                	<a th:href="${'Utilisateurs/Activation/'+elmt.user_id}" th:switch="${elmt.enabled}">
-	                                                	<span th:case="true"  class="btn_21"> ACTIVER</span >
-	                                                	<span th:case="*"  class="btn_2"> BLOQUER</span >
-	                                                </a>
+		                                                	<span th:case="true"  class="btn_21"> ACTIVER</span >
+		                                                	<span th:case="*"  class="btn_2"> BLOQUER</span >
+	                                                	</a>
 	                                                </td>
-	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>
-	                                                <td><a href="#" class="sm_btn">Supprimer</a></td>-->
+	                                                
 	                                            </tr>
                                            </tbody>
                                     	</table>

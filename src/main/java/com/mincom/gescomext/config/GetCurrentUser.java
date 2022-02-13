@@ -14,5 +14,13 @@ public class GetCurrentUser {
 		}
 		return currentUserName;
 	}
-
+	
+	/*public void getLinkUserConnected(String category){
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		String site = user.getSite().getNomSite();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+	}*/
 }
