@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mincom.gescomext.entities.Site;
 import com.mincom.gescomext.entities.User;
 import com.mincom.gescomext.repository.UserRepository;
 
@@ -47,6 +48,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public List<User> findBynomUserOrPrenomsUserContaining (String nom,String prenoms) {
+		return userRepository.findBynomUserOrPrenomsUserContaining(nom,prenoms);
+	}
+
+	@Override
+	public List<User> findBySite(Site site) {
+		return userRepository.findBySite(site);
 	}
 
 }

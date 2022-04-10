@@ -44,4 +44,9 @@ public class SiteServiceImpl implements SiteService {
 		return siteRepository.findAll();
 	}
 
+	@Override
+	public Site findByNomSite(String nomSite) {
+		return siteRepository.findByNomSite(nomSite);
+	}
+
 }

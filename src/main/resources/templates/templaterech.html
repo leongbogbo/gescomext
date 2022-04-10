@@ -69,16 +69,7 @@
                 </div>
             </a>
         </li >
-       	<li >
-            <a th:href="@{'/LeveeDeGage/ReAttribution'}" aria-expanded="false">
-                <div class="nav_icon_small">
-                    <img src="../svg/3.svg" alt="">
-                </div>
-                <div class="nav_title">
-                    <span th:text="${'ReAttribution'}"></span >
-                </div>
-            </a>
-        </li >
+       	
      </ul>
 </nav>
  <!--/ MENU GAUCHE  -->
@@ -101,25 +92,9 @@
                     <div class="slider round open_miniSide"></div>
                 </label>
                 <h3>ZONE DE RECHERCHE</h3>
-                <div class="header_right d-flex justify-content-between align-items-center">
-                    <div class="header_notification_warp d-flex align-items-center">
-                    
-                    </div>
-                    <div class="profile_info">
-                        <img src="../images/client_img.png" alt="#">
-                        <div class="profile_info_iner">
-                            <div class="profile_author_name">
-                                <p>Neurologist </p>
-                                <h5 sec:authentication="name"></h5>
-                            </div>
-                            <div class="profile_info_details">
-                                <a href="monProfile">Mon Profile </a>
-                                 <a href="../administration/listeUtilisateurs" sec:authorize="hasRole('ADMIN')">Parametre</a>
-                                <a th:href="@{../logout}">Déconnexion</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div th:replace="fragments :: menuProfileHaut">
+			    <!-- barre noire haut-->
+			</div >
             </div>
             <!-- FIN BARRE DE CONNEXION HAUT -->
         </div>

@@ -49,14 +49,14 @@ public class GenreMarqueController {
 		return "autres/listeGenreMarque";
 	}
 	
-	@RequestMapping("/parametre/GenreNew")
+	@RequestMapping("/parametre/GenreMarqueNew")
 	public String saveMarque(@Valid GenreMarque genreMarque, BindingResult bindingResult,ModelMap modelMap)
 	{
 		if (bindingResult.hasErrors()) return "listeGenreMarque";
 		genreMarqueRepo.save(genreMarque);
 		List<GenreMarque> elmt = genreMarqueService.getAllGenreMarque();
 		modelMap.addAttribute("genreMarques", elmt);
-		return "autres/listeGenreMarque";
+		return "redirect:/parametre/listeGenres";
 	}
 	
 	@RequestMapping("/parametre/Genre/{idGen}")

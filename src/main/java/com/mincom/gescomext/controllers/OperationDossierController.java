@@ -66,8 +66,8 @@ import com.mincom.gescomext.validator.ProprietaireValidator;
 
 @Controller
 public class OperationDossierController {
-	
-	//INJECTION DES SERVICES
+
+	// INJECTION DES SERVICES
 	@Autowired
 	NationaliteService natService;
 	@Autowired
@@ -95,67 +95,75 @@ public class OperationDossierController {
 	@Autowired
 	DomaineActiviteService domaineActiviteService;
 	@Autowired
-	DepartementService departementService;		
-	@Autowired 
-	MarqueService marqueService;		  
-	@Autowired 
+	DepartementService departementService;
+	@Autowired
+	MarqueService marqueService;
+	@Autowired
 	GenreMarqueService genreMarqueService;
-	@Autowired 
+	@Autowired
 	FonctionService fonctionService;
 	@Autowired
 	ActionListeService actionListeService;
 	@Autowired
 	BeneficiaireService beneficiaireService;
-	
+
 	List<String> errorsList = new ArrayList<>();
-	//INJECTION DES REPOSITORY
+	// INJECTION DES REPOSITORY
 	@Autowired
 	EntrepriseRepository entrepriseRepo;
 	@Autowired
 	UserRepository userRepository;
-			
+
 	@RequestMapping("/{category}/Operation/Dossier/Liste")
-	public String opDossiers(@PathVariable("category") String category, ModelMap modelMap) throws IOException
-	{
+	public String opDossiers(@PathVariable("category") String category, ModelMap modelMap) throws IOException {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category,site);
-		modelMap.addAttribute("listeCode", codfs);
-		return "./"+category+"/operationDossier";
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCode", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCode", cods);
+		}
+		
+		return "./" + category + "/operationDossier";
 	}
-	
+
 	@RequestMapping("/{category}/Operation/Rechercher/Dossier")
-	public String rechercheOpDossier(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
-	{
+	public String rechercheOpDossier(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		OpCodeImportation codeElmt = opCodeImportationService.findBynumDocOp(numDoc,category,site);
-		modelMap.addAttribute("listeCode", codeElmt);
-		return "./"+category+"/operationDossier";
+		if(username.equals("superadmin")) {
+			OpCodeImportation cods = opCodeImportationService.findBynumDocOpSuper(numDoc, category);
+			modelMap.addAttribute("listeCode", cods);
+		}else {
+			OpCodeImportation cods = opCodeImportationService.findBynumDocOp(numDoc, category, site);
+			modelMap.addAttribute("listeCode", cods);
+		}
+		
+		return "./" + category + "/operationDossier";
 	}
-	
+
 	@RequestMapping("/{category}/Operation/Update/Dossier/{numDoc}")
-	public String rechercheUpDossier(@PathVariable("category") String category,
-										@PathVariable("numDoc") Integer numDoc, 
-											ModelMap modelMap)
-	{
+	public String rechercheUpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Integer numDoc,
+			ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		
+
 		List<Commune> coms = communeService.getAllCommune();
 		List<Ville> vils = villeService.getAllVille();
 		List<Nationalite> nats = natService.getAllNationalite();
@@ -167,21 +175,26 @@ public class OperationDossierController {
 		List<DomaineActivite> domaineActivite = domaineActiviteService.getAllDomaineActivite();
 		List<Departement> departement = departementService.getAllDepartement();
 		List<Fonction> fonction = fonctionService.getAllFonction();
-		
+
 		Proprietaire verifProp = new Proprietaire();
 		Demandeur verifDemandeur = new Demandeur();
 		Beneficiaire verifBeneficiaire = new Beneficiaire();
-		Entreprise verifEntr = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getEntreprise();
-		if(verifEntr!=null) {
-			verifProp = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getEntreprise().getProprietaires();
-			if(category.equals("LeveeDeGage")) {
-				verifBeneficiaire = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getBeneficiaire();
+		Entreprise verifEntr = opCodeImportationService.findBynumDocOp(numDoc, category, site).getCodeImportation()
+				.getEntreprise();
+		if (verifEntr != null) {
+			verifProp = opCodeImportationService.findBynumDocOp(numDoc, category, site).getCodeImportation()
+					.getEntreprise().getProprietaires();
+			if (category.equals("LeveeDeGage")) {
+				verifBeneficiaire = opCodeImportationService.findBynumDocOp(numDoc, category, site).getCodeImportation()
+						.getBeneficiaire();
 			}
-		}else {
-			verifDemandeur = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation().getDemandeur();
+		} else {
+			verifDemandeur = opCodeImportationService.findBynumDocOp(numDoc, category, site).getCodeImportation()
+					.getDemandeur();
 		}
-		CodeImportation verifCodeImportation = opCodeImportationService.findBynumDocOp(numDoc,category,site).getCodeImportation();
-		
+		CodeImportation verifCodeImportation = opCodeImportationService.findBynumDocOp(numDoc, category, site)
+				.getCodeImportation();
+
 		modelMap.addAttribute("listeCommunes", coms);
 		modelMap.addAttribute("listeVilles", vils);
 		modelMap.addAttribute("listeNationalites", nats);
@@ -201,39 +214,34 @@ public class OperationDossierController {
 		modelMap.addAttribute("verifDemandeur", verifDemandeur);
 		modelMap.addAttribute("verifCodeImportation", verifCodeImportation);
 		modelMap.addAttribute("numDoc", numDoc);
-		return "./"+category+"/updateDossier";
+		return "./" + category + "/updateDossier";
 	}
-	
+
 	@RequestMapping("/{category}/Operation/Valide/Update")
 	public String valideUpDossier(@PathVariable("category") String category,
-									@ModelAttribute("entreprise") Entreprise entreprise,
-										@ModelAttribute("proprietaire") Proprietaire proprietaire,
-											@ModelAttribute("demandeur") Demandeur demandeur,
-												@ModelAttribute("codeImportation") CodeImportation codeImportation,
-													@ModelAttribute("beneficiaire") Beneficiaire beneficiaire,
-														Integer numDossier,
-															ModelMap modelMap)
-	{
+			@ModelAttribute("entreprise") Entreprise entreprise,
+			@ModelAttribute("proprietaire") Proprietaire proprietaire, @ModelAttribute("demandeur") Demandeur demandeur,
+			@ModelAttribute("codeImportation") CodeImportation codeImportation,
+			@ModelAttribute("beneficiaire") Beneficiaire beneficiaire, Integer numDossier, ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		//------- GESTION DES ONGLLETS--------
+		// ------- GESTION DES ONGLLETS--------
 		errorsList.clear();
-		String codesExportation="";
-		String codesFiscals="";
-		
+		String codesExportation = "";
+		String codesFiscals = "";
+
 		Entreprise verifEntr = new Entreprise();
 		Proprietaire verifProp = new Proprietaire();
 		Demandeur verifDemandeur = new Demandeur();
 		Beneficiaire verifBeneficiaire = new Beneficiaire();
 		CodeImportation verifcodeImportation = new CodeImportation();
 		OpCodeImportation verifOpCodeImportation = new OpCodeImportation();
-		
-		
-		if(entreprise.getIdEntr()!=null) {
+
+		if (entreprise.getIdEntr() != null) {
 			EntrepriseValidator.validate(entreprise).forEach(error -> {
 				errorsList.add(error);
 			});
@@ -241,14 +249,14 @@ public class OperationDossierController {
 				errorsList.add(error);
 			});
 			if (errorsList.size() == 0) {
-				verifEntr = entrepriseService.getEntrepriseById(entreprise.getIdEntr());		
+				verifEntr = entrepriseService.getEntrepriseById(entreprise.getIdEntr());
 				verifProp = proprietaireService.getProprietaireById(proprietaire.getIdProp());
-				if(category.equals("LeveeDeGage")) {
+				if (category.equals("LeveeDeGage")) {
 					verifBeneficiaire = beneficiaireService.getBeneficiaireById(beneficiaire.getIdBen());
 				}
 			}
 		}
-		if(demandeur.getIdDem()!=null) {
+		if (demandeur.getIdDem() != null) {
 			DemandeurValidator.validate(demandeur).forEach(error -> {
 				errorsList.add(error);
 			});
@@ -256,411 +264,468 @@ public class OperationDossierController {
 				verifDemandeur = demandeurService.getDemandeurById(demandeur.getIdDem());
 			}
 		}
-		if(codeImportation!=null) {
-			LeveeGageValidator.validate(codeImportation).forEach(error -> {
-				errorsList.add(error);
-			});
-		verifOpCodeImportation = opCodeImportationService.findBynumDocOp(numDossier,category,site);	
-		verifcodeImportation = opCodeImportationService.findBynumDocOp(numDossier,category,site).getCodeImportation();	
+		if (codeImportation != null) {
+			verifOpCodeImportation = opCodeImportationService.findBynumDocOp(numDossier, category, site);
+			verifcodeImportation = opCodeImportationService.findBynumDocOp(numDossier, category, site)
+					.getCodeImportation();
 		}
 		if (errorsList.size() == 0) {
-			if(category.equals("CodeImportExport")) {
-				if(verifEntr!=null && verifProp!=null) {
-					if(entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr()!=null && entreprise.getContribuableEntr()!=null){
-						codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(), entreprise.getContribuableEntr(), numDossier);
-						codesFiscals = CalculeCodesExportation.getCodeFixcal(1,numDossier);
-					}else if((entreprise.getExoregcomEntr()!=null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)
-							|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() !=0 && entreprise.getRegcommerceEntr()==null && entreprise.getContribuableEntr()!=null)){
-						codesExportation = CalculeCodesExportation.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
-						codesFiscals = CalculeCodesExportation.getCodeFixcal(0,numDossier);
+			if (category.equals("CodeImportExport")) {
+				if (verifEntr != null && verifProp != null) {
+					if (entreprise.getExoregcomEntr() != null && entreprise.getExoregcomEntr().equals("non")
+							&& entreprise.getRegcommerceEntr() != null && entreprise.getContribuableEntr() != null) {
+						codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(),
+								entreprise.getContribuableEntr(), numDossier);
+						codesFiscals = CalculeCodesExportation.getCodeFixcal(1, numDossier);
+					} else if ((entreprise.getExoregcomEntr() != null && entreprise.getExoregcomEntr().equals("oui")
+							&& entreprise.getRegcommerceEntr() == null && entreprise.getContribuableEntr() != null)
+							|| (entreprise.getDepartement() != null && entreprise.getDepartement().getIdDep() != 0
+									&& entreprise.getRegcommerceEntr() == null
+									&& entreprise.getContribuableEntr() != null)) {
+						codesExportation = CalculeCodesExportation
+								.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
+						codesFiscals = CalculeCodesExportation.getCodeFixcal(0, numDossier);
 					}
-					
-					
-					if(!codesExportation.isEmpty()) {
+
+					if (!codesExportation.isEmpty()) {
 						verifEntr.setCodeImportExportEntr(codesExportation);
 					}
-					
-					if(!codesFiscals.isEmpty()) {			
+
+					if (!codesFiscals.isEmpty()) {
 						verifcodeImportation.setNumCodFic(codesFiscals);
 					}
 				}
 			}
-			
-			
-			if(verifDemandeur!=null) {
-				if(demandeur.getNomDem()!=null) {
+
+			if (verifDemandeur != null) {
+				if (demandeur.getNomDem() != null) {
 					verifDemandeur.setNomDem(demandeur.getNomDem());
 				}
-				
-				if(demandeur.getPrenomsDem()!=null) {
+
+				if (demandeur.getPrenomsDem() != null) {
 					verifDemandeur.setPrenomsDem(demandeur.getPrenomsDem());
 				}
-				
-				if(demandeur.getSexeDem()!=null) {
+
+				if (demandeur.getSexeDem() != null) {
 					verifDemandeur.setSexeDem(demandeur.getSexeDem());
 				}
-				
-				if(demandeur.getContribuableDem()!=null) {
+
+				if (demandeur.getContribuableDem() != null) {
 					verifDemandeur.setContribuableDem(demandeur.getContribuableDem());
 				}
-				
-				if(demandeur.getTypePieceIdentite()!=null) {
+
+				if (demandeur.getTypePieceIdentite() != null) {
 					verifDemandeur.setTypePieceIdentite(demandeur.getTypePieceIdentite());
 				}
-				
-				if(demandeur.getValiditePieceDem()!=null) {
+
+				if (demandeur.getValiditePieceDem() != null) {
 					verifDemandeur.setValiditePieceDem(demandeur.getValiditePieceDem());
 				}
-				
-				if(demandeur.getNationalite()!=null) {
+
+				if (demandeur.getNationalite() != null) {
 					verifDemandeur.setNationalite(demandeur.getNationalite());
 				}
-				
-				if(demandeur.getTelDem()!=null) {
+
+				if (demandeur.getTelDem() != null) {
 					verifDemandeur.setTelDem(demandeur.getTelDem());
 				}
-				
-				if(demandeur.getEmailDem()!=null) {
+
+				if (demandeur.getEmailDem() != null) {
 					verifDemandeur.setEmailDem(demandeur.getEmailDem());
+				}
+				
+				if (demandeur.getExoPaiementDem() != null) {
+					verifDemandeur.setExoPaiementDem(demandeur.getExoPaiementDem());
 				}
 				demandeurService.saveDemandeur(verifDemandeur);
 			}
-			if(verifEntr!=null) {
-				if(entreprise.getNomEntr()!=null) {
+			if (verifEntr != null) {
+				if (entreprise.getNomEntr() != null) {
 					verifEntr.setNomEntr(entreprise.getNomEntr());
 				}
-				
-				if(entreprise.getSigleEntr()!=null) {
+
+				if (entreprise.getSigleEntr() != null) {
 					verifEntr.setSigleEntr(entreprise.getSigleEntr());
 				}
-				
-				if(entreprise.getNumIduEntr()!=null) {
+
+				if (entreprise.getNumIduEntr() != null) {
 					verifEntr.setNumIduEntr(entreprise.getNumIduEntr());
 				}
-				
-				if(entreprise.getDepartement()!=null) {
+
+				if (entreprise.getDepartement() != null) {
 					verifEntr.setDepartement(entreprise.getDepartement());
 				}
-				
-				if(entreprise.getExoregcomEntr() !=null) {
+
+				if (entreprise.getExoregcomEntr() != null) {
 					verifEntr.setExoregcomEntr(entreprise.getExoregcomEntr());
 				}
-				
-				if(entreprise.getRegcommerceEntr()!=null) {
+
+				if (entreprise.getRegcommerceEntr() != null) {
 					verifEntr.setRegcommerceEntr(entreprise.getRegcommerceEntr());
 				}
-				
-				if(entreprise.getCommune()!=null) {
+
+				if (entreprise.getCommune() != null) {
 					verifEntr.setCommune(entreprise.getCommune());
 				}
-				
-				if(entreprise.getPostaleEntr()!=null) {
+
+				if (entreprise.getPostaleEntr() != null) {
 					verifEntr.setPostaleEntr(entreprise.getPostaleEntr());
 				}
-				
-				if(entreprise.getEmailEntr()!=null) {
+
+				if (entreprise.getEmailEntr() != null) {
 					verifEntr.setEmailEntr(entreprise.getEmailEntr());
 				}
-				
-				if(entreprise.getFormeJuridique()!=null) {
+
+				if (entreprise.getFormeJuridique() != null) {
 					verifEntr.setFormeJuridique(entreprise.getFormeJuridique());
 				}
-				
-				if(entreprise.getDomaineActivite()!=null) {
+
+				if (entreprise.getDomaineActivite() != null) {
 					verifEntr.setDomaineActivite(entreprise.getDomaineActivite());
 				}
-				
-				if(entreprise.getContribuableEntr()!=null) {
+
+				if (entreprise.getContribuableEntr() != null) {
 					verifEntr.setContribuableEntr(entreprise.getContribuableEntr());
 				}
 				
-				if(proprietaire.getNomProp()!=null) {
+				if (entreprise.getExoPaiementEntr() != null) {
+					verifEntr.setExoPaiementEntr(entreprise.getExoPaiementEntr());
+				}
+
+				if (proprietaire.getNomProp() != null) {
 					verifProp.setNomProp(proprietaire.getNomProp());
 				}
-				
-				if(proprietaire.getPrenomsProp()!=null) {
+
+				if (proprietaire.getPrenomsProp() != null) {
 					verifProp.setPrenomsProp(proprietaire.getPrenomsProp());
 				}
-				
-				if(proprietaire.getSexeProp()!=null) {
+
+				if (proprietaire.getSexeProp() != null) {
 					verifProp.setSexeProp(proprietaire.getSexeProp());
 				}
-				
-				if(proprietaire.getTypePieceIdentite()!=null) {
+
+				if (proprietaire.getTypePieceIdentite() != null) {
 					verifProp.setTypePieceIdentite(proprietaire.getTypePieceIdentite());
 				}
-				
-				if(proprietaire.getValiditePieceProp()!=null) {
+
+				if (proprietaire.getValiditePieceProp() != null) {
 					verifProp.setValiditePieceProp(proprietaire.getValiditePieceProp());
 				}
-				
-				if(proprietaire.getNationalite()!=null) {
+
+				if (proprietaire.getNationalite() != null) {
 					verifProp.setNationalite(proprietaire.getNationalite());
 				}
-				
-				if(proprietaire.getTelProp()!=null) {
+
+				if (proprietaire.getTelProp() != null) {
 					verifProp.setTelProp(proprietaire.getTelProp());
 				}
-				
-				if(proprietaire.getEmailProp()!=null) {
+
+				if (proprietaire.getEmailProp() != null) {
 					verifProp.setEmailProp(proprietaire.getEmailProp());
 				}
-				
-				if(category.equals("LeveeDeGage")) {
-					if(beneficiaire.getNomBen()!=null) {
+
+				if (category.equals("LeveeDeGage")) {
+					LeveeGageValidator.validate(codeImportation).forEach(error -> {
+						errorsList.add(error);
+					});
+					if (beneficiaire.getNomBen() != null) {
 						verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
 					}
-					if(beneficiaire.getPrenomsBen()!=null) {
+					if (beneficiaire.getPrenomsBen() != null) {
 						verifBeneficiaire.setPrenomsBen(beneficiaire.getPrenomsBen());
 					}
-					if(beneficiaire.getSexeBen()!=null) {
+					if (beneficiaire.getSexeBen() != null) {
 						verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
 					}
-					if(beneficiaire.getNumpieceBen()!=null) {
+					if (beneficiaire.getNumpieceBen() != null) {
 						verifBeneficiaire.setNumpieceBen(beneficiaire.getNumpieceBen());
 					}
-					if(beneficiaire.getPieceidentBen()!=null) {
+					if (beneficiaire.getPieceidentBen() != null) {
 						verifBeneficiaire.setPieceidentBen(beneficiaire.getPieceidentBen());
 					}
-					if(beneficiaire.getValiditePieceBen()!=null) {
+					if (beneficiaire.getValiditePieceBen() != null) {
 						verifBeneficiaire.setValiditePieceBen(beneficiaire.getValiditePieceBen());
 					}
-					if(beneficiaire.getNatBeneficiaire()!=null) {
+					if (beneficiaire.getNatBeneficiaire() != null) {
 						verifBeneficiaire.setNatBeneficiaire(beneficiaire.getNatBeneficiaire());
 					}
-					if(beneficiaire.getTelBen()!=null) {
+					if (beneficiaire.getTelBen() != null) {
 						verifBeneficiaire.setSexeBen(beneficiaire.getSexeBen());
 					}
-					if(beneficiaire.getEmailBen()!=null) {
+					if (beneficiaire.getEmailBen() != null) {
 						verifBeneficiaire.setEmailBen(beneficiaire.getEmailBen());
 					}
-					
+
 					beneficiaireService.saveBeneficiaire(verifBeneficiaire);
 				}
-				
+
 				entrepriseService.saveEntreprise(verifEntr);
 				proprietaireService.saveProprietaire(verifProp);
-			}	
-			
-			if(verifcodeImportation!=null) {
-				if(category.equals("CodeOccasionnel")) {
+			}
+
+			if (verifcodeImportation != null) {
+				if (category.equals("CodeOccasionnel")) {
 					String codeStruc;
-					if(verifcodeImportation.getEntreprise()!=null) {
+					if (verifcodeImportation.getEntreprise() != null) {
 						codeStruc = verifEntr.getTypeStructure().getCodeStruc();
-					}else{
+					} else {
 						codeStruc = "42000A";
 					}
 					String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
-					
-					if(!codesOccasionnel.isEmpty()) {
+
+					if (!codesOccasionnel.isEmpty()) {
 						verifcodeImportation.setNumOcca(codesOccasionnel);
 					}
-					
-					if(codeImportation.getNumFactureOcca()!=null) {
+
+					if (codeImportation.getNumFactureOcca() != null) {
 						verifcodeImportation.setNumFactureOcca(codeImportation.getNumFactureOcca());
-					}	
-					
-					if(codeImportation.getEmetteurOcca()!=null) {
+					}
+
+					if (codeImportation.getEmetteurOcca() != null) {
 						verifcodeImportation.setEmetteurOcca(codeImportation.getEmetteurOcca());
 					}
-					if(codeImportation.getDateEmisOcca()!=null) {
+					if (codeImportation.getDateEmisOcca() != null) {
 						verifcodeImportation.setDateEmisOcca(codeImportation.getDateEmisOcca());
 					}
-					if(codeImportation.getDeclarationOcca()!=null) {
+					if (codeImportation.getDeclarationOcca() != null) {
 						verifcodeImportation.setDeclarationOcca(codeImportation.getDeclarationOcca());
 					}
-					if(codeImportation.getObjetOcca()!=null) {
+					if (codeImportation.getObjetOcca() != null) {
 						verifcodeImportation.setObjetOcca(codeImportation.getObjetOcca());
 					}
-					if(codeImportation.getTypeCodeOcca()!=null) {
+					if (codeImportation.getTypeCodeOcca() != null) {
 						verifcodeImportation.setTypeCodeOcca(codeImportation.getTypeCodeOcca());
 					}
+					
+					if (codeImportation.getPaysorigine() != null) {
+						verifcodeImportation.setPaysorigine(codeImportation.getPaysorigine());
+					}
 				}
-				
-				if(category.equals("LeveeDeGage")) {
-					
+
+				if (category.equals("LeveeDeGage")) {
+
 					Date dategag = codeImportation.getDateGag();
-					
+
 					SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
 					String dateDuJours = formatGag.format(new Date());
 					LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
 					LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
-					
+
 					Period diffDate = Period.between(dJour, dates);
 					int years = Math.abs(diffDate.getYears());
 					int mois = Math.abs(diffDate.getMonths());
-					
-					String typeGage="";
-					
-					if((years == 2 && mois > 0) || (years > 2 )) {
+
+					String typeGage = "";
+
+					if ((years == 2 && mois > 0) || (years > 2)) {
 						typeGage = "ordinaire";
 						verifOpCodeImportation.setMontantOp("40000");
-					}else if((years == 2 && mois == 0) || (years < 2 )) {
+					} else if ((years == 2 && mois == 0) || (years < 2)) {
 						typeGage = "exceptionnelle";
 						verifOpCodeImportation.setMontantOp("50000");
 					}
 					verifcodeImportation.setTypeGag(typeGage);
-					String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(), codeImportation.getNumChassisGag(), typeGage, numDossier);
-					
-					if(!codesLege.isEmpty()) {
+					String codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(),
+							codeImportation.getNumChassisGag(), typeGage, numDossier);
+
+					if (!codesLege.isEmpty()) {
 						verifcodeImportation.setNumGag(codesLege);
 					}
-					if(codeImportation.getDateGag()!=null) {
+					if (codeImportation.getDateGag() != null) {
 						verifcodeImportation.setDateGag(codeImportation.getDateGag());
 					}
-					if(codeImportation.getNumImmatriculationtGag()!=null) {
+					if (codeImportation.getNumImmatriculationtGag() != null) {
 						verifcodeImportation.setNumImmatriculationtGag(codeImportation.getNumImmatriculationtGag());
-					}							
-					if(codeImportation.getNumCarteGriseGag()!=null) {
+					}
+					if (codeImportation.getNumCarteGriseGag() != null) {
 						verifcodeImportation.setNumCarteGriseGag(codeImportation.getNumCarteGriseGag());
 					}
-					if(codeImportation.getNumChassisGag()!=null) {
+					if (codeImportation.getNumChassisGag() != null) {
 						verifcodeImportation.setNumChassisGag(codeImportation.getNumChassisGag());
 					}
-					if(codeImportation.getDateMiseCirculationGag()!=null) {
+					if (codeImportation.getDateMiseCirculationGag() != null) {
 						verifcodeImportation.setDateMiseCirculationGag(codeImportation.getDateMiseCirculationGag());
 					}
-					if(codeImportation.getTypeTechGag()!=null) {
+					if (codeImportation.getTypeTechGag() != null) {
 						verifcodeImportation.setTypeTechGag(codeImportation.getTypeTechGag());
-					}if(codeImportation.getUsageGag()!=null) {
+					}
+					if (codeImportation.getUsageGag() != null) {
 						verifcodeImportation.setUsageGag(codeImportation.getUsageGag());
 					}
-					if(codeImportation.getTypeGag()!=null) {
+					if (codeImportation.getTypeGag() != null) {
 						verifcodeImportation.setTypeGag(codeImportation.getTypeGag());
 					}
-					if(codeImportation.getMarque()!=null) {
+					if (codeImportation.getMarque() != null) {
 						verifcodeImportation.setMarque(codeImportation.getMarque());
 					}
-					if(codeImportation.getGenreMarque()!=null) {
+					if (codeImportation.getGenreMarque() != null) {
 						verifcodeImportation.setGenreMarque(codeImportation.getGenreMarque());
 					}
 				}
 				opCodeImportationService.saveOpCodeImportation(verifOpCodeImportation);
 				codeImportationService.saveCodeImportation(verifcodeImportation);
-			
-				}
+
 			}
-		
+		}
+
 		if (errorsList.size() != 0) {
 			modelMap.addAttribute("errorsList", errorsList);
 			return "./errorsPage";
-		}			
+		}
 		return "redirect:../Dossier/Liste";
 	}
-	
+
 	@RequestMapping("/{category}/Operation/Suppression/Dossier/{numDoc}")
-	public String supprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc, ModelMap modelMap)
-	{
+	public String supprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc,
+			ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		
+
 		OpCodeImportation Elmt = opCodeImportationService.getOpCodeImportationById(numDoc);
-		Entreprise infoEntr = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation().getEntreprise();
-		Demandeur infoDem = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation().getDemandeur();
-		Beneficiaire infoBen = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation().getBeneficiaire();
-		//codeImportationService.deleteCodeImportationById(idElmt);
-		if(infoEntr != null) {
-			Proprietaire infoProp = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation().getEntreprise().getProprietaires();
+		Entreprise infoEntr = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation()
+				.getEntreprise();
+		Demandeur infoDem = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation()
+				.getDemandeur();
+		Beneficiaire infoBen = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation()
+				.getBeneficiaire();
+		// codeImportationService.deleteCodeImportationById(idElmt);
+		if (infoEntr != null) {
+			Proprietaire infoProp = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation()
+					.getEntreprise().getProprietaires();
 			modelMap.addAttribute("infoEntreprise", infoEntr);
-			modelMap.addAttribute("infoProprietaire", infoProp);			
+			modelMap.addAttribute("infoProprietaire", infoProp);
 		}
-		if(infoDem != null) {
-			modelMap.addAttribute("infofiscos", infoDem);			
+		if (infoDem != null) {
+			modelMap.addAttribute("infofiscos", infoDem);
 		}
 		modelMap.addAttribute("listeCode", Elmt);
 		modelMap.addAttribute("numDoc", numDoc);
-		return "./"+category+"/suppressionDossier";
+		return "./" + category + "/suppressionDossier";
 	}
-	
+
 	@RequestMapping("/{category}/Operation/Valider/Suppression/{numDoc}")
-	public String valSupprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc, ModelMap modelMap)
-	{		
+	public String valSupprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc,
+			ModelMap modelMap) {
 		CodeImportation idElmt = opCodeImportationService.getOpCodeImportationById(numDoc).getCodeImportation();
-		if(idElmt != null) {
-			codeImportationService.deleteCodeImportation(idElmt);			
+		if (idElmt != null) {
+			codeImportationService.deleteCodeImportation(idElmt);
 		}
 		return "redirect:../../Dossier/Liste";
 	}
-	
+
 	Integer nbreTrie = 0;
-	
+
 	@RequestMapping("/{category}/Doublon/Liste")
-	public String doublonDossiers(@PathVariable("category") String category, ModelMap modelMap) throws IOException
-	{
-		
+	public String doublonDossiers(@PathVariable("category") String category, ModelMap modelMap) throws IOException {
+
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		List<OpCodeImportation> tries = new ArrayList<>()
-				;
-		//List<Proprietaire> proprietaire = proprietaireService.getAllProprietaire();
-		List<OpCodeImportation> codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category,site);
-		codfs.forEach(trier ->{
-			System.out.println("nbreTrie= "+nbreTrie+" trier.getNumDocOp "+trier.getNumDocOp());
-			/*if(nbreTrie == trier.getNumDocOp()) {
-				nbreTrie = trier.getNumDocOp();
-				tries.add(trier);
-				System.out.println("affiche ");
-			}else {
-				nbreTrie = trier.getNumDocOp();
-				tries.add(trier);
-				System.out.println("non ");
-			}*/
+		List<OpCodeImportation> tries = new ArrayList<>();
+		List<OpCodeImportation> codfs = new ArrayList<>();
+		
+		// List<Proprietaire> proprietaire = proprietaireService.getAllProprietaire();
+		if(username.equals("superadmin")) {
+			codfs = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+		}else {
+			codfs = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+		}
+		codfs.forEach(trier -> {
+			/*
+			 * if(nbreTrie == trier.getNumDocOp()) { nbreTrie = trier.getNumDocOp();
+			 * tries.add(trier); System.out.println("affiche "); }else { nbreTrie =
+			 * trier.getNumDocOp(); tries.add(trier); System.out.println("non "); }
+			 */
 			tries.add(trier);
 		});
 		modelMap.addAttribute("listeCode", tries);
-		return "./"+category+"/doublonDossier";
+		return "./" + category + "/doublonDossier";
 	}
-	
+
 	@RequestMapping("/{category}/Suppression/Doublon/{numDoc}")
-	public String dolSupprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc, ModelMap modelMap)
-	{		
+	public String dolSupprOpDossier(@PathVariable("category") String category, @PathVariable("numDoc") Long numDoc,
+			ModelMap modelMap) {
 		Proprietaire idElmt = proprietaireService.getProprietaireById(numDoc);
-		if(idElmt != null) {
-			proprietaireService.deleteProprietaire(idElmt);			
+		if (idElmt != null) {
+			proprietaireService.deleteProprietaire(idElmt);
 		}
 		return "redirect:../../Doublon/Liste";
 	}
-	
+
 	@RequestMapping("/{category}/Doublon/Recherche")
-	public String recherchedorDossier(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap)
-	{
+	public String recherchedorDossier(@PathVariable("category") String category, Integer numDoc, ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		List<OpCodeImportation> codeElmt = opCodeImportationService.findAllOpCodeImportationNUMDOC(numDoc,site);
-		modelMap.addAttribute("listeCode", codeElmt);
-		return "./"+category+"/doublonDossier";
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllOpCodeImportationNUMDOCSuper(numDoc);
+			modelMap.addAttribute("listeCode", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllOpCodeImportationNUMDOC(numDoc, site);
+			modelMap.addAttribute("listeCode", cods);
+		}
+		return "./" + category + "/doublonDossier";
 	}
 	
+	List<OpCodeImportation> infosDoc;
+	
 	@RequestMapping("/{category}/ZoneDeRecherche")
-	public String rechercheDossier(@PathVariable("category") String category, String codeEntr, String codeDem, ModelMap modelMap)
-	{
+	public String rechercheDossier(@PathVariable("category") String category, String codeEntr, String codeDem,
+			Integer numDos, ModelMap modelMap) {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
-		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user,category);		
+		String site = user.getSite().getNomSite();
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		
-		if (codeEntr != null && !codeEntr.isEmpty() && codeDem == null) {
+		if (codeEntr != null && !codeEntr.isEmpty()) {
 			List<Entreprise> infosEntr = entrepriseService.findEntrepriseByGeneralInfo(codeEntr);
+			infosEntr.forEach(enteprises->{
+				enteprises.getCodeImportation().forEach(codeimp->{
+					infosDoc =codeimp.getOpCodeImportation();
+				});
+			});
 			modelMap.addAttribute("infosEntr", infosEntr);
-		} else if (codeEntr == null && codeDem != null && !codeDem.isEmpty()) {
+			modelMap.addAttribute("infosDos", infosDoc);
+		} else if (codeDem != null && !codeDem.isEmpty()) {
 			List<Demandeur> infosDem = demandeurService.findDemandeurByGeneralInfo(codeDem);
+			infosDem.forEach(enteprises->{
+				enteprises.getCodeImportation().forEach(codeimp->{
+					infosDoc =codeimp.getOpCodeImportation();
+				});
+			});
 			modelMap.addAttribute("infosDem", infosDem);
+			modelMap.addAttribute("infosDos", infosDoc);
+		} else if (numDos != null) {
+			if(username.equals("superadmin")) {
+				OpCodeImportation infosDos = opCodeImportationService.findBynumDocOpSuper(numDos, category);
+				Entreprise infosEntr = opCodeImportationService.findBynumDocOpSuper(numDos, category).getCodeImportation().getEntreprise();
+				Demandeur infosDem = opCodeImportationService.findBynumDocOpSuper(numDos, category).getCodeImportation().getDemandeur();
+				modelMap.addAttribute("infosDos", infosDos);
+				modelMap.addAttribute("infosEntr", infosEntr);
+				modelMap.addAttribute("infosDem", infosDem);
+			}else {
+				OpCodeImportation infosDos = opCodeImportationService.findBynumDocOp(numDos, category, site);
+				Entreprise infosEntr = opCodeImportationService.findBynumDocOp(numDos, category, site).getCodeImportation().getEntreprise();
+				Demandeur infosDem = opCodeImportationService.findBynumDocOp(numDos, category, site).getCodeImportation().getDemandeur();
+				modelMap.addAttribute("infosDos", infosDos);
+				modelMap.addAttribute("infosEntr", infosEntr);
+				modelMap.addAttribute("infosDem", infosDem);
+			}
 		}
 
-		return "./"+category+"/zoneRecherche";
+		return "./" + category + "/zoneRecherche";
 	}
 
 }

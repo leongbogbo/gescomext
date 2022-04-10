@@ -14,5 +14,6 @@ public interface VilleService {
 	Ville getVilleById(Long id);
 	List<Ville> getAllVille();
 	Page<Ville> getAllVilleByPage(int page, int size);
+	Ville findBynomVille(String nom);
 
 }

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templateparam">
+<head>
+<meta charset="utf-8">
+<title>Liste des entreprises</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+        	<!-- ZONE DE TITRE  -->
+			<div class="row">
+			    <div class="col-12">
+			        <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+			            <div class="page_title_left">
+			                <h3 class="f_s_25 f_w_700 dark_text"></h3>
+			            </div>
+			            <div class="page_title_right">
+			                <!--<div class="page_date_button" data-toggle="modal" data-target="#exampleModalCenter">
+			                    Nouvelle entreprise
+			                </div>-->
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- FIN ZONE DE TITRE  -->
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>LISTE ENTREPRISE</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            <div class="search_inner">
+                                                <form th:action="@{/parametre/Recherche/Entreprise}" method="POST">
+                                                    <div class="search_field">
+                                                        <input type="text" name="nomEntr" placeholder="RAISON SOCIAL">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="QA_table mb_30">
+                                    <!-- table-responsive -->
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                    	<table class="table lms_table_active dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1302px;">
+	                                        <thead>
+	                                            <tr role="row">
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">RAISON SOCIALE</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">FORME</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">N° RCCM</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">N° CC</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">CONTACT</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 151px;" aria-label="Status: activate to sort column ascending"></th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 151px;" aria-label="Status: activate to sort column ascending"></th>
+	                                            </tr>
+	                                        </thead>
+                                        	<tbody>
+	                                            <tr role="row" class="odd" th:each="elmt:${entreprises}">
+	                                                <td th:text="${elmt.nomEntr}"></td >
+	                                                <td th:if="${elmt.formeJuridique}" th:text="${elmt.formeJuridique.titreJury}"></td  >
+	                                                <td th:unless="${elmt.formeJuridique}"></td  >
+	                                                <td th:text="${elmt.regcommerceEntr}"></td >
+	                                                <td th:text="${elmt.contribuableEntr}"></td >
+	                                                <td th:text="${elmt.telEntr}"></td >
+	                                                <td><a th:href="@{${'/parametre/Update/Entreprise/'+elmt.idEntr}}" class="btn_21">Modifier</a></td>
+	                                                <td><a th:href="@{${'/parametre/Suppression/Entreprise/'+elmt.idEntr}}" class="btn_2" onclick="return confirm('Voulez-vous vraiment supprimer cette entreprise ?')">Supprimer</a></td>
+	                                            </tr>
+                                           </tbody>
+                                    	</table>
+                                    	
+                                    	<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+	                                    	
+                                    	</div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+       <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AJOUTER UNE ENTREPRISE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{Utilisateurs/new}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body">
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">NOM</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="nomUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PRENOMS</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="prenomsUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">TEL</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="telUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">E-MAIL</label>
+	                    <div class="col-sm-8">
+	                        <input type="email" name="emailUser" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PSEUDO</label>
+	                    <div class="col-sm-8">
+	                        <input type="text" name="username" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">PASSWORD</label>
+	                    <div class="col-sm-8">
+	                        <input type="password" name="password" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                <div class="form-group row">
+	                    <label for="inputEmail3" class="col-sm-4 col-form-label">CONFIRME</label>
+	                    <div class="col-sm-8">
+	                        <input type="password" name="passconfirm" class="form-control" id="inputEmail3">
+	                    </div>
+	                </div>
+	                
+	                <div class="form-group row">                                                
+	                    <label class="col-sm-4 col-form-label" for="inputState">ROLE</label>
+	                    <div class="col-sm-8">
+	                        <select name="roles" id="inputState" class="form-control">
+	                        	<option value="">Selectionner un role</option >
+	                            <th:block th:each="vil : ${roleList}">
+	                            	<option th:value="${vil.role_id}" th:text="${vil.role}"></option >
+	                            </th:block>
+	                        </select>
+	                    </div>
+	                </div>
+		         </div>
+        	</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Enregistrer</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+     
+</div>
+</body>

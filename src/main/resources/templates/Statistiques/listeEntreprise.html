@@ -16,13 +16,18 @@ layout:decorator="templatestat" xml:lang="">
                 <div class="col-12">
                     <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
                         <div class="page_title_left">
-                            <h3 class="f_s_25 f_w_700 dark_text">Dashboard</h3>
+                            <h3 class="f_s_25 f_w_700 dark_text">Tableau de bord</h3>
                         </div>
                         <div class="page_title_right">
-                            <div class="page_date_button">
-                                August 1, 2020 - August 31, 2020
+                            <div class="page_date_button statDonneesExtraction" data-toggle="modal" data-target="#exampleModalCenter">
+                               PDF
                             </div>
-                  
+                            <!--<div class="page_date_button statDonneesExtraction" data-toggle="modal" data-target="#exampleModalCenter">
+                               EXCEL
+                            </div>
+                            <div class="page_date_button statDonneesExtraction" data-toggle="modal" data-target="#exampleModalCenter">
+                               CSV
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -42,58 +47,78 @@ layout:decorator="templatestat" xml:lang="">
                                     <div class="box_right d-flex2 lms_block">
                                         <div class="serach_field_22">
                                             <div class="search_inner">
-                                                <form action="" method="POST" active="#">
+                                                <form th:action="@{/Statistique/Entreprise}" method="POST" id="statForm">
 	                                                <div class="row">
-	                                                    <div class="col-xl-2 col-lg-6 ">
+	                                                	<div class="col-xl-3 col-lg-6 ">
+			                                                <label for="#">Formes Juridiques:</label>
+			                                                <div class="common_select">
+			                                                    <select name="idJuridique" id="formeJuridique" class="nice_Select wide mb_30">
+			                                                        <option value="">Choix</option>
+							                                        <th:block th:each="jury : ${listeFormjury}">
+										                            	<option formeJuridique th:text="${jury.titreJury}" th:value="${jury.idJury}"></option >
+										                            </th:block>
+			                                                    </select>
+			                                                </div>
+			                                            </div>
+	                                                    <div class="col-xl-3 col-lg-6 ">
 			                                                <label for="#">Domaines Activités:</label>
 			                                                <div class="common_select">
-			                                                    <select class="nice_Select wide mb_30">
-			                                                        <option value="">Dark</option>
-			                                                        <option value="">Lite</option>
+			                                                    <select name="domaineActivite" id="domaineActivite" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listedomaineActivite}">
+											                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
+											                            </th:block>
 			                                                    </select>
 			                                                    
 			                                                </div>
 			                                            </div>
-	                                                    <div class="col-xl-2 col-lg-6 ">
-			                                                <label for="#">Formes Juridiques:</label>
-			                                                <div class="common_select">
-			                                                    <select class="nice_Select wide mb_30">
-			                                                        <option value="">Dark</option>
-			                                                        <option value="">Lite</option>
-			                                                    </select>
-			                                                </div>
-			                                            </div>
-	                                                    <div class="col-xl-2 col-lg-6 ">
+	                                                    <div class="col-xl-3 col-lg-6 ">
 			                                                <label for="#">Ville:</label>
 			                                                <div class="common_select">
-			                                                    <select class="nice_Select wide mb_30">
-			                                                        <option value="">Dark</option>
-			                                                        <option value="">Lite</option>
+			                                                    <select name="ville" id="ville" class="nice_Select wide mb_30">
+			                                                       <option value="">Choix</option>
+							                                       <th:block th:each="vil : ${listeVilles}">
+										                            	<option th:text="${vil.nomVille}" th:value="${vil.idVille}"></option >
+										                            </th:block>
 			                                                    </select>
 			                                                </div>
 			                                            </div>
-	                                                    <div class="col-xl-2 col-lg-6">
+	                                                    <div class="col-xl-3 col-lg-6">
 			                                                <label for="#">Commune:</label>
 			                                                <div class="common_select">
-			                                                    <select class="nice_Select wide mb_30">
-			                                                        <option value="">Dark</option>
-			                                                        <option value="">Lite</option>
+			                                                    <select name="commune" id="commune" class="nice_Selects form-control wide mb_30">             
 			                                                    </select>
 			                                                </div>
 			                                            </div>
-	                                                    <div class="col-xl-2 col-lg-6">
-			                                                <label for="#">Pays:</label>
-			                                                <div class="common_select">
-			                                                    <select class="nice_Select wide mb_30">
-			                                                        <option value="">Dark</option>
-			                                                        <option value="">Lite</option>
-			                                                    </select>
-			                                                </div>
-			                                            </div>
-				                                        <div class="col-xl-2 col-lg-6 mt_25">
-				                                            <input type="submit" class="btn_1" value="Recherche"/>
-				                                        </div>
 			                                        </div>
+			                                        <div class="row">
+			                                        	<div class="col-xl-3 col-lg-6">
+			                                                <label for="#">Natinalité:</label>
+			                                                <div class="common_select">
+			                                                    <select name="nationalite" id="nationalite" class="nice_Select wide mb_30">
+			                                                         	<option value="">Choix</option>
+							                                            <th:block th:each="nat : ${listeNationalites}">
+											                            	<option th:text="${nat.titreNat}" th:value="${nat.idNat}"></option >
+											                            </th:block>
+			                                                    </select>
+			                                                </div>
+			                                            </div>
+			                                        	<div class="col-xl-3 col-lg-6 ">
+			                                                <label for="#">Date Debut:</label>
+			                                                <div class="form-group mb-0">
+																<input type="date" class="form-control" name="inputDate" id="inputDate" th:value="${dateDebut}">
+															</div>
+			                                            </div>
+	                                                    <div class="col-xl-3 col-lg-6 ">
+			                                                <label for="#">Date Fin:</label>
+			                                                <div class="form-group mb-0">
+																<input type="date" class="form-control" name="outPutDate" id="outPutDate" th:value="${dateDuJour}">
+															</div>
+			                                            </div>
+			                                            <div class="col-xl-2 col-lg-6 mt_25">
+				                                            <input type="submit" class="btn_1" id="submit" value="Recherche"/>
+				                                        </div>
+			                                        </div >
                                                 </form >
                                             </div>
                                         </div>
@@ -111,157 +136,32 @@ layout:decorator="templatestat" xml:lang="">
                                 <div class="white_card_header">
                                     <div class="box_header m-0">
                                         <div class="main-title">
-                                            <h3 class="m-0">Running Campain</h3>
-                                            <span>Overview</span>
+                                            <h3 class="m-0">LISTE DES ENTREPRISES</h3>
+                                            <span></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="white_card_body QA_section">
-                                    <div class="QA_table ">
+                                    <div class="QA_table statConteneur">
                                         <!-- table-responsive -->
-                                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table lms_table_active2 p-0 dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" style="width: 820px;">
-                                            <thead>
-                                                <tr role="row"><th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 282px;" aria-sort="ascending" aria-label="Campain: activate to sort column descending">Campain</th><th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Start Time: activate to sort column ascending">Start Time</th><th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 127px;" aria-label="Company: activate to sort column ascending">Company</th><th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 96px;" aria-label="Status: activate to sort column ascending">Status</th><th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 84px;" aria-label="Action: activate to sort column ascending">Action</th></tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">
-                                                        <div class="customer d-flex align-items-center">
-                                                            <div class="social_media">
-                                                                <i class="fab fa-facebook-f"></i>
-                                                            </div>
-                                                            <div class="ml_18">
-                                                                <h3 class="f_s_18 f_w_900 mb-0">Facebook Promotion</h3>
-                                                                <span class="f_s_12 f_w_700 text_color_8">Unique Watch</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_900 mb-0">08:32</h3>
-                                                            <span class="f_s_12 f_w_700 color_text_3">12.12.2022</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_800 mb-0">H&amp;G Fashion</h3>
-                                                            <span class="f_s_12 f_w_500 color_text_3">Fashion and design</span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="f_s_14 f_w_400 color_text_3">
-                                                        <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="badge_active">Active</a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_btns d-flex">
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn"> <i class="fas fa-trash"></i> </a>
-                                                        </div>
-                                                    </td>
-                                                </tr><tr role="row" class="even">
-                                                    <td tabindex="0" class="sorting_1">
-                                                        <div class="customer d-flex align-items-center">
-                                                            <div class="social_media insta_bg">
-                                                                <i class="fab fa-instagram"></i>
-                                                            </div>
-                                                            <div class="ml_18">
-                                                                <h3 class="f_s_18 f_w_900 mb-0">Instagram</h3>
-                                                                <span class="f_s_12 f_w_700 text_color_9">Unique Watch</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_900 mb-0">08:32</h3>
-                                                            <span class="f_s_12 f_w_700 color_text_3">12.12.2022</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_800 mb-0">H&amp;G Fashion</h3>
-                                                            <span class="f_s_12 f_w_500 color_text_3">Fashion and design</span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="f_s_14 f_w_400 color_text_3">
-                                                        <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="badge_active2">Posed</a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_btns d-flex">
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn"> <i class="fas fa-trash"></i> </a>
-                                                        </div>
-                                                    </td>
-                                                </tr><tr role="row" class="odd">
-                                                    <td tabindex="0" class="sorting_1">
-                                                        <div class="customer d-flex align-items-center">
-                                                            <div class="social_media twitter_bg">
-                                                                <i class="fab fa-twitter"></i>
-                                                            </div>
-                                                            <div class="ml_18">
-                                                                <h3 class="f_s_18 f_w_900 mb-0">Twitter</h3>
-                                                                <span class="f_s_12 f_w_700 text_color_10">Unique Watch</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_900 mb-0">08:32</h3>
-                                                            <span class="f_s_12 f_w_700 color_text_3">12.12.2022</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_800 mb-0">H&amp;G Fashion</h3>
-                                                            <span class="f_s_12 f_w_500 color_text_3">Fashion and design</span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="f_s_14 f_w_400 color_text_3">
-                                                        <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="badge_active3">Closed</a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_btns d-flex">
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn"> <i class="fas fa-trash"></i> </a>
-                                                        </div>
-                                                    </td>
-                                                </tr><tr role="row" class="even">
-                                                    <td tabindex="0" class="sorting_1">
-                                                        <div class="customer d-flex align-items-center">
-                                                            <div class="social_media youtube_bg">
-                                                                <i class="fab fa-youtube"></i>
-                                                            </div>
-                                                            <div class="ml_18">
-                                                                <h3 class="f_s_18 f_w_900 mb-0">Youtube</h3>
-                                                                <span class="f_s_12 f_w_700 text_color_11">Summer Campain</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_900 mb-0">08:32</h3>
-                                                            <span class="f_s_12 f_w_700 color_text_3">12.12.2022</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <h3 class="f_s_18 f_w_800 mb-0">H&amp;G Fashion</h3>
-                                                            <span class="f_s_12 f_w_500 color_text_3">Fashion and design</span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="f_s_14 f_w_400 color_text_3">
-                                                        <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="badge_active4">End soon</a>
-                                                    </td>
-                                                    <td>
-                                                        <div class="action_btns d-flex">
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn mr_10"> <i class="far fa-edit"></i> </a>
-                                                            <a href="https://demo.dashboardpack.com/analytic-html/index.html#" class="action_btn"> <i class="fas fa-trash"></i> </a>
-                                                        </div>
-                                                    </td>
-                                                </tr></tbody>
-                                        </table></div>
+                                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+	                                        <table class="table lms_table_active2 p-0 dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" style="width: 820px;">
+	                                            <thead>
+	                                                <tr role="row">
+	                                                	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 282px;" aria-sort="ascending" aria-label="Campain: activate to sort column descending">Raison sociale</th>
+	                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Start Time: activate to sort column ascending">Régistre du commerce</th>
+	                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 127px;" aria-label="Company: activate to sort column ascending">N° CC</th>
+	                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 96px;" aria-label="Status: activate to sort column ascending">Contact</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody id="tbodys">
+	                                           
+												</tbody>
+	                                        </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -269,8 +169,9 @@ layout:decorator="templatestat" xml:lang="">
                     <div class=" card_height_100 mb_30">
                         <div class="white_card_header">
                             <div class="main-title">
-                                <h3 class="m-0">Visitors by Device</h3>
-                                <span>15654 Visitors</span>
+                                <h3 class="m-0">Total entreprise par selection</h3>
+                                <span id="totalEntr">0 entreprise</span >
+                                <strong id="pourcentage">0 entreprise</strong >
                             </div>
                         </div>
                         <div class="white_card_body ">
@@ -282,11 +183,7 @@ layout:decorator="templatestat" xml:lang="">
                                 	<div></div>
                           		</div>
                             </div>
-                            <div class="devices_btn text-center">
-                                <a class="color_button color_button2" href="https://demo.dashboardpack.com/analytic-html/index.html#">Android</a>
-                                <a class="color_button" href="https://demo.dashboardpack.com/analytic-html/index.html#">iphone</a>
-                                <a class="color_button color_button3" href="https://demo.dashboardpack.com/analytic-html/index.html#">Others</a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -296,7 +193,42 @@ layout:decorator="templatestat" xml:lang="">
 
 
 <!-- ### CHAT_MESSAGE_BOX   ### -->
-
+<!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">EXTRACTION DE DONNEES</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form th:action="@{/Statistique/pdf/Entreprise}" method="POST">
+        	<div class="modal-body">
+		         <div class="white_card_body">
+	                <div class="form-group row">
+	                    <div class="col-sm-12">
+	                    	<label for="#">Extraction des données statistiques au format : <strong id="format"></strong ></label>
+	                        <input type="hidden" name="idJuridiques" class="form-control" id="idJuridiques">
+	                        <input type="hidden" name="iddomaineActivite" class="form-control" id="iddomaineActivite" >
+	                        <input type="hidden" name="idville" class="form-control" id="idville" >
+	                        <input type="hidden" name="idcommune" class="form-control" id="idcommune" >
+	                        <input type="hidden" name="idnationalite" class="form-control" id="idnationalite" >
+	                        <input type="hidden" name="inputDates" class="form-control" id="inputDates" >
+	                        <input type="hidden" name="outputDates" class="form-control" id="outputDates" >
+	                    </div>
+	                </div>
+		         </div>
+        	</div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          <button type="submit" class="btn btn-primary">Extraire</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
 
 </div>
 </div>

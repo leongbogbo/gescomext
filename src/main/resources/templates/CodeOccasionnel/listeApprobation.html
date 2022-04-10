@@ -71,8 +71,7 @@ layout:decorator="template2">
                                     </tr >
                                 </tbody>
                             </table>
-                        </div>
-                
+                        </div>                
                     </div>
                 </div>
               </div>
@@ -85,7 +84,7 @@ layout:decorator="template2">
                             </div>
                         </div>
                     </div>
-                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'CodeOccasionnel'}">
+                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'CodeOccasionnel' and infoCodefics.activePaimentOp==1}">
                         <table class="table">
                             <tbody>
                                 <tr>

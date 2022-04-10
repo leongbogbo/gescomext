@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templateparam">
+<head>
+<meta charset="utf-8">
+<title>Liste</title>
+</head>
+<body>
+<div layout:fragment="MyContent">
+    <!-- LE CORPS  -->
+    <div class="main_content_iner ">
+        <div class="container-fluid p-0">
+        <!-- ZONE DE TITRE  -->
+			<div class="row">
+			    <div class="col-12">
+			        <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+			            <div class="page_title_left">
+			                <h3 class="f_s_25 f_w_700 dark_text"></h3>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- FIN ZONE DE TITRE  -->
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header">
+                                    <h4>MODIFIER CETTE NATIONALITE</h4>
+                                    <div class="box_right d-flex lms_block">
+                                        <div class="serach_field_2">
+                                            <div class="search_inner">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="QA_table mb_30">
+                                    <!-- table-responsive -->
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                    	<form th:action="@{/parametre/Valider/Update/Nationalite}" method="POST">
+									         <div class="white_card_body">
+										         <div class="offset-sm-1 smcol-sm-8">
+									                <div class="form-group row">
+									                    <label for="inputEmail3" class="col-sm-2 col-form-label">NATIONALITE</label>
+									                    <div class="col-sm-8">
+									                        <input type="text" name="titreNat" class="form-control" id="titreNat" th:value="${nationalite.titreNat}">
+									                    	<input type="hidden" name="idNat" class="form-control" id="idNat" th:value="${nationalite.idNat}">
+									                    </div>
+									                    <button type="submit" class="btn btn-primary col-sm-2">Modifiez</button>
+									                </div>
+									                
+								                </div>
+									         </div>
+								        </form>
+                                    </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN DU CORPS  -->
+    <!-- MODAL  -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un role</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+     <!-- FIN MODAL  -->
+</div>
+</body>

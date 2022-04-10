@@ -26,18 +26,30 @@ public class RoleController {
 	RoleRepository roleRepo;
 	@Autowired
 	UserRepository	userRepo;
-	
+	String validate = "non";
 	@RequestMapping("/administration/listeRoles")
 	public String listeUtilisateurs(ModelMap modelMap)
 	{
+		validate = "non";
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeRoles")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		List<Role> elmts = roleService.getAllRole();
 		modelMap.addAttribute("roles", elmts);
@@ -47,6 +59,23 @@ public class RoleController {
 	
 	@RequestMapping("/administration/Role/new")
 	public String saveRole(String role){
+		validate = "non";
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeRoles")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		Role roles = new Role();
 		roles.setRole(role);
 		roleRepo.save(roles);
@@ -55,6 +84,26 @@ public class RoleController {
 	
 	@RequestMapping("/administration/Role/{role_id}")
 	public String AfficheRole(@PathVariable("role_id") Long role_id, ModelMap modelMap){
+		validate = "non";
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeRoles")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		Role roles = roleService.getRoleById(role_id);
 		modelMap.addAttribute("roles", roles);
 		return "/autres/updateRole";
@@ -62,6 +111,26 @@ public class RoleController {
 	
 	@RequestMapping("/administration/updateRole")
 	public String updateRole(String role, Long role_id, ModelMap modelMap){
+		validate = "non";
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		System.out.println(username);
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeRoles")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		Role roles = new Role();
 		roles.setRole_id(role_id);
 		roles.setRole(role);

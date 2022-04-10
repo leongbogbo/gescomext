@@ -25,21 +25,11 @@ layout:decorator="template3">
                                <div class="white_box_tittle list_header">
                                     <h4>RE-ATTRIBUTION</h4>
                                     <div class="box_right d-flex lms_block">
-                                    	<div class="serach_field_2 most">
-                                            <div class="search_inner">
-                                                <form th:action="@{ReAttribution}" method="POST">
-                                                    <div class="search_field">
-                                                        <input type="text" name="codeEntr" placeholder="ENTREZ RAISON SOCIALE">
-                                                    </div>
-                                                    <button type="submit"> <i class="ti-search"></i> </button>
-                                                </form>
-                                            </div>
-                                        </div>
                                         <div class="serach_field_2 most">
                                             <div class="search_inner">
                                                 <form th:action="@{ReAttribution}" method="POST">
                                                     <div class="search_field">
-                                                        <input type="text" name="codeDem" placeholder="ENTREZ N° PIECE DEMANDEUR">
+                                                        <input type="text" name="codeDem" placeholder="ENTREZ CODE IDEX">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
                                                 </form>
@@ -67,6 +57,7 @@ layout:decorator="template3">
 				                                        <div>
 				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
 				                                        </div>
+				                                        <div th:text="'Code IDEX : '+ ${infofiscos.codeIdexEntr}"></div >
 				                                        <div th:text="'Nom : '+ ${infofiscos.nomEntr}"></div >
 				                                        <div th:text="'RCCM : '+${infofiscos.regcommerceEntr}"></div >
 				                                        <div th:text="'CC : '+${infofiscos.contribuableEntr}"></div >
@@ -90,6 +81,7 @@ layout:decorator="template3">
 				                                        <div>
 				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
 				                                        </div>
+				                                        <div th:text="'Code IDEX : '+ ${infoDem.codeIdexDem}"></div >
 				                                        <div th:text="'Nom : '+ ${infoDem.nomDem} +' ' + ${infoDem.prenomsDem}"></div  >
 				                                        <div th:text="'Civilité : '+ ${infoDem.sexeDem}"></div >
 				                                        <div th:text="'E-Mail : '+ ${infoDem.emailDem}"></div >
@@ -98,7 +90,7 @@ layout:decorator="template3">
 				                                    </div>
 				                                </div>				
 				                                <div class="table-responsive-sm">
-				                                <h5><strong>Historique des levee de gage</strong></h5>
+				                                	<h5><strong>Historique des levées de gage</strong></h5>
 				                                    <table class="table table-striped">
 				                                        <thead>
 				                                            <tr>

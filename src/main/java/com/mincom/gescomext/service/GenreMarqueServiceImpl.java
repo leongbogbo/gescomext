@@ -45,4 +45,9 @@ public class GenreMarqueServiceImpl implements GenreMarqueService {
 		return genreMarqueRepository.findAll();
 	}
 
+	@Override
+	public GenreMarque findByNomGen(String nomGen) {
+		return genreMarqueRepository.findByNomGen(nomGen);
+	}
+
 }

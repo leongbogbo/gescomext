@@ -11,4 +11,5 @@ public interface MarqueService {
 	void deleteMarqueById(Long id);
 	Marque getMarqueById(Long id);
 	List<Marque> getAllMarque();
+	Marque findByNomMarque(String nomMarque);
 }

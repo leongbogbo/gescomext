@@ -20,4 +20,9 @@ public interface TraitementOpCodeImportationService {
 	TraitementOpCodeImportation findTraitementOpCodeImportationByStatut (Integer numDocOp, String statut, String site);
 	TraitementOpCodeImportation findTraitementOpCodeImportationByIDoP (Long idOp, String statut, String site);
 	
+	//SUPPER ADMIN
+	List<TraitementOpCodeImportation> findAllTraitementOpCodeImportationByTypeCodeOpSuper (String code);
+	TraitementOpCodeImportation findTraitementOpCodeImportationByStatutSuper (Integer numDocOp, String statut);
+	TraitementOpCodeImportation findTraitementOpCodeImportationByIDoPSuper (Long idOp, String statut);
+	
 }

@@ -121,6 +121,13 @@ layout:decorator="template2" xml:lang="">
                                                 <label for="inputPassword3" class="col-form-label">Compte contribuable <strong class="text-danger">*</strong> </label>
                                                 <input name="contribuableEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntr.contribuableEntr}" required="required">
                                             </div>
+                                              <div class="col-sm-4" id="">                                          
+			                                	<label class="form-label" for="inputState">Exonérer paiement ?</label>						                                    
+			                                    <select name="exoPaiementEntr" id="exoPaiementEntr" class="form-control" th:field="*{verifEntreprise.exoPaiementEntr}">
+                        							<option value="non">NON</option>
+			                                        <option value="oui  selected">OUI</option >
+			                                    </select>
+			                                </div>
                                         </div>
                                     </div>
 			                    </div>
@@ -302,6 +309,15 @@ layout:decorator="template2" xml:lang="">
 			                                    <div class="col-sm-8">
 			                                        <input name="emailDem" type="email" class="form-control" id="inputPassword3" th:value="${verifDemandeur.emailDem}" required="required">
 			                                    </div>
+			                                </div>
+			                                <div class="form-group row" id="">                                          
+			                                	<label class="col-sm-4 col-form-label" for="inputState">Exonérer paiement ?</label>						                                    
+			                                    <div class="col-sm-8">
+				                                    <select name="exoPaiementDem" id="exoPaiementDem" class="form-control" th:field="*{verifDemandeur.exoPaiementDem}">
+	                        							<option value="non">NON</option>
+				                                        <option value="oui  selected">OUI</option >
+				                                    </select>
+			                                	</div>
 			                                </div>
 			                        </div>
 			                    </div>

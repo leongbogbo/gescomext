@@ -44,4 +44,9 @@ public class TypePieceIdentiteServiceImpl implements TypePieceIdentiteService {
 		return typePieceIdentiteRepository.findAll();
 	}
 
+	@Override
+	public TypePieceIdentite findByTitreTyp(String titreTyp) {
+		return typePieceIdentiteRepository.findByTitreTyp(titreTyp);
+	}
+
 }

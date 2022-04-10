@@ -11,5 +11,5 @@ public interface NationaliteService {
 	void deleteNationaliteById(Long id);
 	Nationalite getNationaliteById(Long id);
 	List<Nationalite> getAllNationalite();
-
+	Nationalite findByTitreNat(String titreNat);
 }

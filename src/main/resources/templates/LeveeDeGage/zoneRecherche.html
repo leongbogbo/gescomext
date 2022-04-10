@@ -18,17 +18,20 @@ layout:decorator="templaterech">
                             <div class="bulder_tab_wrapper">
                                 <ul class="nav" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                      <a class="nav-link" th:classappend="${not #lists.isEmpty(infosEntr)?'active':''}" id="Themes-tab" data-toggle="tab" href="#Themes" role="tab" aria-controls="Themes" aria-selected="false">Demandeur moral</a>
+                                      <a class="nav-link" id="Themes-tab" data-toggle="tab" href="#Themes" role="tab" aria-controls="Themes" aria-selected="false">Demandeur moral</a>
                                     </li>
                                     <li class="nav-item">
-                                      <a class="nav-link" th:classappend="${not #lists.isEmpty(infosDem)?'active':''}" id="page-tab" data-toggle="tab" href="#page" role="tab" aria-controls="profile" aria-selected="true">Demandeur physique</a>
+                                      <a class="nav-link" id="page-tab" data-toggle="tab" href="#page" role="tab" aria-controls="profile" aria-selected="true">Demandeur physique</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" id="page-tab" data-toggle="tab" href="#dos" role="tab" aria-controls="dos" aria-selected="true">Dossier</a>
                                     </li>
                                  </ul>
                             </div>
                         </div>
                         <div class="white_card_body">
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane  fade" th:classappend="${not #lists.isEmpty(infosEntr)?'show active':''}" id="Themes" role="tabpanel" aria-labelledby="Themes-tab">
+                                <div class="tab-pane  fade" id="Themes" role="tabpanel" aria-labelledby="Themes-tab">
                                     <div class="builder_select">
                                         <div class="row">
                                             <div class="serach_field_2">
@@ -44,7 +47,7 @@ layout:decorator="templaterech">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane  fade" th:classappend="${not #lists.isEmpty(infosDem)?'show active':''}" id="page" role="tabpanel" aria-labelledby="page-tab">
+                                <div class="tab-pane  fade" id="page" role="tabpanel" aria-labelledby="page-tab">
                                     <div class="builder_select">
                                         <div class="row">
                                             <div class="serach_field_2">
@@ -52,6 +55,22 @@ layout:decorator="templaterech">
 	                                                <form th:action="@{ZoneDeRecherche}" method="POST">
 	                                                    <div class="search_field">
 	                                                        <input type="text" name="codeDem" placeholder="RECHERCHER PAR N° PIECE ou E-MAIL ou TEL">
+	                                                    </div>
+	                                                    <button type="submit"> <i class="ti-search"></i> </button>
+	                                                </form>
+	                                            </div>
+	                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="page-tab">
+                                    <div class="builder_select">
+                                        <div class="row">
+                                            <div class="serach_field_2">
+	                                            <div class="search_inner">
+	                                                <form th:action="@{ZoneDeRecherche}" method="POST">
+	                                                    <div class="search_field">
+	                                                        <input type="text" name="numDos" placeholder="RECHERCHER PAR N° DOSSIER">
 	                                                    </div>
 	                                                    <button type="submit"> <i class="ti-search"></i> </button>
 	                                                </form>
@@ -76,6 +95,7 @@ layout:decorator="templaterech">
 				                                        <div>
 				                                            <strong>INFORMATION SUR L'ENTREPRISE</strong>
 				                                        </div>
+				                                        <div th:text="'Code IDEX : '+ ${infofiscos.codeIdexEntr}"></div >
 				                                        <div th:text="'Nom : '+ ${infofiscos.nomEntr}"></div >
 				                                        <div th:text="'RCCM : '+${infofiscos.regcommerceEntr}"></div >
 				                                        <div th:text="'CC : '+${infofiscos.contribuableEntr}"></div >
@@ -100,6 +120,7 @@ layout:decorator="templaterech">
 				                                        <div>
 				                                            <strong>INFORMATION SUR LE DEMANDEUR</strong>
 				                                        </div>
+				                                        <div th:text="'Code IDEX : '+ ${infoDem.codeIdexDem}"></div >
 				                                        <div th:text="'Nom : '+ ${infoDem.nomDem} +' ' + ${infoDem.prenomsDem}"></div  >
 				                                        <div th:text="'Civilité : '+ ${infoDem.sexeDem}"></div >
 				                                        <div th:text="'Pièce : '+ ${infoDem.typePieceIdentite.titreTyp}"></div >
@@ -108,6 +129,37 @@ layout:decorator="templaterech">
 				                                        <div th:text="'Tel : '+ ${infoDem.telDem}"></div >
 				                                        <div th:text="'Nationalité : '+ ${infoDem.nationalite.titreNat}"></div >
 				                                    </div>
+				                                </div>
+				                                <div class="table-responsive-sm" th:if="${infosDos}">
+				                                	<h5><strong>Information levée de gage</strong></h5>
+				                                    <table class="table table-striped">
+				                                        <thead>
+				                                            <tr>
+				                                            	<th class="right">#</th>
+				                                                <th class="center">Levées de Gage</th>
+				                                                <th>Date Création</th>
+				                                                <th>Type Operation</th>
+				                                                <th>Saisie</th>
+				                                                <th>Paiement</th>
+				                                                <th>Approbation</th>
+				                                                <th>Signature</th>
+				                                            </tr >
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr th:each="infofisc : ${infosDos}" th:if="${infofisc.typeCodeOp=='LeveeDeGage'}">
+				                                            	<td class="right" th:text="${infofisc.numDocOp}"></td>
+				                                                <td class="center" th:text="${infofisc.codeImportation.numGag}"></td>
+				                                                <td class="left strong" th:text="${#dates.format(infofisc.dateOp, 'dd-MM-yyyy')}"></td>
+				                                                <td class="left" th:text="${infofisc.typeOp}"></td>
+				                                                <td class="left" th:text="${infofisc.user.nomUser+' '+infofisc.user.prenomsUser}"></td>
+				                                                <span th:each="tropfisc : ${infosDos.traitementOpCodeImportation}">
+					                                                <td class="left" th:if="${tropfisc.statutTrait=='paiement'}" th:text="${tropfisc.user.nomUser+' '+tropfisc.user.prenomsUser}"></td>
+					                                                <td class="left" th:if="${tropfisc.statutTrait=='approbation'}" th:text="${tropfisc.user.nomUser+' '+tropfisc.user.prenomsUser}"></td>
+					                                                <td class="left" th:if="${tropfisc.statutTrait=='signature'}" th:text="${tropfisc.user.nomUser+' '+tropfisc.user.prenomsUser}"></td>
+				                                                </span >
+				                                            </tr >
+				                                        </tbody>
+				                                    </table>
 				                                </div>
 				                            </div>
 				                        </div>

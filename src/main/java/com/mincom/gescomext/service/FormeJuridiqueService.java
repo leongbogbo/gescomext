@@ -11,5 +11,5 @@ public interface FormeJuridiqueService {
 	void deleteFormeJuridiqueById(Long id);
 	FormeJuridique getFormeJuridiqueById(Long id);
 	List<FormeJuridique> getAllFormeJuridique();
-
+	FormeJuridique findByTitreJury(String titreJury);
 }

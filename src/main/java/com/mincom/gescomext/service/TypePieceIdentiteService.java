@@ -11,5 +11,5 @@ public interface TypePieceIdentiteService {
 	void deleteTypePieceIdentiteById(Long id);
 	TypePieceIdentite getTypePieceIdentiteById(Long id);
 	List<TypePieceIdentite> getAllTypePieceIdentite();
-
+	TypePieceIdentite findByTitreTyp(String titreTyp);
 }

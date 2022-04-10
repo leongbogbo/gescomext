@@ -11,4 +11,5 @@ public interface GenreMarqueService {
 	void deleteGenreMarqueById(Long id);
 	GenreMarque getGenreMarqueById(Long id);
 	List<GenreMarque> getAllGenreMarque();
+	GenreMarque findByNomGen(String nomGen);
 }

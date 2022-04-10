@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 import lombok.Data;
@@ -21,7 +24,8 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long role_id;
 	private String role;
-
+	
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "role_action", joinColumns = @JoinColumn(name = "role_id"), 
 	inverseJoinColumns = @JoinColumn(name = "actionliste_id"))

@@ -44,4 +44,14 @@ public class FonctionServiceImpl implements FonctionService {
 		return fonctionRepository.findAll();
 	}
 
+	@Override
+	public Fonction findByTitreFonc(String titreFonc) {
+		return fonctionRepository.findByTitreFonc(titreFonc);
+	}
+
+	@Override
+	public List<Fonction> findByTitreFoncContaining(String titreFonc) {
+		return fonctionRepository.findByTitreFoncContaining(titreFonc);
+	}
+
 }

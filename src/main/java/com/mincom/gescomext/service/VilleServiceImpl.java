@@ -15,8 +15,6 @@ public class VilleServiceImpl implements VilleService {
 	
 	@Autowired
 	VilleRepository villeRepository;
-	@Autowired
-	VilleService villeService;
 
 	@Override
 	public Ville saveVille(Ville elmt) {
@@ -51,6 +49,11 @@ public class VilleServiceImpl implements VilleService {
 	@Override
 	public Page<Ville> getAllVilleByPage(int page, int size) {
 		return villeRepository.findAll(PageRequest.of(page, size));
+	}
+
+	@Override
+	public Ville findBynomVille(String nom) {
+		return villeRepository.findBynomVille(nom);
 	}
 
 }

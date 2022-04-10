@@ -44,4 +44,10 @@ public class FormeJuridiqueServiceImpl implements FormeJuridiqueService {
 		return formeJuridiqueRepository.findAll();
 	}
 
+	@Override
+	public FormeJuridique findByTitreJury(String titreJury) {
+		// TODO Auto-generated method stub
+		return formeJuridiqueRepository.findByTitreJury(titreJury);
+	}
+
 }

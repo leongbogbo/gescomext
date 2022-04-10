@@ -35,14 +35,37 @@ public class UserController{
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
-		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
 		
-		List<User> elmts = userService.getAllUser();
+		if(username.equals("superadmin")) {
+			List<User> elmts = userService.getAllUser();
+			modelMap.addAttribute("users", elmts);
+		}else {
+			List<User> elmts = userService.findBySite(user.getSite());
+			modelMap.addAttribute("users", elmts);
+		}
+		
+		List<Role> roleList = roleService.getAllRole();
+		modelMap.addAttribute("roleList", roleList);
+		modelMap.addAttribute("usersVide", new User());
+		return "autres/listeUser";
+	}
+	@RequestMapping("/administration/Recherche/Utilisateur")
+	public String rechUtilisateurs(String nomUser, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		List<User> elmts = userService.findBynomUserOrPrenomsUserContaining(nomUser,nomUser);
 		List<Role> roleList = roleService.getAllRole();
 		modelMap.addAttribute("users", elmts);
 		modelMap.addAttribute("roleList", roleList);

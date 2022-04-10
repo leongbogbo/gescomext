@@ -44,4 +44,9 @@ public class NationaliteServiceImpl implements NationaliteService {
 		return nationaliteRepository.findAll();
 	}
 
+	@Override
+	public Nationalite findByTitreNat(String titreNat) {
+		return nationaliteRepository.findByTitreNat(titreNat);
+	}
+
 }

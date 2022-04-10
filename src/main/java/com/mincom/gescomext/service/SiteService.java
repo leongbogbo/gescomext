@@ -11,5 +11,5 @@ public interface SiteService {
 	void deleteSiteById(Long id);
 	Site getSiteById(Long id);
 	List<Site> getAllSite();
-
+	Site findByNomSite(String nomSite);
 }

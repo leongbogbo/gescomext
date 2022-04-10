@@ -17,8 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.validation.BindingResult;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mincom.gescomext.config.GetCurrentUser;
 import com.mincom.gescomext.config.ListeRolesActionsUser;
@@ -53,7 +54,6 @@ public class VilleController {
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
-		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
@@ -67,17 +67,74 @@ public class VilleController {
 	}
 	
 	@RequestMapping("/parametre/Ville/new")
-	public String saveVille(@Valid Ville ville, BindingResult bindingResult)
+	public String saveVille(@Valid Ville ville, ModelMap modelMap)
 	{
-		if (bindingResult.hasErrors()) return "listeVille";
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
 		villeRepo.save(ville);
+		return "redirect:/parametre/listeVilles";
+	}
+	
+	@RequestMapping("/parametre/Recherche/Ville")
+	public String rechVille(@RequestParam String nomVille, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		Ville ville = villeService.findBynomVille(nomVille);
+		modelMap.addAttribute("villes", ville);
 		return "autres/listeVille";
+	}
+	
+	@RequestMapping("/parametre/Update/Ville/{id}")
+	public String updateVille(@PathVariable("id") Long id, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		Ville ville = villeRepo.getById(id);
+		modelMap.addAttribute("villetrouve", ville);
+		return "autres/updateVille";
+	}
+	
+	@RequestMapping("/parametre/Valider/Update/Ville")
+	public String updatevVille(Ville ville, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		Ville villeFound = villeRepo.getById(ville.getIdVille());
+		if(villeFound!=null) {
+			villeFound.setNomVille(ville.getNomVille());
+			villeService.saveVille(villeFound);
+		}
+		return "redirect:../../listeVilles";
 	}
 	
 	@RequestMapping("/parametre/pdf")
 	public ResponseEntity<byte[]> generatePdf() throws FileNotFoundException, JRException {
 		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(villeService.getAllVille());
-		JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/autres/villepdf.jrxml"));
+		JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/templates/pdf/villepdf.jrxml"));
 		HashMap<String, Object> map = new HashMap<>();
 		JasperPrint report = JasperFillManager.fillReport(compileReport, map,beanCollectionDataSource);
 		//JasperExportManager.exportReportToPdfFile(report, "villeViewer.pdf");

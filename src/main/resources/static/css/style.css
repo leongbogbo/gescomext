@@ -9417,7 +9417,7 @@ canvas#highlights {
 
 /* line 573, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
 .card_container {
-  padding: 20px;
+  padding: 0;
 }
 
 /* line 582, G:/admin_project/8 admin/Analytic/scss/_byer_table.scss */
@@ -13091,7 +13091,11 @@ a.pswp__share--download:hover {
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 20px;
-  padding: 30px 50px;
+  margin-bottom: 25px;
+  padding-top: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 0;
 }
 
 /* line 46, G:/admin_project/8 admin/Analytic/scss/_todo.scss */
@@ -13620,6 +13624,11 @@ a.pswp__share--download:hover {
 
 .white_card_body .table-responsive.conteneurActivite{
 	height: 450px;
+	overflow: auto;
+}
+
+.white_card .white_card_body .statConteneur{
+	height: 500px;
 	overflow: auto;
 }
 

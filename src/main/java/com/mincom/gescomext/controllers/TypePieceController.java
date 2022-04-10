@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.validation.BindingResult;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mincom.gescomext.config.GetCurrentUser;
@@ -53,5 +53,24 @@ public class TypePieceController {
 		if (bindingResult.hasErrors()) return "listeTypePiece";
 		typePieceService.saveTypePieceIdentite(typePiece);
 		return "redirect:../listeTypePieces";
+	}
+	
+	@RequestMapping("/parametre/Update/TypePiece/{id}")
+	public String updateDepartement(@PathVariable("id") Long id, ModelMap modelMap)
+	{
+		TypePieceIdentite pieceIdentiteFound = typePieceService.getTypePieceIdentiteById(id);
+		modelMap.addAttribute("pieceIdentiteFound", pieceIdentiteFound);
+		return "./autres/updateTypePiece";
+	}
+	
+	@RequestMapping("/parametre/Valider/Update/TypePiece")
+	public String updatevDepartement(TypePieceIdentite pieceIdentite, ModelMap modelMap)
+	{
+		TypePieceIdentite pieceIdentiteFound = typePieceService.getTypePieceIdentiteById(pieceIdentite.getIdTyp());
+		if(pieceIdentiteFound!=null) {
+			pieceIdentiteFound.setTitreTyp(pieceIdentite.getTitreTyp());
+			typePieceService.saveTypePieceIdentite(pieceIdentiteFound);
+		}
+		return "redirect:../../listeTypePieces";
 	}
 }

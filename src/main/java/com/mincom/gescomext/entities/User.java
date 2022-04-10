@@ -24,15 +24,20 @@ public class User {
 	private Long user_id;
 	private String nomUser;
 	private String prenomsUser;
+	@JsonIgnore
 	private String telUser;
+	@JsonIgnore
 	private String emailUser;
+	@JsonIgnore
 	private String username;
+	@JsonIgnore
 	private String password;
 	private Boolean enabled;
 	
 	@ManyToOne
 	private Site site;
 	
+	//@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))

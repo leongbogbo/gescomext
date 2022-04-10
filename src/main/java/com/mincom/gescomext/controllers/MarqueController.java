@@ -36,7 +36,6 @@ public class MarqueController {
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
-		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
@@ -49,18 +48,49 @@ public class MarqueController {
 		return "autres/listeMarque";
 	}
 	
-	@RequestMapping("parametre/MarqueNew")
-	public String saveMarque(@Valid Marque marque, BindingResult bindingResult,ModelMap modelMap)
+	@RequestMapping("/parametre/MarqueNew")
+	public String saveMarque(@Valid Marque marque,ModelMap modelMap)
 	{
-		if (bindingResult.hasErrors()) return "listeMarque";
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
 		marqueRepo.save(marque);
 		List<Marque> elmt = marqueService.getAllMarque();
 		modelMap.addAttribute("marques", elmt);
 		return "autres/listeMarque";
 	}
 	
+	@RequestMapping("/parametre/Recherche/Marque")
+	public String rechMarque(String nomMarque, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		Marque marque = marqueService.findByNomMarque(nomMarque);
+		modelMap.addAttribute("marques", marque);
+		return "autres/listeMarque";
+	}
+	
 	@RequestMapping("/parametre/Marque/{idMarque}")
 	public String AfficheMarque(@PathVariable("idMarque") Long idMarque, ModelMap modelMap){
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
 		Marque elmts = marqueService.getMarqueById(idMarque);
 		modelMap.addAttribute("marquetrouve", elmts);
 		return "/autres/updateMarque";

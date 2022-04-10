@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="templatestat" xml:lang="">
+<head>
+<meta charset="utf-8">
+<title>Statistique : Liste des opérations</title>
+</head>
+<body class="crm_body_bg">
+
+<div layout:fragment="MyContent">
+    <div class="main_content_iner overly_inner ">
+        <div class="container-fluid p-0 ">
+            <!-- page title  -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page_title_box d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="page_title_left">
+                            <h3 class="f_s_25 f_w_700 dark_text">Tableau de bord</h3>
+                        </div>
+                        <div class="page_title_right">
+                            <div class="page_date_button">
+                               Imprimer
+                            </div>
+                  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                    <div class="white_card card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="QA_section">
+                                <div class="white_box_tittle list_header2">
+                                    <div class="box_right d-flex2 lms_block">
+                                        <div class="serach_field_22">
+                                            <div class="search_inner">
+                                                <form th:action="@{/Statistique/Entreprise}" method="POST" id="statOp">
+	                                                <div class="row">
+	                                                	<div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Rubriques:</label>
+			                                                <div class="common_select">
+			                                                    <select name="rubrique" id="rubrique" class="nice_Select wide mb_30">
+			                                                        <option value="">Choix</option>
+			                                                        <option value="CodeImportExport">Code Import / Export</option>
+			                                                        <option value="CodeOccasionnel">Code Occasionnel</option>
+			                                                        <option value="LeveeDeGage">Levée de gage</option>
+							                                        
+			                                                    </select>
+			                                                </div>
+			                                            </div>
+	                                                	<div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Type Opération:</label>
+			                                                <div class="common_select">
+			                                                    <select name="typeOp" id="typeOp" class="nice_Select wide mb_30">
+			                                                        <option value="">Choix</option>
+			                                                        <option value="Attribution">Attribution</option>
+			                                                        <option value="Renouvellement">Renouvellement</option>
+			                                                        <option value="Dupplicata">Dupplicata</option>
+							                                        
+			                                                    </select>
+			                                                </div>
+			                                            </div>
+	                                                    <div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Sites:</label>
+			                                                <div class="common_select">
+			                                                    <select name="siteid" id="siteid" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listeSite}">
+											                            	<option th:value="${dom.idSite}" th:text="${dom.nomSite}" ></option >
+											                            </th:block>
+			                                                    </select>
+			                                                    
+			                                                </div>
+			                                            </div>
+	                                                 
+	                                                    <div class="col-xl-3 col-lg-6 ">
+			                                                <label for="#">Date Debut:</label>
+			                                                <div class="form-group mb-0">
+																<input type="date" class="form-control" name="inputDate" id="inputDate" th:value="${dateDebut}">
+															</div>
+			                                            </div>
+	                                                    <div class="col-xl-3 col-lg-6 ">
+			                                                <label for="#">Date Fin:</label>
+			                                                <div class="form-group mb-0">
+																<input type="date" class="form-control" name="outPutDate" id="outPutDate" th:value="${dateDuJour}">
+															</div>
+			                                            </div>
+			                                        </div>
+	                                                <div class="row">
+	                                                    <div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Forme Juridique:</label>
+			                                                <div class="common_select">
+			                                                    <select name="fmjuryid" id="fmjuryid" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listeFormjury}">
+											                            	<option th:value="${dom.idJury}" th:text="${dom.titreJury}" ></option >
+											                            </th:block>
+			                                                    </select>
+			                                                    
+			                                                </div>
+			                                            </div>
+	                                                    <div class="col-xl-4 col-lg-6 ">
+			                                                <label for="#">Domaine d'activité:</label>
+			                                                <div class="common_select">
+			                                                    <select name="domActid" id="domActid" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listeDomAct}">
+											                            	<option th:value="${dom.idDomAct}" th:text="${dom.titreDomAct}" ></option >
+											                            </th:block>
+			                                                    </select>
+			                                                    
+			                                                </div>
+			                                            </div>
+	                                                    <div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Profile:</label>
+			                                                <div class="common_select">
+			                                                    <select name="roleid" id="roleid" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listeRole}">
+											                            	<option th:value="${dom.role_id}" th:text="${dom.role}" ></option >
+											                            </th:block>
+			                                                    </select>
+			                                                    
+			                                                </div>
+			                                            </div>
+	                                                    <div class="col-xl-2 col-lg-6 ">
+			                                                <label for="#">Utilisateurs:</label>
+			                                                <div class="common_select">
+			                                                    <select name="userid" id="userid" class="nice_Select wide mb_30">
+			                                                           <option value="">Choix</option>
+								                                        <th:block th:each="dom : ${listeUser}">
+											                            	<option th:value="${dom.user_id}" th:text="${dom.nomUser+' '+dom.prenomsUser}" ></option >
+											                            </th:block>
+			                                                    </select>
+			                                                    
+			                                                </div>
+			                                            </div>
+				                                        <div class="col-xl-2 col-lg-6 mt_25">
+				                                            <input type="submit" class="btn_1" value="Recherche"/>
+				                                        </div>
+			                                        </div>
+                                                </form >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row ">          
+                <div class="col-xl-8">
+                    <div class="white_card card_height_100 mb_30 ">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">LISTE DES OPERATIONS</h3>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body QA_section">
+                                    <div class="QA_table statConteneur">
+                                        <!-- table-responsive -->
+                                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table lms_table_active2 p-0 dataTable no-footer dtr-inline" id="DataTables_Table_0" role="grid" style="width: 820px;">
+                                            <thead>
+                                                <tr role="row">
+                                                	<th scope="col" class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 282px;" aria-sort="ascending" aria-label="Campain: activate to sort column descending">Demandeur</th>
+                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Start Time: activate to sort column ascending">Opérations</th>
+                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 127px;" aria-label="Company: activate to sort column ascending">Type Op</th>
+                                                	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 96px;" aria-label="Status: activate to sort column ascending">Sites</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodys">
+                                           
+											</tbody>
+                                        </table></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 project_complete pt_25">
+                    <div class=" card_height_100 mb_30">
+                        <div class="white_card_header">
+                            <div class="main-title">
+                                <h3 class="m-0">Total entreprise par selection</h3>
+                                <span id="totalEntr">0 opération</span >
+                                <strong id="pourcentage">0 opération</strong >
+                            </div>
+                        </div>
+                        <div class="white_card_body ">
+                            <div class="card_container">
+                                <div id="platform_type_dates_donut" style="height: 280px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1637181563663">
+                                	<div style="position: relative; overflow: hidden; width: 273px; height: 280px; padding: 0px; margin: 0px; border-width: 0px;">
+                                		<canvas data-zr-dom-id="zr_0" width="273" height="280" style="position: absolute; left: 0px; top: 0px; width: 273px; height: 280px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+                                	</div>
+                                	<div></div>
+                          		</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- ### CHAT_MESSAGE_BOX   ### -->
+
+
+</div>
+</div>

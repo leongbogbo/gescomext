@@ -1,0 +1,111 @@
+<div class="header_right d-flex justify-content-between align-items-center" th:fragment="menuProfileHaut">
+    <div class="header_notification_warp d-flex align-items-center">
+    </div>
+    <div class="profile_info">
+        <img src="../images/client_img.png" alt="#">
+        <div class="profile_info_iner">
+            <div class="profile_author_name">
+                <p> </p>
+                <h5 sec:authentication="name"></h5>
+            </div>
+            <div class="profile_info_details">
+                <a th:href="@{/administration/monProfile}">Mon Profile </a>
+                <a th:href="@{/parametre/listeVilles}" sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')">Parametre</a>
+                <a th:href="@{/administration/listeUtilisateurs}">Administration</a>
+                <a th:href="@{/Statistique/Entreprise}">Statistique</a>
+                <a th:href="@{/logout}">Déconnexion</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="sidebar" th:fragment="menuAdminGauche">
+    <div class="logo d-flex justify-content-between">
+        <a class="large_logo" th:href="@{/}"><img th:src="@{/images/logo.jpg}" alt="pas logo"></a>
+        <a class="small_logo" href="@{/}"><img th:src="@{/images/mini_logo.jpg}" alt=""></a>
+        <div class="sidebar_close_icon d-lg-none">
+            <i class="ti-close"></i>
+        </div>
+    </div>
+    <ul id="sidebar_menu" class="metismenu">
+        <li class="mm-active">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Paramétrage</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              <li th:each="urlListeUser:${listeUrlUser}">
+		            <a th:href="@{'/'+${urlListeUser.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUser.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
+		        <li >
+		            <a th:href="@{'/parametre/listeEntreprises'}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${'Liste Entreprise'}"></span >
+		                </div>
+		            </a>
+		        </li >
+            </ul>
+        </li>
+        
+        <li class="mm-active" sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              	<div class="nav_icon_small">
+                	<img src="../svg/16.svg" alt="">
+	            </div>
+	            <div class="nav_title">
+	                <span>Administration</span>
+	            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              	<li th:each="urlListeUsers:${listeUrlUserAdmin}">
+		            <a th:href="@{'/'+${urlListeUsers.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUsers.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
+            </ul>
+        </li>
+        <li class="mm-active" sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')">
+            <a class="has-arrow" href="#" aria-expanded="true">
+              <div class="nav_icon_small">
+                <img src="../svg/16.svg" alt="">
+            </div>
+            <div class="nav_title">
+                <span>Statistique</span>
+            </div>
+            </a>
+            <ul class="mm-collapse mm-show" style="">
+              	<li th:each="urlListeUsers:${listeUrlStatAdmin}">
+		            <a th:href="@{'/'+${urlListeUsers.lienActPro}}" aria-expanded="false">
+		                <div class="nav_icon_small">
+		                    <img src="../svg/3.svg" alt="">
+		                </div>
+		                <div class="nav_title">
+		                    <span th:text="${urlListeUsers.titreActPro}"></span >
+		                </div>
+		            </a>
+		        </li >
+            </ul>
+        </li>
+      </ul>
+</nav>
+
+<!-- ******************************** ADMIN FRAGMENTS *********************************** -->

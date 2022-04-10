@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,14 +38,17 @@ public class OpCodeImportation {
 	private String activeApprobationOp;
 	private String typeCodeOp;
 	
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "codeimport_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private CodeImportation codeImportation;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "opCodeImportation", cascade = CascadeType.REMOVE)
 	private List<TraitementOpCodeImportation> traitementOpCodeImportation;
 	
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

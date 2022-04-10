@@ -85,7 +85,7 @@ layout:decorator="template3">
                             </div>
                         </div>
                     </div>
-                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'LeveeDeGage'}">
+                    <div class="total-payment p-3" th:each="infoCodefics : ${infoCodefic}" th:if="${infoCodefics.typeCodeOp == 'LeveeDeGage' AND infoCodefics.activePaimentOp==1 AND infoCodefics.activeApprobationOp=='actif'}">
                         <table class="table">
                             <tbody>
                                 <tr>
@@ -127,7 +127,7 @@ layout:decorator="template3">
                                     <td colspan="2" th:switch="${infoCodefics.activeSignatureOp}">
                                     	<strong  th:case="oui">
                                     		<a href="#" class="btn_1 mt-1 mb-1 w-100 text-center">
-                                    			<span >DOSSIER SIGNATURE</span >
+                                    			<span >DOSSIER SIGNE</span >
                                     		</a>
                                     	</strong >
                                     	<strong th:case="*">

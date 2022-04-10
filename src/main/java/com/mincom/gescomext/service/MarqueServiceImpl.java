@@ -45,4 +45,9 @@ public class MarqueServiceImpl implements MarqueService {
 		return marqueRepository.findAll();
 	}
 
+	@Override
+	public Marque findByNomMarque(String nomMarque) {
+		return marqueRepository.findByNomMarque(nomMarque);
+	}
+
 }

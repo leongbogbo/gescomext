@@ -11,5 +11,6 @@ public interface FonctionService {
 	void deleteFonctionById(Long id);
 	Fonction getFonctionById(Long id);
 	List<Fonction> getAllFonction();
-
+	Fonction findByTitreFonc(String titreFonc);
+	List<Fonction> findByTitreFoncContaining(String titreFonc);
 }

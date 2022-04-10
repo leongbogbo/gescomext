@@ -20,6 +20,8 @@
 	<field name="opCodeImportation.codeImportation.demandeur.prenomsDem" class="java.lang.String"/>
 	<field name="dateTrait" class="java.util.Date"/>
 	<field name="opCodeImportation.codeImportation.typeGag" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.entreprise.codeIdexEntr" class="java.lang.String"/>
+	<field name="opCodeImportation.codeImportation.demandeur.codeIdexDem" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -269,6 +271,13 @@
 				</textElement>
 				<text><![CDATA[LE COMPTABLE]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="13" width="328" height="30" forecolor="#EB1410" uuid="bd76daff-9d83-4e26-8a7f-761401e9b31b"/>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["mci/dgce_"+$F{dateTrait}.toString().substring( 0, 4)+"_"+($F{opCodeImportation.codeImportation.statutDemandeurCodeImp}.equals("oui") ? $F{opCodeImportation.codeImportation.entreprise.codeIdexEntr}.toUpperCase() : $F{opCodeImportation.codeImportation.demandeur.codeIdexDem}.toUpperCase())]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 </jasperReport>
