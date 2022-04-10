@@ -1,5 +1,6 @@
 package com.mincom.gescomext.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.query.Param;
@@ -20,5 +21,10 @@ public interface EntrepriseService {
 	Entreprise findByRegcommerceEntr(String regcommerceEntr);
 	Entreprise findByNumIduEntr(String numIduEntr);
 	List<Entreprise> findEntrepriseByGeneralInfo (String code);
-
+	List<Entreprise> findBynomEntrContaining(String nomEntr);
+	//STATISTIQUE
+	List<Entreprise> findStatAllEntreprise (Date datedebut,Date datefin);
+	List<Entreprise> findByFormeJuridique (Long idjury);
+	List<Entreprise> findByDomaineActivite (Long idomAct);
+	List<Entreprise> findByFormeJuridiqueAndDomaineActiviteLike(Long idjury, Long idomAct);
 }

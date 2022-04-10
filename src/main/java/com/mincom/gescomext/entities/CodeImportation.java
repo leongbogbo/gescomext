@@ -18,6 +18,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,10 +32,8 @@ public class CodeImportation {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idImp;	
 	private Date dateImp;
-	private String statutDemandeurCodeImp;
-	
-	private String numCodFic;
-	
+	private String statutDemandeurCodeImp;	
+	private String numCodFic;	
 	private String numOcca;
 	private String numFactureOcca;
 	private String emetteurOcca;
@@ -58,14 +58,17 @@ public class CodeImportation {
 	private String usageGag;
 	private String typeGag;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "marque_id")
 	private Marque marque;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "genremarque_id")
 	private GenreMarque genreMarque;
 	
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "entreprise_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -77,14 +80,17 @@ public class CodeImportation {
 	private Demandeur demandeur;
 	
 	//beneficiaire du code pour operation
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "beneficiaire_id")
 	private Beneficiaire beneficiaire;
 	
+	@JsonIgnore
 	@ManyToOne	  
   	@JoinColumn(name = "nat_id")
 	private Nationalite paysorigine;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "codeImportation", cascade = CascadeType.REMOVE)
 	private List<OpCodeImportation> opCodeImportation;
 	

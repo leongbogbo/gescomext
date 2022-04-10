@@ -58,7 +58,7 @@ layout:decorator="template2" xml:lang>
 																			<select name="typeStructure" id="typeStructure" class="form-control" required>
 																				<option value="">Veuillez selectionner</option>
 																				<th:block th:each="struc : ${listetypeStructure}">
-																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc==2 or struc.idStruc==3 or struc.idStruc==4 or struc.idStruc==5 or struc.idStruc==6}" th:text="${struc.titreStruc}" ></option >
+																					<option th:value="${struc.idStruc}" th:if="${struc.idStruc==2 or struc.idStruc==3 or struc.idStruc==4 or struc.idStruc==5 or struc.idStruc==6 or struc.idStruc==10}" th:text="${struc.titreStruc}" ></option >
 																				</th:block>
 																			</select>
 																		</div>
@@ -96,14 +96,14 @@ layout:decorator="template2" xml:lang>
 										                                	<strong id="infoContri" class="text-danger"></strong >
 										                                </div>
 										                                <div class="mt-2" id="exoregcomBody">                                          
-										                                	<label class="form-label" for="inputState">Exonérer RCCM</label>						                                    
+										                                	<label class="form-label" for="inputState">Exonérer RCCM ?</label>						                                    
 										                                    <select name="exoregcomEntr" id="exoregcomEntr" class="form-control">
 										                                        <option value="">Veuillez selectionner</option>
 			                                        							<option value="non">NON</option>
-										                                        <option value="oui  selected">OUI</option >
+										                                        <option value="oui">OUI</option >
 										                                    </select>
 										                                </div>
-										                            	 <!----><div class="mt-2" id="typeRCCMEntrBody">                                          
+										                            	 <div class="mt-2" id="typeRCCMEntrBody">                                          
 										                                	<label class="form-label" for="inputState">TYPE RCCM</label>						                                    
 										                                    <select name="typeRCCMEntr" id="typeRCCMEntr" class="form-control">
 										                                        <option value="ancien">ANCIEN</option >
@@ -121,6 +121,13 @@ layout:decorator="template2" xml:lang>
 										                                    <input type="text" name="regcommerceEntrAnc" class="form-control" id="regcommerceEntranc">
 										                                    <strong id="" class="text-info">Format exigé : XX-XXX-9999-X-*</strong >
 										                   					<strong id="infoRccm" class="text-danger"></strong >
+										                                </div>
+										                                <div class="mt-2" id="">                                          
+										                                	<label class="form-label" for="inputState">Exonérer paiement ?</label>						                                    
+										                                    <select name="exoPaiementEntr" id="exoPaiementEntr" class="form-control">
+			                                        							<option value="non">NON</option>
+										                                        <option value="oui  selected">OUI</option >
+										                                    </select>
 										                                </div>
 										                            </div>
 																	<div class="step">

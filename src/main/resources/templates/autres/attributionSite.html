@@ -45,9 +45,9 @@ layout:decorator="templateparam">
                                     <div class="box_right d-flex lms_block">
                                         <div class="serach_field_2">
                                             <div class="search_inner">
-                                                <form active="#">
+                                                <form th:action="@{/administration/Recherche/User/Site}" method="POST">
                                                     <div class="search_field">
-                                                        <input type="text" placeholder="Search content here...">
+                                                        <input type="text" name="nomSite" placeholder="NOM DU SITE">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
                                                 </form>
@@ -69,11 +69,11 @@ layout:decorator="templateparam">
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
-	                                            <tr role="row" class="odd" th:each="v:${userListes}">
+	                                            <tr role="row" class="odd" th:each="v:${userListes}" th:if="${v.user_id != 31}">
 	                                                <td th:text="${#strings.toUpperCase(v.nomUser)}"></td >
 	                                                <td th:text="${#strings.toUpperCase(v.prenomsUser)}"></td >
 	                                                <td th:if="${v.site}" th:text="${#strings.toUpperCase(v.site.nomSite)}"></td >
-	                                                <td th:if="${v.site ==null}">PAS DE SITE</td >
+	                                                <td th:if="${v.site==null}">PAS DE SITE</td >
 	                                                <!--<td><a href="#" class="status_btn">Modifier</a></td>-->
 	                                                <td><a th:href="@{${'../administration/siteProfile/'+v.user_id+'/suppr'}}" onclick="return confirm('Etes-vous sûr ?')" class="sm_btn">Supprimer</a></td>
 	                                            </tr>
@@ -120,7 +120,7 @@ layout:decorator="templateparam">
                                 <select class="custom-select" name="idSite" id="site_id" aria-label="Example select with button addon" required>
                                     <option value="">Selectionner un site</option>
                                    <th:block th:each="site : ${siteListes}">
-		                            	<option  th:value="${site.idSite}" th:text="${#strings.toUpperCase(site.nomSite)}"></option >
+		                            	<option  th:if="${site.idSite != 6}" th:value="${site.idSite}" th:text="${#strings.toUpperCase(site.nomSite)}"></option >
 		                            </th:block>
                                 </select>
                             </div>

@@ -44,4 +44,14 @@ public class DomaineActiviteServiceImpl implements DomaineActiviteService {
 		return domaineActiviteRepository.findAll();
 	}
 
+	@Override
+	public DomaineActivite findByTitreDomAct(String titreDomAct) {
+		return domaineActiviteRepository.findByTitreDomAct(titreDomAct);
+	}
+
+	@Override
+	public List<DomaineActivite> findBytitreDomActContaining(String titreDomAct) {
+		return domaineActiviteRepository.findBytitreDomActContaining(titreDomAct);
+	}
+
 }

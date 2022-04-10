@@ -18,6 +18,7 @@ import com.mincom.gescomext.repository.ActionListeRepository;
 import com.mincom.gescomext.repository.UserRepository;
 import com.mincom.gescomext.service.RoleService;
 import com.mincom.gescomext.service.SiteService;
+import com.mincom.gescomext.service.UserService;
 import com.mincom.gescomext.service.ActionListeService;
 
 @Controller
@@ -33,6 +34,9 @@ public class ActionListeController{
 	ActionListeRepository actionListeRepo;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	UserService userService;
+	String validate = "non";
 	
 	@RequestMapping("/administration/listeActions")
 	public String listeActions(ModelMap modelMap)
@@ -42,14 +46,29 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeActions")) {
+				validate = "oui";
+			}
+			System.out.println(liens.getLienActPro());
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		List<ActionListe> elmts = actionListeService.getAllActionListe();
 		List<Role> roleList = roleService.getAllRole();
 		modelMap.addAttribute("actionListes", elmts);
 		modelMap.addAttribute("roleList", roleList);
 		modelMap.addAttribute("ActionListesVide", new ActionListe());
+		
+		
 		return "autres/listeAction";
 	}
 	
@@ -61,8 +80,20 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionActions")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		List<ActionListe> elmts = actionListeService.getAllActionListe();
 		List<Role> roleList = roleService.getAllRole();
@@ -81,8 +112,20 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionActions")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		if(role.getRole_id()!=null) {
 			Role roleFind = roleService.getRoleById(role.getRole_id());
@@ -100,8 +143,20 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeSites")) {
+				validate = "oui";
+			}			
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		List<Site> elmts = siteService.getAllSite();
 		modelMap.addAttribute("siteListes", elmts);
@@ -116,11 +171,79 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		if(site!=null) {
 			siteService.saveSite(site);
+		}
+		return "redirect:/administration/listeSites";
+	}
+	
+	@RequestMapping("/administration/Update/Site/{id}")
+	public String updateSite(@PathVariable("id") Long id, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		Site site = siteService.getSiteById(id);
+		modelMap.addAttribute("siteTrouve", site);
+		return "autres/updateSite";
+	}
+	@RequestMapping("/administration/Valider/Update/Site")
+	public String updatevSite(Site site, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/listeSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		Site siteFound = siteService.getSiteById(site.getIdSite());
+		if(siteFound != null) {
+			siteFound.setNomSite(site.getNomSite());
+			siteService.saveSite(siteFound);
 		}
 		return "redirect:/administration/listeSites";
 	}
@@ -133,11 +256,60 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
+		
+		if(username.equals("superadmin")) {
+			List<User> elmtUser = userService.getAllUser();
+			modelMap.addAttribute("userListes", elmtUser);
+		}else {
+			List<User> elmtUser = userService.findBySite(user.getSite());
+			modelMap.addAttribute("userListes", elmtUser);
+		}
 		
 		List<Site> elmts = siteService.getAllSite();
-		List<User> elmtUser = userRepository.findAll();
+		modelMap.addAttribute("siteListes", elmts);
+		
+		return "autres/attributionSite";
+	}
+	@RequestMapping("/administration/Recherche/User/Site")
+	public String rechAttributionSites(String nomSite, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepository.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
+		List<Site> elmts = siteService.getAllSite();
+		List<User> elmtUser = userRepository.findBySite(siteService.findByNomSite(nomSite));
 		
 		modelMap.addAttribute("siteListes", elmts);
 		modelMap.addAttribute("userListes", elmtUser);
@@ -152,9 +324,20 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionSites")) {
+				validate = "oui";
+			}
+		});
 		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		if(site!=null) {
 			site.getUser().forEach(users->{
 				User findUser = userRepository.getById(users.getUser_id());
@@ -175,8 +358,20 @@ public class ActionListeController{
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		List<ActionListe> listeUrlStatAdmin = classGestionUrl.getListeAcctions(user, "Statistique");
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		modelMap.addAttribute("listeUrlStatAdmin", listeUrlStatAdmin);
+		validate = "non";
+		listeUrlUserAdmin.forEach(liens -> {
+			if (liens.getLienActPro().equals("administration/AttributionSites")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		
 		if(id!=null) {			
 			User findUser = userRepository.getById(id);

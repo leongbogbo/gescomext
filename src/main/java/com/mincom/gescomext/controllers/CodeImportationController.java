@@ -152,84 +152,82 @@ public class CodeImportationController {
 		 * //modelMap.addAttribute("listeUrlUser", listeUrlUser);
 		 */
 
-		  /*List<TableauCodeIdex> listesd =
-				  TableauCodeIdex.getKeyIdex(); listesd.forEach(voir ->{
-		  System.out.println(" BaseDix => "+voir.getBaseDix()+" Correpondance => "+voir.getKey()); 
-		  });*/
-		  
-		  /*List<TableauCorrespondance> listesds =
-		  TableauCorrespondance.getContribuableCode(); listesds.forEach(voir ->{
-		  System.out.println(" BaseDix => "+voir.getBaseDix()+" Lettre => "+voir.
-		  getContriKey()+" Correpondance => "+voir.getKey()); });
+		/*
+		 * List<TableauCodeIdex> listesd = TableauCodeIdex.getKeyIdex();
+		 * listesd.forEach(voir ->{
+		 * System.out.println(" BaseDix => "+voir.getBaseDix()+" Correpondance => "+voir
+		 * .getKey()); });
 		 */
-		
-		/*SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
-		String dateDuJours = formatGag.format(new Date());
-		LocalDate dates = LocalDate.parse("2021-10-04", DateTimeFormatter.ISO_LOCAL_DATE);
-		LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
 
-		Period diffDate = Period.between(dJour, dates);
-		int years = Math.abs(diffDate.getYears());
-		int mois = Math.abs(diffDate.getMonths());
-		System.out.println(diffDate);
-		System.out.println(years);*/
-		
-		
-		/*List<Entreprise> listeEntreprise = entrepriseService.getAllEntreprise();
-		listeEntreprise.forEach(entreprise->{
-			errorsList.clear();
-			EntrepriseValidator.validate(entreprise).forEach(error -> {
-				errorsList.add(error);
-			});
-			if(errorsList.size()==0) {
-				codeIdex = CalculeCodesIdex.getCodeCodeIdex(entreprise.getContribuableEntr(),"", numDossier);
-				entreprise.setCodeIdexEntr(codeIdex);
-			}else {
-				codeIdex = CalculeCodesIdex.getCodeCodeIdex("",entreprise.getNomEntr(), numDossier);			
-				entreprise.setCodeIdexEntr(codeIdex);			
-			}
-			System.out.println(codeIdex+" "+entreprise.getContribuableEntr()+" "+entreprise.getIdEntr());
-			entrepriseService.saveEntreprise(entreprise);
-			numDossier = numDossier+1;
-		});
-		
-		List<Demandeur> listedemandeur = demandeurService.getAllDemandeur();
-		listedemandeur.forEach(demandeur->{
-			errorsList.clear();
-			DemandeurValidator.validate(demandeur).forEach(error -> {
-				errorsList.add(error);
-			});
-			if(errorsList.size()==0) {
-				codeIdex = CalculeCodesIdex.getCodeCodeIdex(demandeur.getContribuableDem(),"", numDossier);
-				demandeur.setCodeIdexDem(codeIdex);
-			}else {
-				codeIdex = CalculeCodesIdex.getCodeCodeIdex("",demandeur.getNomDem(), numDossier);			
-				demandeur.setCodeIdexDem(codeIdex);			
-			}
-			System.out.println(codeIdex+" "+demandeur.getContribuableDem()+" "+demandeur.getIdDem());
-			demandeurService.saveDemandeur(demandeur);
-			numDossier = numDossier+1;
-		});*/
+		/*
+		 * List<TableauCorrespondance> listesds =
+		 * TableauCorrespondance.getContribuableCode(); listesds.forEach(voir ->{
+		 * System.out.println(" BaseDix => "+voir.getBaseDix()+" Lettre => "+voir.
+		 * getContriKey()+" Correpondance => "+voir.getKey()); });
+		 */
+
+		/*
+		 * SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd"); String
+		 * dateDuJours = formatGag.format(new Date()); LocalDate dates =
+		 * LocalDate.parse("2021-10-04", DateTimeFormatter.ISO_LOCAL_DATE); LocalDate
+		 * dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+		 * 
+		 * Period diffDate = Period.between(dJour, dates); int years =
+		 * Math.abs(diffDate.getYears()); int mois = Math.abs(diffDate.getMonths());
+		 * System.out.println(diffDate); System.out.println(years);
+		 */
+
+		/*
+		 * List<Entreprise> listeEntreprise = entrepriseService.getAllEntreprise();
+		 * listeEntreprise.forEach(entreprise->{ errorsList.clear();
+		 * EntrepriseValidator.validate(entreprise).forEach(error -> {
+		 * errorsList.add(error); }); if(errorsList.size()==0) { codeIdex =
+		 * CalculeCodesIdex.getCodeCodeIdex(entreprise.getContribuableEntr(),"",
+		 * numDossier); entreprise.setCodeIdexEntr(codeIdex); }else { codeIdex =
+		 * CalculeCodesIdex.getCodeCodeIdex("",entreprise.getNomEntr(), numDossier);
+		 * entreprise.setCodeIdexEntr(codeIdex); }
+		 * System.out.println(codeIdex+" "+entreprise.getContribuableEntr()+" "
+		 * +entreprise.getIdEntr()); entrepriseService.saveEntreprise(entreprise);
+		 * numDossier = numDossier+1; });
+		 * 
+		 * List<Demandeur> listedemandeur = demandeurService.getAllDemandeur();
+		 * listedemandeur.forEach(demandeur->{ errorsList.clear();
+		 * DemandeurValidator.validate(demandeur).forEach(error -> {
+		 * errorsList.add(error); }); if(errorsList.size()==0) { codeIdex =
+		 * CalculeCodesIdex.getCodeCodeIdex(demandeur.getContribuableDem(),"",
+		 * numDossier); demandeur.setCodeIdexDem(codeIdex); }else { codeIdex =
+		 * CalculeCodesIdex.getCodeCodeIdex("",demandeur.getNomDem(), numDossier);
+		 * demandeur.setCodeIdexDem(codeIdex); }
+		 * System.out.println(codeIdex+" "+demandeur.getContribuableDem()+" "+demandeur.
+		 * getIdDem()); demandeurService.saveDemandeur(demandeur); numDossier =
+		 * numDossier+1; });
+		 */
 
 		return "index";
 	}
 
 	@RequestMapping("/{category}/Liste")
 	public String listeEntreprises(@PathVariable("category") String category, ModelMap modelMap) throws IOException {
+		
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
 		String site = user.getSite().getNomSite();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-		List<OpCodeImportation> codfs = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
-		modelMap.addAttribute("listeCode", codfs);
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/Liste")) {
 				validate = "oui";
 			}
 		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		List<OpCodeImportation> codfs = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+		modelMap.addAttribute("listeCode", codfs);
+
+		
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeDossier";
 		} else {
@@ -258,7 +256,15 @@ public class CodeImportationController {
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		Integer numDossier = 1;
 		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
 		if (elmt != null) {
@@ -282,11 +288,6 @@ public class CodeImportationController {
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
-				validate = "oui";
-			}
-		});
 		if (validate.equals("oui")) {
 			return "./" + category + "/creationDossierPhysique";
 		} else {
@@ -301,7 +302,17 @@ public class CodeImportationController {
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		Integer numDossier = 1;
 		OpCodeImportation elmt = opCodeImportationService.findFirstByOrderByIdOpDesc();
 		if (elmt != null) {
@@ -333,11 +344,7 @@ public class CodeImportationController {
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
-				validate = "oui";
-			}
-		});
+		
 		if (validate.equals("oui")) {
 			return "./" + category + "/creationDossierMoral";
 		} else {
@@ -359,13 +366,21 @@ public class CodeImportationController {
 		User user = userRepository.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		if (regcommerceNouv != null && !regcommerceNouv.isEmpty()) {
-			System.out.println("NOUEAU " + regcommerceNouv);
 			entreprise.setRegcommerceEntr(regcommerceNouv);
 		}
 		if (regcommerceEntrAnc != null && !regcommerceEntrAnc.isEmpty()) {
-			System.out.println("ANCIEN " + regcommerceEntrAnc);
 			entreprise.setRegcommerceEntr(regcommerceEntrAnc);
 		}
 		if (codeImportation.getDateMiseCirculationGag() != null) {
@@ -418,11 +433,7 @@ public class CodeImportationController {
 		}
 
 		modelMap.addAttribute("dateDuJour", dateDuJour);
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/CreationDossier")) {
-				validate = "oui";
-			}
-		});
+	
 		if (validate.equals("oui")) {
 			return "./" + category + "/" + pageselect;
 		} else {
@@ -476,17 +487,17 @@ public class CodeImportationController {
 				Entreprise verifByRaisonEntreprise = entrepriseService.findByNomEntr(entreprise.getNomEntr());
 				if ((verifByRaisonEntreprise == null) && (verifByContriEntreprise == null)) {
 
-					if (entreprise.getExoregcomEntr().equals("non") && !entreprise.getRegcommerceEntr().isEmpty()
+					if (entreprise.getExoregcomEntr() != null && entreprise.getExoregcomEntr().equals("non") && entreprise.getRegcommerceEntr() != null && !entreprise.getRegcommerceEntr().isEmpty()
 							&& !entreprise.getContribuableEntr().isEmpty()) {
 						codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(),
 								entreprise.getContribuableEntr(), numDossier);
 						codesFiscals = CalculeCodesExportation.getCodeFixcal(1, numDossier);
-					} else if (entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr().isEmpty()
+					} else if (entreprise.getExoregcomEntr() != null && entreprise.getExoregcomEntr().equals("oui") && entreprise.getRegcommerceEntr() != null && entreprise.getRegcommerceEntr().isEmpty()
 							&& !entreprise.getContribuableEntr().isEmpty()) {
 						codesExportation = CalculeCodesExportation
 								.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
 						codesFiscals = CalculeCodesExportation.getCodeFixcal(0, numDossier);
-					} else if (entreprise.getDepartement().getIdDep() != 0 && entreprise.getRegcommerceEntr().isEmpty()
+					} else if (entreprise.getDepartement().getIdDep() != 0 && entreprise.getRegcommerceEntr() == null
 							&& !entreprise.getContribuableEntr().isEmpty()) {
 						codesExportation = CalculeCodesExportation
 								.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
@@ -580,7 +591,7 @@ public class CodeImportationController {
 				if (!codesOccasionnel.isEmpty()) {
 					codeImportation.setNumOcca(codesOccasionnel);
 					CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
-					if (codeStruc.equals("42000A")) {
+					if (codeStruc.equals("42000A") || entreprise.getExoPaiementEntr().equals("non")) {
 						opCodeImportation.setMontantOp("50000");
 						opCodeImportation.setActivePaimentOp(0);
 						opCodeImportation.setActiveApprobationOp("inactif");
@@ -701,8 +712,59 @@ public class CodeImportationController {
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
 		if (errorsList.size() != 0) {
+
+			if (codeImportation.getDateMiseCirculationGag() != null) {
+				Date dategag = codeImportation.getDateMiseCirculationGag();
+				SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+				String dateDuJours = formatGag.format(new Date());
+				LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
+				LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+
+				Period diffDate = Period.between(dJour, dates);
+				int jours = Math.abs(diffDate.getDays());
+				int mois = Math.abs(diffDate.getMonths());
+				int years = Math.abs(diffDate.getYears());
+				modelMap.addAttribute("jours", jours);
+				modelMap.addAttribute("mois", mois);
+				modelMap.addAttribute("years", years);
+			}
+			String pageselect = "confirmerDossierMoral";
+
+			List<Commune> coms = communeService.getAllCommune();
+			List<Ville> vils = villeService.getAllVille();
+			List<Nationalite> nats = natService.getAllNationalite();
+			List<FormeJuridique> fmjury = fjuryService.getAllFormeJuridique();
+			List<Marque> marques = marqueService.getAllMarque();
+			List<GenreMarque> genreMarques = genreMarqueService.getAllGenreMarque();
+			List<TypeStructure> typeStructure = typeStructureService.getAllTypeStructure();
+			List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
+			List<DomaineActivite> domaineActivite = domaineActiviteService.getAllDomaineActivite();
+			List<Departement> departement = departementService.getAllDepartement();
+			List<Fonction> fonction = fonctionService.getAllFonction();
+			modelMap.addAttribute("listeCommunes", coms);
+			modelMap.addAttribute("listeVilles", vils);
+			modelMap.addAttribute("listeNationalites", nats);
+			modelMap.addAttribute("listeFormjury", fmjury);
+			modelMap.addAttribute("listemarques", marques);
+			modelMap.addAttribute("listegenreMarques", genreMarques);
+			modelMap.addAttribute("listetypeStructure", typeStructure);
+			modelMap.addAttribute("listetypePieceIdentite", typePieceIdentite);
+			modelMap.addAttribute("listedomaineActivite", domaineActivite);
+			modelMap.addAttribute("listedepartement", departement);
+			modelMap.addAttribute("listefonction", fonction);
+			modelMap.addAttribute("verifEntreprise", entreprise);
+			modelMap.addAttribute("verifProprietaire", proprietaire);
+			modelMap.addAttribute("verifCodeImportation", codeImportation);
+			modelMap.addAttribute("verifDemandeur", demandeur);
+			modelMap.addAttribute("verifBeneficiaire", beneficiaire);
+
+			if (demandeur.getNomDem() != null && demandeur.getPrenomsDem() != null) {
+				pageselect = "confirmerDossier";
+			}
+
 			modelMap.addAttribute("errorsList", errorsList);
-			return "./errorsPage";
+			// return "./errorsPage";
+			return "./" + category + "/" + pageselect;
 		}
 		return "./" + category + "/succes";
 	}
@@ -718,9 +780,20 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 
 		String dossierAfficher = "renouvellementDossier";
-		if (codeImportExportEntr != null && codeImportExportEntr.length() == 10) {
+		if (codeImportExportEntr != null
+				&& (codeImportExportEntr.length() == 10 || codeImportExportEntr.length() == 11)) {
 			Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
 			Proprietaire props = entr.getProprietaires();
 			List<OpCodeImportation> fgg = opCodeImportationService
@@ -758,11 +831,7 @@ public class CodeImportationController {
 			dossierAfficher = "reNewDossierMoral";
 		}
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
-				validate = "oui";
-			}
-		});
+		
 		if (validate.equals("oui")) {
 			return "./" + category + "/" + dossierAfficher;
 		} else {
@@ -780,7 +849,17 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		String codesFiscals = "";
 		Date date = new Date();
 
@@ -815,11 +894,7 @@ public class CodeImportationController {
 			opCodeImportation.setCodeImportation(codeImportationSave);
 			opCodeImportationService.saveOpCodeImportation(opCodeImportation);
 		}
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
-				validate = "oui";
-			}
-		});
+	
 		if (validate.equals("oui")) {
 			return "redirect:../../" + category + "/Liste";
 		} else {
@@ -841,6 +916,15 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 		errorsList.clear();
 		// calcul du dernier dossier
 		Integer numDossier = 1001001;
@@ -853,14 +937,14 @@ public class CodeImportationController {
 		if (category.equals("CodeImportExport")) {
 			String codesExportation = "";
 			String codesFiscals = "";
-			
+
 			EntrepriseValidator.validate(entreprise).forEach(error -> {
 				errorsList.add(error);
 			});
 			ProprietaireValidator.validate(proprietaire).forEach(error -> {
 				errorsList.add(error);
 			});
-			if(errorsList.size()==0) {
+			if (errorsList.size() == 0) {
 				if (entreprise.getExoregcomEntr().equals("non") && !entreprise.getRegcommerceEntr().isEmpty()
 						&& !entreprise.getContribuableEntr().isEmpty()) {
 					codesExportation = CalculeCodesExportation.getCodeImportExport(entreprise.getRegcommerceEntr(),
@@ -871,7 +955,7 @@ public class CodeImportationController {
 					codesExportation = CalculeCodesExportation
 							.getCodeImportExportWithOutRCCM(entreprise.getContribuableEntr(), numDossier);
 					codesFiscals = CalculeCodesExportation.getCodeFixcal(0, numDossier);
-				}				
+				}
 				if (!codesExportation.isEmpty() && !codesFiscals.isEmpty()) {
 					Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);
 					entreprise.setProprietaires(saveProprietaire);
@@ -879,14 +963,14 @@ public class CodeImportationController {
 							CalculeCodesIdex.getCodeCodeIdex(entreprise.getContribuableEntr(), "", numDossier));
 					entreprise.setDateEntr(date);
 					entreprise.setCodeImportExportEntr(codesExportation);
-					
+
 					Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
-					
+
 					codeImportation.setEntreprise(saveEntreprise);
 					codeImportation.setNumCodFic(codesFiscals);
 					codeImportation.setStatutDemandeurCodeImp("oui");
 					CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
-					
+
 					opCodeImportation.setMontantOp("30000");
 					opCodeImportation.setCodeImportation(codeImportationSave);
 					opCodeImportation.setActiveApprobationOp("inactif");
@@ -930,7 +1014,7 @@ public class CodeImportationController {
 							CalculeCodesIdex.getCodeCodeIdex(entreprise.getContribuableEntr(), "", numDossier));
 					entreprise.setDateEntr(date);
 					entreprise.setQuotaOccaEntr(1);
-					
+
 					Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
 					codeImportation.setEntreprise(saveEntreprise);
 					codeImportation.setStatutDemandeurCodeImp("oui");
@@ -938,7 +1022,7 @@ public class CodeImportationController {
 			}
 			if (errorsList.size() == 0) {
 				String codesOccasionnel = CalculeCodesExportation.getCodeOccasionnel(codeStruc, numDossier);
-				
+
 				codeImportation.setNumOcca(codesOccasionnel);
 				CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
 				if (codeStruc.equals("42000A")) {
@@ -950,7 +1034,7 @@ public class CodeImportationController {
 					opCodeImportation.setActivePaimentOp(1);
 					opCodeImportation.setActiveApprobationOp("inactif");
 				}
-				
+
 				opCodeImportation.setCodeImportation(codeImportationSave);
 			}
 
@@ -963,22 +1047,22 @@ public class CodeImportationController {
 			String codesLege = "";
 			if (errorsList.size() == 0) {
 				Date dategag = codeImportation.getDateGag();
-				
+
 				SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
 				String dateDuJours = formatGag.format(new Date());
 				LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
 				LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
-				
+
 				Period diffDate = Period.between(dJour, dates);
 				int years = Math.abs(diffDate.getYears());
 				int mois = Math.abs(diffDate.getMonths());
-				
+
 				if ((years == 2 && mois > 0) || (years > 2)) {
 					typeGage = "ordinaire";
 				} else if ((years == 2 && mois == 0) || (years < 2)) {
 					typeGage = "exceptionnelle";
 				}
-				
+
 				codesLege = CalculeCodesExportation.getLeveeGage(codeImportation.getUsageGag(),
 						codeImportation.getNumChassisGag(), typeGage, numDossier);
 			}
@@ -988,7 +1072,8 @@ public class CodeImportationController {
 						errorsList.add(error);
 					});
 					if (errorsList.size() == 0) {
-						demandeur.setCodeIdexDem(CalculeCodesIdex.getCodeCodeIdex("", demandeur.getNomDem(), numDossier));
+						demandeur.setCodeIdexDem(
+								CalculeCodesIdex.getCodeCodeIdex("", demandeur.getNomDem(), numDossier));
 						Demandeur saveDemandeur = demandeurService.saveDemandeur(demandeur);
 						codeImportation.setDemandeur(saveDemandeur);
 						codeImportation.setStatutDemandeurCodeImp("non");
@@ -1004,12 +1089,12 @@ public class CodeImportationController {
 					});
 					if (errorsList.size() == 0) {
 						Proprietaire saveProprietaire = proprietaireService.saveProprietaire(proprietaire);
-						
+
 						entreprise.setProprietaires(saveProprietaire);
 						entreprise.setCodeIdexEntr(
 								CalculeCodesIdex.getCodeCodeIdex(entreprise.getContribuableEntr(), "", numDossier));
 						entreprise.setDateEntr(date);
-						
+
 						Entreprise saveEntreprise = entrepriseService.saveEntreprise(entreprise);
 						codeImportation.setEntreprise(saveEntreprise);
 						codeImportation.setStatutDemandeurCodeImp("oui");
@@ -1029,13 +1114,13 @@ public class CodeImportationController {
 					codeImportation.setNumGag(codesLege);
 					codeImportation.setTypeGag(typeGage);
 					CodeImportation codeImportationSave = codeImportationService.saveCodeImportation(codeImportation);
-					
+
 					if (typeGage.equals("ordinaire")) {
 						opCodeImportation.setMontantOp("40000");
 					} else if (typeGage.equals("exceptionnelle")) {
 						opCodeImportation.setMontantOp("50000");
 					}
-					
+
 					opCodeImportation.setActiveApprobationOp("inactif");
 					opCodeImportation.setActivePaimentOp(0);
 					opCodeImportation.setCodeImportation(codeImportationSave);
@@ -1043,7 +1128,7 @@ public class CodeImportationController {
 			}
 		}
 		if (errorsList.size() == 0) {
-			opCodeImportation.setTypeOp("Attribution");
+			opCodeImportation.setTypeOp("Renouvellement");
 			opCodeImportation.setActiveSignatureOp("non");
 			opCodeImportation.setTypeCodeOp(category);
 			opCodeImportation.setNumDocOp(numDossier);
@@ -1053,21 +1138,64 @@ public class CodeImportationController {
 		}
 		modelMap.addAttribute("numDossiers", numDossier);
 		modelMap.addAttribute("dateDuJour", dateDuJour);
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Renouvellement")) {
-				validate = "oui";
-			}
-		});
+
 		if (errorsList.size() != 0) {
+			if (codeImportation.getDateMiseCirculationGag() != null) {
+				Date dategag = codeImportation.getDateMiseCirculationGag();
+				SimpleDateFormat formatGag = new SimpleDateFormat("yyyy-MM-dd");
+				String dateDuJours = formatGag.format(new Date());
+				LocalDate dates = LocalDate.parse(formatGag.format(dategag), DateTimeFormatter.ISO_LOCAL_DATE);
+				LocalDate dJour = LocalDate.parse(dateDuJours, DateTimeFormatter.ISO_LOCAL_DATE);
+
+				Period diffDate = Period.between(dJour, dates);
+				int jours = Math.abs(diffDate.getDays());
+				int mois = Math.abs(diffDate.getMonths());
+				int years = Math.abs(diffDate.getYears());
+				modelMap.addAttribute("jours", jours);
+				modelMap.addAttribute("mois", mois);
+				modelMap.addAttribute("years", years);
+			}
+			String pageselect = "confirmerDossierMoral";
+
+			List<Commune> coms = communeService.getAllCommune();
+			List<Ville> vils = villeService.getAllVille();
+			List<Nationalite> nats = natService.getAllNationalite();
+			List<FormeJuridique> fmjury = fjuryService.getAllFormeJuridique();
+			List<Marque> marques = marqueService.getAllMarque();
+			List<GenreMarque> genreMarques = genreMarqueService.getAllGenreMarque();
+			List<TypeStructure> typeStructure = typeStructureService.getAllTypeStructure();
+			List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
+			List<DomaineActivite> domaineActivite = domaineActiviteService.getAllDomaineActivite();
+			List<Departement> departement = departementService.getAllDepartement();
+			List<Fonction> fonction = fonctionService.getAllFonction();
+			modelMap.addAttribute("listeCommunes", coms);
+			modelMap.addAttribute("listeVilles", vils);
+			modelMap.addAttribute("listeNationalites", nats);
+			modelMap.addAttribute("listeFormjury", fmjury);
+			modelMap.addAttribute("listemarques", marques);
+			modelMap.addAttribute("listegenreMarques", genreMarques);
+			modelMap.addAttribute("listetypeStructure", typeStructure);
+			modelMap.addAttribute("listetypePieceIdentite", typePieceIdentite);
+			modelMap.addAttribute("listedomaineActivite", domaineActivite);
+			modelMap.addAttribute("listedepartement", departement);
+			modelMap.addAttribute("listefonction", fonction);
+			modelMap.addAttribute("verifEntreprise", entreprise);
+			modelMap.addAttribute("verifProprietaire", proprietaire);
+			modelMap.addAttribute("verifCodeImportation", codeImportation);
+			modelMap.addAttribute("verifDemandeur", demandeur);
+			modelMap.addAttribute("verifBeneficiaire", beneficiaire);
+
+			if (demandeur.getNomDem() != null && demandeur.getPrenomsDem() != null) {
+				pageselect = "confirmerDossier";
+			}
+
 			modelMap.addAttribute("errorsList", errorsList);
-			return "./errorsPage";
+			// return "./errorsPage";
+			return "./" + category + "/" + pageselect;
 		}
-		
-		if (validate.equals("oui")) {
-			return "./" + category + "/succes";
-		} else {
-			return "./accessDenied";
-		}
+
+		return "./" + category + "/succes";
+
 	}
 
 	Entreprise infosEntr = new Entreprise();
@@ -1077,8 +1205,7 @@ public class CodeImportationController {
 
 	// ZONE REATTRIBUTION
 	@RequestMapping("/{category}/ReAttribution")
-	public String reattributionCode(@PathVariable("category") String category, String codeEntr, String codeDem,
-			ModelMap modelMap) {
+	public String reattributionCode(@PathVariable("category") String category, String codeDem, ModelMap modelMap) {
 		// User connecté
 		String username = GetCurrentUser.getUserConnected();
 		User user = userRepository.findByUsername(username);
@@ -1086,32 +1213,45 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/ReAttribution")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		List<OpCodeImportation> listecodeImp = new ArrayList<>();
 		Integer quotaOcca = 0;
 		String statuts = "";
-		if (codeEntr != null && !codeEntr.isEmpty() && codeDem == null) {
-			listecodeImp = opCodeImportationService.findOpCodeImportationNOMeNTR(codeEntr, site);
-			listecodeImp.forEach(listes -> {
-				infosEntr = listes.getCodeImportation().getEntreprise();
-				infosBen = listes.getCodeImportation().getBeneficiaire();
-			});
-			statuts = "entr";
-			quotaOcca = infosEntr.getQuotaOccaEntr();
-			modelMap.addAttribute("listeCode", listecodeImp);
-			modelMap.addAttribute("infosEntr", infosEntr);
-			modelMap.addAttribute("infosBen", infosBen);
-		} else if (codeEntr == null && codeDem != null && !codeDem.isEmpty()) {
-			listecodeImp = opCodeImportationService.findOpCodeImportationNUMpIECEdEMANDEUR(codeDem, site);
-			listecodeImp.forEach(listes -> {
-				infosDem = listes.getCodeImportation().getDemandeur();
-				infosBen = listes.getCodeImportation().getBeneficiaire();
-			});
-			statuts = "dem";
-			quotaOcca = infosDem.getQuotaOccaDem();
-			modelMap.addAttribute("listeCode", listecodeImp);
-			modelMap.addAttribute("infosDem", infosDem);
-			modelMap.addAttribute("infosBen", infosBen);
+		if (codeDem != null && !codeDem.isEmpty()) {
+			listecodeImp = opCodeImportationService.findAllCodeImportationByCodeOccaOrCodeLeveeGageEntr(codeDem, site);
+			if (listecodeImp.size() != 0) {
+				listecodeImp.forEach(listes -> {
+					infosEntr = listes.getCodeImportation().getEntreprise();
+					infosBen = listes.getCodeImportation().getBeneficiaire();
+				});
+				statuts = "entr";
+				quotaOcca = infosEntr.getQuotaOccaEntr();
+				modelMap.addAttribute("listeCode", listecodeImp);
+				modelMap.addAttribute("infosEntr", infosEntr);
+				modelMap.addAttribute("infosBen", infosBen);
+			} else {
+				listecodeImp = opCodeImportationService.findAllCodeImportationByCodeOccaOrCodeLeveeGageDem(codeDem,
+						site);
+				listecodeImp.forEach(listes -> {
+					infosDem = listes.getCodeImportation().getDemandeur();
+					infosBen = listes.getCodeImportation().getBeneficiaire();
+				});
+				statuts = "dem";
+				quotaOcca = infosDem.getQuotaOccaDem();
+				modelMap.addAttribute("listeCode", listecodeImp);
+				modelMap.addAttribute("infosDem", infosDem);
+				modelMap.addAttribute("infosBen", infosBen);
+			}
 		}
 		List<Nationalite> paysOrigine = natService.getAllNationalite();
 		List<TypePieceIdentite> typePieceIdentite = typePieceIdentiteService.getAllTypePieceIdentite();
@@ -1129,11 +1269,7 @@ public class CodeImportationController {
 		modelMap.addAttribute("quotaOcca", quotaOcca);
 		modelMap.addAttribute("statuts", statuts);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/ReAttribution")) {
-				validate = "oui";
-			}
-		});
+		
 		if (validate.equals("oui")) {
 			return "./" + category + "/reattributionDossier";
 		} else {
@@ -1153,7 +1289,16 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/ReAttribution")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		OpCodeImportation oPCodeImportations = new OpCodeImportation();
 		// calcul du dernier dossier
 		Integer numDossier = 1001001;
@@ -1273,11 +1418,7 @@ public class CodeImportationController {
 				opCodeImportationService.saveOpCodeImportation(oPCodeImportations);
 			}
 		}
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/ReAttribution")) {
-				validate = "oui";
-			}
-		});
+		
 		if (validate.equals("oui")) {
 			return "redirect:../../" + category + "/Liste";
 		} else {
@@ -1296,14 +1437,25 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Duplicata")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+
+		List<OpCodeImportation> fgg = new ArrayList<>();
 
 		if (codeImportExportEntr != null) {
 			if (category.equals("CodeImportExport")) {
 				Entreprise entr = entrepriseService.findByCodeImportExportEntrAndContribuableEntr(codeImportExportEntr);
 				if (entr != null) {
 					Proprietaire props = entr.getProprietaires();
-					List<OpCodeImportation> fgg = opCodeImportationService
-							.findCodeImportationByTypecodeAndByCodeRccmOrCc(codeImportExportEntr, category, site);
+					fgg = opCodeImportationService.findCodeImportationByTypecodeAndByCodeRccmOrCc(codeImportExportEntr,
+							category, site);
 					modelMap.addAttribute("infoEntreprise", entr);
 					modelMap.addAttribute("infoProprietaire", props);
 					modelMap.addAttribute("listeCode", fgg);
@@ -1313,20 +1465,18 @@ public class CodeImportationController {
 				}
 
 			} else if (category.equals("CodeOccasionnel") || category.equals("LeveeDeGage")) {
-				List<OpCodeImportation> fgg = opCodeImportationService
-						.findAllCodeImportationByCodeOccaOrCodeLeveeGage(codeImportExportEntr, site);
-				fgg.forEach(voir -> {
-					System.out.println(voir.getCodeImportation().getNumGag());
-				});
+				fgg = opCodeImportationService.findAllCodeImportationByCodeOccaOrCodeLeveeGageEntr(codeImportExportEntr,
+						site);
+				if (fgg.size() == 0) {
+					fgg = opCodeImportationService
+							.findAllCodeImportationByCodeOccaOrCodeLeveeGageDem(codeImportExportEntr, site);
+
+				}
 				modelMap.addAttribute("listeCode", fgg);
 			}
 
 		}
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Duplicata")) {
-				validate = "oui";
-			}
-		});
+		
 		if (validate.equals("oui")) {
 			return "./" + category + "/duplicataDossier";
 		} else {
@@ -1397,20 +1547,32 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
-		if (numDoc != null) {
-			OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
-			modelMap.addAttribute("infoCodefic", codeFic);
-		}
-
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/Paiement")) {
 				validate = "oui";
 			}
 		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		if (numDoc != null) {
+			if(username.equals("superadmin")) {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOpSuper(numDoc, category);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}else {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}
+		}
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
+	
 		if (validate.equals("oui")) {
 			return "./" + category + "/listePaiement";
 		} else {
@@ -1428,12 +1590,22 @@ public class CodeImportationController {
 		String site = user.getSite().getNomSite();
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
-
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Paiement")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		OpCodeImportation opcode = opCodeImportationService.findBynumDocOp(numDoc, category, site);
 		if (opcode != null) {
-			TraitementOpCodeImportation tOpCodeImport= traitementOpCodeImportationService.findTraitementOpCodeImportationByStatut(numDoc, "paiement", site);
-			if(tOpCodeImport==null) {
+			TraitementOpCodeImportation tOpCodeImport = traitementOpCodeImportationService
+					.findTraitementOpCodeImportationByStatut(numDoc, "paiement", site);
+			if (tOpCodeImport == null) {
 				traitementOpCodeImportation.setStatutTrait("paiement");
 				traitementOpCodeImportation.setOpCodeImportation(opcode);
 				traitementOpCodeImportation.setDateTrait(new Date());
@@ -1443,16 +1615,16 @@ public class CodeImportationController {
 				opCodeImportationService.saveOpCodeImportation(opcode);
 			}
 		}
-
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
+	
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
 		modelMap.addAttribute("infoCodefic", opcode);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Paiement")) {
-				validate = "oui";
-			}
-		});
 		if (validate.equals("oui")) {
 			return "./" + category + "/listePaiement";
 		} else {
@@ -1471,20 +1643,34 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
-		if (numDoc != null) {
-			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
-			modelMap.addAttribute("infoCodefic", opcodeFic);
-		}
-
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/Approbation")) {
 				validate = "oui";
 			}
 		});
+
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
+		if (numDoc != null) {
+			if(username.equals("superadmin")) {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOpSuper(numDoc, category);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}else {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}
+		}
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
+
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeApprobation";
 		} else {
@@ -1503,11 +1689,22 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Approbation")) {
+				validate = "oui";
+			}
+		});
+		
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 
 		OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
 		if (opcodeFic != null) {
-			TraitementOpCodeImportation tOpCodeImport= traitementOpCodeImportationService.findTraitementOpCodeImportationByStatut(numDoc, "approbation", site);
-			if(tOpCodeImport==null) {
+			TraitementOpCodeImportation tOpCodeImport = traitementOpCodeImportationService
+					.findTraitementOpCodeImportationByStatut(numDoc, "approbation", site);
+			if (tOpCodeImport == null) {
 				traitementOpCodeImportation.setStatutTrait("approbation");
 				traitementOpCodeImportation.setOpCodeImportation(opcodeFic);
 				traitementOpCodeImportation.setDateTrait(new Date());
@@ -1518,15 +1715,15 @@ public class CodeImportationController {
 			}
 		}
 
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
 		modelMap.addAttribute("infoCodefic", opcodeFic);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Approbation")) {
-				validate = "oui";
-			}
-		});
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeApprobation";
 		} else {
@@ -1545,20 +1742,33 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
-		if (numDoc != null) {
-			OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
-			modelMap.addAttribute("infoCodefic", opcodeFic);
-		}
-
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/Signature")) {
 				validate = "oui";
 			}
 		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+
+		if (numDoc != null) {
+			if(username.equals("superadmin")) {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOpSuper(numDoc, category);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}else {
+				OpCodeImportation codeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
+				modelMap.addAttribute("infoCodefic", codeFic);
+			}
+		}
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
+
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeSignature";
 		} else {
@@ -1577,11 +1787,21 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/Signature")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
 		OpCodeImportation opcodeFic = opCodeImportationService.findBynumDocOp(numDoc, category, site);
 		if (opcodeFic != null) {
-			TraitementOpCodeImportation tOpCodeImport= traitementOpCodeImportationService.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
-			if(tOpCodeImport==null) {
+			TraitementOpCodeImportation tOpCodeImport = traitementOpCodeImportationService
+					.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
+			if (tOpCodeImport == null) {
 				traitementOpCodeImportation.setStatutTrait("signature");
 				traitementOpCodeImportation.setOpCodeImportation(opcodeFic);
 				traitementOpCodeImportation.setDateTrait(new Date());
@@ -1592,15 +1812,15 @@ public class CodeImportationController {
 			}
 		}
 
-		List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listeCodes", cods);
+		if(username.equals("superadmin")) {
+			List<OpCodeImportation> cods = opCodeImportationService.findOpCodeImportationsByTypeCodeOp(category);
+			modelMap.addAttribute("listeCodes", cods);
+		}else {
+			List<OpCodeImportation> cods = opCodeImportationService.findAllCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listeCodes", cods);
+		}
 		modelMap.addAttribute("infoCodefic", opcodeFic);
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/Signature")) {
-				validate = "oui";
-			}
-		});
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeSignature";
 		} else {
@@ -1619,6 +1839,15 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		validate = "non";
+		listeUrlUser.forEach(liens -> {
+			if (liens.getLienActPro().equals(category + "/listeEtatCodes")) {
+				validate = "oui";
+			}
+		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
 
 		if (numDoc != null && statut != null) {
 
@@ -1636,15 +1865,17 @@ public class CodeImportationController {
 				}
 			}
 		}
-		List<TraitementOpCodeImportation> listelmt = traitementOpCodeImportationService
-				.findAllTraitementOpCodeImportationByTypeCodeOp(category, site);
-		modelMap.addAttribute("listecodes", listelmt);
+		
+		if(username.equals("superadmin")) {
+			List<TraitementOpCodeImportation> listecode = traitementOpCodeImportationService
+					.findAllTraitementOpCodeImportationByTypeCodeOpSuper(category);
+			modelMap.addAttribute("listecodes", listecode);
+		}else {
+			List<TraitementOpCodeImportation> listecode = traitementOpCodeImportationService
+					.findAllTraitementOpCodeImportationByTypeCodeOp(category, site);
+			modelMap.addAttribute("listecodes", listecode);
+		}
 
-		listeUrlUser.forEach(liens -> {
-			if (liens.getLienActPro().equals(category + "/listeEtatCodes")) {
-				validate = "oui";
-			}
-		});
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeEtatCode";
 		} else {
@@ -1661,20 +1892,32 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
-		if (numDoc != null) {
-			List<TraitementOpCodeImportation> codeimp = opCodeImportationService.findBynumDocOp(numDoc, category, site)
-					.getTraitementOpCodeImportation();
-			if (codeimp != null) {
-				modelMap.addAttribute("listecodes", codeimp);
-			}
-		}
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/ListeEtatCode")) {
 				validate = "oui";
 			}
 		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+
+		if (numDoc != null) {
+			if(username.equals("superadmin")) {
+				List<TraitementOpCodeImportation> codeimp = opCodeImportationService.findBynumDocOpSuper(numDoc, category)
+						.getTraitementOpCodeImportation();
+				if (codeimp != null) {
+					modelMap.addAttribute("listecodes", codeimp);
+				}
+			}else {
+				List<TraitementOpCodeImportation> codeimp = opCodeImportationService.findBynumDocOp(numDoc, category, site)
+						.getTraitementOpCodeImportation();
+				if (codeimp != null) {
+					modelMap.addAttribute("listecodes", codeimp);
+				}
+			}
+		}
+
 		if (validate.equals("oui")) {
 			return "./" + category + "/listeEtatCode";
 		} else {
@@ -1691,24 +1934,43 @@ public class CodeImportationController {
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, category);
 		modelMap.addAttribute("listeUrlUser", listeUrlUser);
-
-		if (numDoc != null) {
-			TraitementOpCodeImportation codes = traitementOpCodeImportationService
-					.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
-			if (codes != null) {
-				modelMap.addAttribute("listecodes", codes);
-			}
-		} else {
-			List<TraitementOpCodeImportation> listecode = traitementOpCodeImportationService
-					.findAllTraitementOpCodeImportationByTypeCodeOp(category, site);
-			modelMap.addAttribute("listecodes", listecode);
-		}
-
+		validate = "non";
 		listeUrlUser.forEach(liens -> {
 			if (liens.getLienActPro().equals(category + "/EditionFiches")) {
 				validate = "oui";
 			}
 		});
+		if (validate.equals("non")) {
+			return "./accessDenied";
+		}
+		
+		if (numDoc != null) {
+			if(username.equals("superadmin")) {
+				TraitementOpCodeImportation codes = traitementOpCodeImportationService
+						.findTraitementOpCodeImportationByStatutSuper(numDoc, "signature");
+				if (codes != null) {
+					modelMap.addAttribute("listecodes", codes);
+				}
+				
+			}else {
+				TraitementOpCodeImportation codes = traitementOpCodeImportationService
+						.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
+				if (codes != null) {
+					modelMap.addAttribute("listecodes", codes);
+				}
+			}
+		} else {
+			if(username.equals("superadmin")) {
+				List<TraitementOpCodeImportation> listecode = traitementOpCodeImportationService
+						.findAllTraitementOpCodeImportationByTypeCodeOpSuper(category);
+				modelMap.addAttribute("listecodes", listecode);
+			}else {
+				List<TraitementOpCodeImportation> listecode = traitementOpCodeImportationService
+						.findAllTraitementOpCodeImportationByTypeCodeOp(category, site);
+				modelMap.addAttribute("listecodes", listecode);
+			}
+		}
+
 		if (validate.equals("oui")) {
 			return "./" + category + "/editerFiche";
 		} else {
@@ -1733,9 +1995,17 @@ public class CodeImportationController {
 		if (numDoc != null) {
 			List<TraitementOpCodeImportation> listOpCodes = new ArrayList<>();
 			// OpCodeImportation opCodes = opCodeImportationService.findBynumDocOp(numDoc);
-			TraitementOpCodeImportation opCodes = traitementOpCodeImportationService
-					.findTraitementOpCodeImportationByStatut(numDoc, "paiement", site);
-			listOpCodes.add(opCodes);
+			
+				if(username.equals("superadmin")) {
+					TraitementOpCodeImportation opCodes = traitementOpCodeImportationService
+							.findTraitementOpCodeImportationByStatutSuper(numDoc, "paiement");
+					listOpCodes.add(opCodes);
+				}else {
+					TraitementOpCodeImportation opCodes = traitementOpCodeImportationService
+							.findTraitementOpCodeImportationByStatut(numDoc, "paiement", site);
+					listOpCodes.add(opCodes);
+				}
+			
 			String fichiers = "";
 			if (category.equals("CodeImportExport")) {
 				fichiers = "recuImportExport";
@@ -1777,10 +2047,18 @@ public class CodeImportationController {
 
 		if (numDoc != null) {
 			List<TraitementOpCodeImportation> listOpCodes = new ArrayList<>();
+			TraitementOpCodeImportation opCodes = new TraitementOpCodeImportation();
 			// OpCodeImportation opCodes = opCodeImportationService.findBynumDocOp(numDoc);
-			TraitementOpCodeImportation opCodes = traitementOpCodeImportationService
-					.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
-			listOpCodes.add(opCodes);
+			if(username.equals("superadmin")) {
+				opCodes = traitementOpCodeImportationService
+						.findTraitementOpCodeImportationByStatutSuper(numDoc, "signature");
+				listOpCodes.add(opCodes);
+			}else {
+				opCodes = traitementOpCodeImportationService
+						.findTraitementOpCodeImportationByStatut(numDoc, "signature", site);
+				listOpCodes.add(opCodes);
+			}
+			
 			String fichiers = "";
 			int mois = 0;
 			int years = 0;

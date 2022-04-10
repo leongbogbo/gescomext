@@ -25,6 +25,15 @@ layout:decorator="template2" xml:lang="">
                             	</div>
                         	</div>
                         </div>
+	                      <div class="row" th:if="${errorsList}">
+				            <div class="col-12">
+				            	<div class="alert text-white bg-danger" role="alert">
+									<div class="alert-text" th:each="errors : ${errorsList}">
+										<b><span th:text="${errors}"> </span ></b>
+									</div>
+								</div>
+				            </div>
+			            </div>
                         <div class="white_card_body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade active show" id="Themes" role="tabpanel" aria-labelledby="Themes-tab">
@@ -69,8 +78,22 @@ layout:decorator="template2" xml:lang="">
                                                     
                                                         <div class="col-sm-4" th:if="${verifEntreprise.numIduEntr!=null}">
                                                             <label for="inputPassword3" class="col-form-label">N° IDU </label>
-                                                                <input name="numIduEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.numIduEntr}">
+                                                            
+                                                             <input name="numIduEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.numIduEntr}">
+                                                        	
                                                         </div>
+                                                        <div class="col-sm-4">                                                
+						                                    <label class="col-form-label" for="exoregcomEntr">Exonérer RCCM s?</label>						                                    
+					                                        <select name="exoregcomEntr" id="exoregcomEntr" class="form-control" th:field="*{verifEntreprise.exoregcomEntr}">
+					                                            <option value="">Veuillez selectionner</option>
+					                                            <option value="non">NON</option>
+					                                            <option value="oui">OUI</option >
+					                                        </select>						                                    
+						                                </div>
+						                                <div class="col-sm-4" th:if="${verifEntreprise.exoregcomEntr=='non'}">
+						                                    <label for="inputEmail3" class="col-form-label">N° RCCM</label>						                                    
+						                                    <input type="text" name="regcommerceEntr" class="form-control" id="inputEmail3" th:value="${verifEntreprise.regcommerceEntr}">
+						                                </div>
                                                         <div class="col-sm-4">                                                
                                                             <label class="col-form-label" for="inputState">Ville <strong class="text-danger">*</strong></label>
                                                             <select name="villeEntr" id="inputState" class="form-control" required="required">
@@ -121,6 +144,13 @@ layout:decorator="template2" xml:lang="">
                                                             <label for="inputPassword3" class="col-form-label">Compte contribuable <strong class="text-danger">*</strong> </label>
                                                             <input name="contribuableEntr" type="text" class="form-control" id="inputPassword3" th:value="${verifEntreprise.contribuableEntr}" required="required">
                                                         </div>
+                                                        <div class="col-sm-4" id="">                                          
+						                                	<label class="form-label" for="inputState">Exonérer paiement ?</label>						                                    
+						                                    <select name="exoPaiementEntr" id="exoPaiementEntr" class="form-control" th:field="*{verifEntreprise.exoPaiementEntr}">
+                                    							<option value="non">NON</option>
+						                                        <option value="oui  selected">OUI</option >
+						                                    </select>
+						                                </div>
                                                     </div>
                                                 </div>
 						                    </div>

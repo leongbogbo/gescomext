@@ -44,4 +44,9 @@ public class CommuneServiceImpl implements CommuneService {
 		return communeRepository.findAll();
 	}
 
+	@Override
+	public Commune findBynomCommune(String nom) {
+		return communeRepository.findBynomCommune(nom);
+	}
+
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,21 +34,25 @@ public class Demandeur {
 	private String emailDem;
 	private String codeIdexDem;
 	private Integer quotaOccaDem;
+	private String exoPaiementDem;
 
 	
+	@JsonIgnore
 	@ManyToOne	  
   	@JoinColumn(name = "nat_id")
 	private Nationalite nationalite;
 	
+	@JsonIgnore
 	@ManyToOne	  
 	@JoinColumn(name = "fonction_id")
 	private Fonction fonction;
-
+	
+	@JsonIgnore
 	@ManyToOne	  
 	@JoinColumn(name = "typepiece_id")
 	private TypePieceIdentite typePieceIdentite;
 
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "demandeur")
 	private List<CodeImportation> codeImportation;
 	

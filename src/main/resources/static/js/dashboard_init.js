@@ -89,8 +89,8 @@
     });
 
     
-// echart 
-jQuery(function (e) {
+// echart ----------------------- ETUDE STATISTIQUE------------------------------------ 
+/*jQuery(function (e) {
     "use strict";
     var o = window.AdminoxAdmin || {};
     if (e("#platform_type_dates_donut").length) {
@@ -146,9 +146,8 @@ jQuery(function (e) {
                             width: "100%",
                             itemStyle: { normal: { label: { show: !1 }, labelLine: { show: !0 } }, emphasis: { label: { show: !1 }, labelLine: { show: !1 } } },
                             data: [
-                                { value: 100, name: "iPhone 7" },
-                                { value: 150, name: "Windows" },
-                                { value: 50, name: "Desktop" },
+                                { value: 200, name: "iPhone 7" },
+                                { value: 500, name: "Windows" }
                             ],
                         },
                     ],
@@ -157,7 +156,7 @@ jQuery(function (e) {
         });
     }
     e(window).on("load", function () {});
-})
+})*/
 
 
 

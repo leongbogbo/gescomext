@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.validation.BindingResult;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mincom.gescomext.config.GetCurrentUser;
@@ -35,7 +35,6 @@ public class DomaineActiviteController {
 	{
 		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
 		String username = GetCurrentUser.getUserConnected();
-		System.out.println(username);
 		User user = userRepo.findByUsername(username);
 		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
 		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
@@ -53,5 +52,47 @@ public class DomaineActiviteController {
 		if (bindingResult.hasErrors()) return "listeDomaineActivite";
 		domaineActiviteService.saveDomaineActivite(domaineActivite);
 		return "redirect:../listeDomaineActivites";
+	}
+	@RequestMapping("/parametre/Recherche/DomaineActivite")
+	public String rechDepartement(String titreDom, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		List<DomaineActivite> domaineActivite = domaineActiviteService.findBytitreDomActContaining(titreDom);
+		modelMap.addAttribute("deps", domaineActivite);
+		return "autres/listeDomaineActivite";
+	}
+	
+	@RequestMapping("/parametre/Update/DomaineActivite/{id}")
+	public String updateDepartement(@PathVariable("id") Long id, ModelMap modelMap)
+	{
+		ListeRolesActionsUser classGestionUrl = new ListeRolesActionsUser();
+		String username = GetCurrentUser.getUserConnected();
+		User user = userRepo.findByUsername(username);
+		List<ActionListe> listeUrlUser = classGestionUrl.getListeAcctions(user, "parametre");
+		List<ActionListe> listeUrlUserAdmin = classGestionUrl.getListeAcctions(user, "administration");
+		modelMap.addAttribute("listeUrlUser", listeUrlUser);
+		modelMap.addAttribute("listeUrlUserAdmin", listeUrlUserAdmin);
+		
+		DomaineActivite domaineActivite = domaineActiviteService.getDomaineActiviteById(id);
+		modelMap.addAttribute("domaineActivite", domaineActivite);
+		return "./autres/updateDomaineActivite";
+	}
+	
+	@RequestMapping("/parametre/Valider/Update/DomaineActivite")
+	public String updateVDepartement(DomaineActivite domaineActivite, ModelMap modelMap)
+	{
+		DomaineActivite domaineActiviteFound = domaineActiviteService.getDomaineActiviteById(domaineActivite.getIdDomAct());
+		if(domaineActivite!=null) {
+			domaineActiviteFound.setTitreDomAct(domaineActivite.getTitreDomAct());
+			domaineActiviteService.saveDomaineActivite(domaineActiviteFound);
+		}
+		return "redirect:../../listeDomaineActivites";
 	}
 }

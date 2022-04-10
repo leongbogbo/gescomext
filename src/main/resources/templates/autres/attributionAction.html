@@ -70,7 +70,7 @@ layout:decorator="templateparam">
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
-	                                            <tr role="row" class="odd" th:each="elmt:${roleList}">
+	                                            <tr role="row" class="odd" th:each="elmt:${roleList}" th:if="${elmt.role_id != 17}">
 	                                                <td th:text="${elmt.role_id}"></td >
 	                                                <td th:text="${elmt.role}"></td >
 	                                                <td>
@@ -150,7 +150,7 @@ layout:decorator="templateparam">
 	                            <div class="card">
 	                                <div class="card-header" id="headingOne">
 	                                    <h2 class="mb-0">
-	                                        <a href="https://demo.dashboardpack.com/analytic-html/faq.html#" class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	                                        <a href="#" class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 	                                            CODE IMPORT - EXPORT
 	                                        </a>
 	                                    </h2>
@@ -165,7 +165,7 @@ layout:decorator="templateparam">
 	                            <div class="card">
 	                                <div class="card-header" id="headingTwo">
 	                                    <h2 class="mb-0">
-	                                        <a href="https://demo.dashboardpack.com/analytic-html/faq.html#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+	                                        <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 	                                            CODE OCCASIONNEL
 	                                        </a>
 	                                    </h2>
@@ -179,7 +179,7 @@ layout:decorator="templateparam">
 	                            <div class="card">
 	                                <div class="card-header" id="headingThree">
 	                                    <h2 class="mb-0">
-	                                        <a href="https://demo.dashboardpack.com/analytic-html/faq.html#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+	                                        <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 	                                            LEVEE DE GAGE
 	                                        </a>
 	                                    </h2>
@@ -193,13 +193,41 @@ layout:decorator="templateparam">
 	                            <div class="card">
 	                                <div class="card-header" id="headingThree3">
 	                                    <h2 class="mb-0">
-	                                        <a href="https://demo.dashboardpack.com/analytic-html/faq.html#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree">
+	                                        <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree">
 	                                            PARAMETRE
 	                                        </a>
 	                                    </h2>
 	                                </div>
 	                                <div id="collapseThree3" class="collapse" aria-labelledby="headingThree3" data-parent="#accordion_ex">
 	                                    <div class="card-body form-row align-items-center" id="paramBody">
+	                                         
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="card">
+	                                <div class="card-header" id="headingAdmin">
+	                                    <h2 class="mb-0">
+	                                        <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseThree">
+	                                            ADMINISTRATION
+	                                        </a>
+	                                    </h2>
+	                                </div>
+	                                <div id="collapseAdmin" class="collapse" aria-labelledby="headingAdmin" data-parent="#accordion_ex">
+	                                    <div class="card-body form-row align-items-center" id="adminBody">
+	                                         
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="card">
+	                                <div class="card-header" id="headingStat">
+	                                    <h2 class="mb-0">
+	                                        <a href="#" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseStat" aria-expanded="false" aria-controls="collapseThree">
+	                                            STATISTIQUE
+	                                        </a>
+	                                    </h2>
+	                                </div>
+	                                <div id="collapseStat" class="collapse" aria-labelledby="headingStat" data-parent="#accordion_ex">
+	                                    <div class="card-body form-row align-items-center" id="statBody">
 	                                         
 	                                    </div>
 	                                </div>

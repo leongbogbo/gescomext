@@ -37,28 +37,28 @@
 		<band height="445" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<staticText>
-				<reportElement x="32" y="151" width="100" height="30" uuid="9f46245b-f4c3-405f-90ad-6789e8276c57"/>
+				<reportElement x="32" y="186" width="100" height="30" uuid="9f46245b-f4c3-405f-90ad-6789e8276c57"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SIGLE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="32" y="211" width="208" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
+				<reportElement x="32" y="237" width="208" height="30" uuid="3b80a219-9f2c-40d0-9094-07781203997a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CODE IMPORT-EXPORT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="31" y="273" width="181" height="30" uuid="e7c83780-866d-430f-aaf5-66016ca9ccb2"/>
+				<reportElement x="31" y="288" width="181" height="30" uuid="e7c83780-866d-430f-aaf5-66016ca9ccb2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CODE FISCAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="32" y="335" width="228" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
+				<reportElement x="32" y="342" width="228" height="30" uuid="9a53f11e-b989-48e4-a049-339c29058ee1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -72,42 +72,42 @@
 				<text><![CDATA[DATE DE DELIVRANCE]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="260" y="149" width="294" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
+				<reportElement x="260" y="184" width="294" height="30" uuid="1dfb33fb-0ec5-4ce0-aedf-155e8835db4b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.sigleEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="262" y="211" width="292" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
+				<reportElement x="262" y="237" width="292" height="30" uuid="3ada6feb-5c7d-4bbd-8e42-2ad4362ca315"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.codeImportExportEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="264" y="273" width="290" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
+				<reportElement x="264" y="288" width="290" height="30" uuid="6533577b-b66e-46ad-9971-4a9b9f61256e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.numCodFic}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="261" y="335" width="293" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
+				<reportElement x="261" y="342" width="293" height="30" uuid="32c31494-bb15-4061-87f9-49f06e8ad7aa"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{opCodeImportation.codeImportation.entreprise.contribuableEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="30" y="87" width="182" height="30" uuid="c69d3618-8a56-4a81-920a-48042fb0e1ad"/>
+				<reportElement x="30" y="113" width="182" height="30" uuid="c69d3618-8a56-4a81-920a-48042fb0e1ad"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RAISON SOCIALE]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="261" y="77" width="293" height="60" uuid="83d80bc9-db80-488b-b900-63a65261fded"/>
+				<reportElement x="261" y="77" width="293" height="103" uuid="83d80bc9-db80-488b-b900-63a65261fded"/>
 				<textElement verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
@@ -121,7 +121,7 @@
 				<textFieldExpression><![CDATA[$F{dateTrait}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="183" y="335" width="80" height="30" uuid="27c58e20-e5df-4c0a-8c04-2f9b1771ffea"/>
+				<reportElement x="183" y="342" width="80" height="30" uuid="27c58e20-e5df-4c0a-8c04-2f9b1771ffea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -135,28 +135,28 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="273" width="80" height="30" uuid="cb0fd1e8-36e6-48e1-a47a-909970d2d13b"/>
+				<reportElement x="183" y="288" width="80" height="30" uuid="cb0fd1e8-36e6-48e1-a47a-909970d2d13b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="213" width="80" height="30" uuid="48662d95-b256-4808-966b-9df8e2d362ef"/>
+				<reportElement x="183" y="239" width="80" height="30" uuid="48662d95-b256-4808-966b-9df8e2d362ef"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="151" width="80" height="30" uuid="9c48cf61-7b6b-40d5-a7d5-8163e4c8088c"/>
+				<reportElement x="183" y="186" width="80" height="30" uuid="9c48cf61-7b6b-40d5-a7d5-8163e4c8088c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="87" width="80" height="30" uuid="85e9bb64-e8c0-4d1e-bc69-6d68259440ec"/>
+				<reportElement x="183" y="113" width="80" height="30" uuid="85e9bb64-e8c0-4d1e-bc69-6d68259440ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -194,7 +194,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="43" y="34" width="326" height="30" forecolor="#EB1410" uuid="0cee4880-3252-4ecf-bf45-3f84d9a6fb09"/>
 				<textElement verticalAlignment="Top">
-					<font size="12" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["mci/dgce_"+$F{dateTrait}.toString().substring( 0, 4)+"_"+$F{opCodeImportation.codeImportation.entreprise.codeIdexEntr}.toUpperCase()]]></textFieldExpression>
 			</textField>

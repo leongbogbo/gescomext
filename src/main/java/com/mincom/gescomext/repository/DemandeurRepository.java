@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import com.mincom.gescomext.entities.Demandeur;
 
 public interface DemandeurRepository extends JpaRepository<Demandeur, Long> {
-	@Query("select e from Demandeur e where (e.numpieceDem = :code) or (e.emailDem = :code) or (e.telDem = :code)")
+	@Query("select e from Demandeur e where (e.numpieceDem = :code) or (e.emailDem = :code) or (e.telDem = :code) or (e.codeIdexDem = :code)")
 	List<Demandeur> findDemandeurByGeneralInfo (@Param("code") String code);
 }

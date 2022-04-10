@@ -11,5 +11,6 @@ public interface DomaineActiviteService {
 	void deleteDomaineActiviteById(Long id);
 	DomaineActivite getDomaineActiviteById(Long id);
 	List<DomaineActivite> getAllDomaineActivite();
-
+	DomaineActivite findByTitreDomAct(String titreDomAct);
+	List<DomaineActivite> findBytitreDomActContaining(String titreDomAct);
 }

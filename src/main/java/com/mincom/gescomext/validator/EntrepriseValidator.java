@@ -14,42 +14,63 @@ public class EntrepriseValidator {
 		if (valideElement == null) {
 			errors.add("Veuillez renseigner tous les champs obligatoire");
 		}
-
-		if (valideElement.getRegcommerceEntr() == null || !StringUtils.hasLength(valideElement.getRegcommerceEntr())) {
-			errors.add("Veuillez renseigner le N° RCCM");
+		if(valideElement.getTypeStructure().getIdStruc()!=8) {
+			if(valideElement.getExoregcomEntr().equals("non")) {
+				if (valideElement.getRegcommerceEntr() == null || !StringUtils.hasLength(valideElement.getRegcommerceEntr())) {
+					errors.add("Veuillez renseigner le N° RCCM");
+				}
+			
+			if(valideElement.getRegcommerceEntr() != null){
+				String[] tabRccm = valideElement.getRegcommerceEntr().split("-");
+				
+				if (tabRccm.length != 5 && tabRccm.length != 6) {
+					errors.add("Format du RCCM non valide");
+				}
+				if (tabRccm.length == 6) {
+					try {
+						int result = Integer.parseInt(tabRccm[2]);
+					} catch (NumberFormatException e) {
+						// do something for the exception.
+						errors.add("Format du RCCM non valide : " + tabRccm[2]);
+					}
+					if(tabRccm[0].toString().length() != 2 || tabRccm[1].toString().length() != 3 || tabRccm[2].toString().length() != 2 || tabRccm[3].toString().length() != 4 || tabRccm[4].toString().length() != 3){
+						errors.add("Format du RCCM non valide");
+					}
+				}
+				
+				if (tabRccm.length == 5) {
+					try {
+						int result = Integer.parseInt(tabRccm[3]);
+						errors.add("Format du RCCM non valide : " + tabRccm[3]);
+					} catch (NumberFormatException e) {
+						// do something for the exception.
+					}
+					if(tabRccm[0].toString().length() != 2 || tabRccm[1].toString().length() != 3 || tabRccm[2].toString().length() != 4){
+						errors.add("Format du RCCM non valide");
+					}
+				}
+				
+			}
 		}
-		if(valideElement.getRegcommerceEntr() != null){
-			String[] tabRccm = valideElement.getRegcommerceEntr().split("-");
-			
-			try {
-				int result = Integer.parseInt(tabRccm[2]);
-			} catch (NumberFormatException e) {
-				// do something for the exception.
-				errors.add("Le code juridique du RCCM doit être un nombre: " + tabRccm[2]);
-			}
-			
-			if (tabRccm.length != 6 || !valideElement.getRegcommerceEntr().contains("-")) {
-				errors.add("Mauvais format du N° RCCM ");
-			}
 		}
 		if(valideElement.getContribuableEntr() == null || !StringUtils.hasLength(valideElement.getContribuableEntr())) {
 			errors.add("Veuillez renseigner le N° CC");
 		}else {
 			if (valideElement.getContribuableEntr().length() < 8) {
-				errors.add("Le nombre de caractère du CC est inferieur à 8 : " + valideElement.getContribuableEntr());
+				errors.add("Format du Compte Contribuable non valide : " + valideElement.getContribuableEntr());
 			} else if (valideElement.getContribuableEntr().length() > 8) {
-				errors.add("Le nombre de caractère du CC est supérieur à 8 : " + valideElement.getContribuableEntr());
+				errors.add("Format du Compte Contribuable non valide : " + valideElement.getContribuableEntr());
 			} else {
 				try {
 					int results = Integer.parseInt(valideElement.getContribuableEntr().substring(0, 7));
 				} catch (NumberFormatException e) {
 					// do something for the exception.
-					errors.add("Les 7 prémiers caracteres du CC doivent être des nombres: "
+					errors.add("Format du Compte Contribuable non valide : "
 							+ valideElement.getContribuableEntr().substring(0, 7));
 				}
 				try {
 					int results = Integer.parseInt(valideElement.getContribuableEntr().substring(7, 8));
-					errors.add("Le dernier caractère du CC doit être un caractère: "
+					errors.add("Format du Compte Contribuable non valide : "
 							+ valideElement.getContribuableEntr().substring(7, 8));
 				} catch (NumberFormatException ex) {
 					

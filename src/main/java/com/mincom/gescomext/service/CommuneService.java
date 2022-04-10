@@ -11,5 +11,6 @@ public interface CommuneService {
 	void deleteCommuneById(Long id);
 	Commune getCommuneById(Long id);
 	List<Commune> getAllCommune();
+	Commune findBynomCommune(String nom);
 
 }

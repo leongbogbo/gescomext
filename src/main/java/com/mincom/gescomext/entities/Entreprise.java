@@ -32,6 +32,7 @@ public class Entreprise {
 	private String nomEntr;
 	private String sigleEntr;
 	private String exoregcomEntr;
+	private String exoPaiementEntr;
 	private String postaleEntr;
 	private String telEntr;
 	private String emailEntr;
@@ -48,7 +49,8 @@ public class Entreprise {
 	@ManyToOne	  
 	@JoinColumn(name = "commune_id") 
 	private Commune commune;
-	@JsonIgnore
+	
+	//@JsonIgnore
 	 @ManyToOne		  
 	 @JoinColumn(name = "fjury_id")
 	 private FormeJuridique formeJuridique;
@@ -62,16 +64,19 @@ public class Entreprise {
 	 @JsonIgnore
 	 @OneToMany(mappedBy = "entreprise", cascade = CascadeType.REMOVE)
 	 private List<CodeImportation> codeImportation;
+	 
 	 @JsonIgnore
-	@ManyToOne		  
+	 @ManyToOne		  
 	 @JoinColumn(name = "typestruc_id")
 	 private TypeStructure typeStructure;
-	@JsonIgnore
+	 
+	 @JsonIgnore
 	 @ManyToOne		  
 	 @JoinColumn(name = "departement_id")
 	 private Departement departement;
+	
 	 @JsonIgnore
-	@ManyToOne		  
+	 @ManyToOne		  
 	 @JoinColumn(name = "domact_id")
 	 private DomaineActivite domaineActivite;
 

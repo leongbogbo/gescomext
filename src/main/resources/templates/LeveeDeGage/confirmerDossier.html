@@ -25,6 +25,15 @@ layout:decorator="template3" xml:lang="">
                             	</div>
                         	</div>
                         </div>
+                              <div class="row" th:if="${errorsList}">
+				            <div class="col-12">
+				            	<div class="alert text-white bg-danger" role="alert">
+									<div class="alert-text" th:each="errors : ${errorsList}">
+										<b><span th:text="${errors}"> </span ></b>
+									</div>
+								</div>
+				            </div>
+			            </div>
                         <div class="white_card_body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade active show" id="page" role="tabpanel" aria-labelledby="page-tab">

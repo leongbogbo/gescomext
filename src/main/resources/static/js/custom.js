@@ -402,17 +402,17 @@ $('.spin_icon_clicker').on('click', function(e) {
       });
     });
     
-    //GESTION PERSONNEL
+    //---------------------------------------GESTION PERSONNEL--------------------------//
     $('#typeStructure').change(function(){
 	    var nbre = $(this).val();
-	    if(nbre == 7 || nbre == 11){
-			$("#numIduEntr").removeAttr('disabled');
-            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#typeRCCMEntrBody").show();
-            $("#departementBody").hide();
-		}else{
+	    if(nbre == 8){
 	    	$('#numIduEntr').val("").attr('disabled','disabled');
             $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#nouvauselect,#typeRCCMEntrBody").hide();
             $("#departementBody").show();		
+		}else{
+			$("#numIduEntr").removeAttr('disabled');
+            $("#exoregcomBody,#regcommerceBody,#numIduBody,#ancienselect,#typeRCCMEntrBody").show();
+            $("#departementBody").hide();
 		}
 	});
 	
@@ -481,16 +481,45 @@ $('.spin_icon_clicker').on('click', function(e) {
 	$("#regcommerceEntr").on("blur", function () {
 		var convert=0;
 	  	var regCode = $("#regcommerceEntr").val().split("-");
-	  	if(regCode.length !=6){
+	  	alert(regCode.length);
+	  	if(regCode.length <5 || regCode.length >6){
 			$("#regcommerceEntr").val("");
 			$("#infoRccm").text("Format non conforme");
-			alert("Format non conforme");	
+			alert("Format non conforme1");	
 		}else{
-			convert = parseInt(regCode[2]);			
-			if(isNaN(convert) || $.isNumeric(regCode[2]) == false){
-				$("#regcommerceEntr").val("");
-				$("#infoRccm").text("Le code juridique doit être un nombre : "+regCode[2]);	
-				alert("Le code juridique doit être un nombre : "+regCode[2]);	
+			if(regCode.length==6){
+				convert = parseInt(regCode[2]);			
+				if(isNaN(convert) || $.isNumeric(regCode[2]) == false){
+					$("#regcommerceEntr").val("");
+					$("#infoRccm").text("Le code juridique doit être un nombre : "+regCode[2]);	
+					alert("Format non conforme : "+regCode[2]);	
+				}
+				if(regCode[0].length != 2 || regCode[1].length != 3 || regCode[2].length != 2 || regCode[3].length != 4 || regCode[4].length != 3){
+					$("#regcommerceEntr").val("");
+					$("#infoRccm").text("Format non conforme");
+					alert("Format non conforme2");	
+				}
+			}else if(regCode.length==5){
+				if(regCode[0].length != 2 || regCode[1].length != 3 || regCode[2].length != 4){
+					$("#regcommerceEntranc").val("");
+					$("#infoRccm").text("Format non conforme");
+					alert("Format non conforme3");	
+				}
+			}
+		}
+	});
+	
+	$("#regcommerceEntranc").on("blur", function () {
+	  	var regCode = $("#regcommerceEntranc").val().split("-");
+	  	if(regCode.length !=5){
+			$("#regcommerceEntranc").val("");
+			$("#infoRccm").text("Format non conforme");
+			alert("Format non conforme");	
+		}else{						
+			if(regCode[0].length != 2 || regCode[1].length != 3 || regCode[2].length != 4){
+				$("#regcommerceEntranc").val("");
+				$("#infoRccm").text("Format non conforme");
+				alert("Format non conforme");	
 			}
 		}
 	});
@@ -524,16 +553,12 @@ $('.spin_icon_clicker').on('click', function(e) {
   	
   	//$(".dispPasse").css("display", "none");
   	
-  	$("#ville").on('change', function(e) {
-		$("#commune").empty();
-		listeCommuneByVille()    
-  	});
-  	
   	$("#role_id").on('change', function(e) {
 		$("#importBody").empty();
 		$("#occaBody").empty();
 		$("#gageBody").empty();
 		$("#paramBody").empty();
+		$("#statBody").empty();
 		listeActionByRole();
   	});
   	
@@ -578,6 +603,7 @@ function listeCommuneByVille(){
 	$.ajax({metod: "GET", url: urlString})
 		.done(function(responseJson){
 			designeCommune = $("#commune");
+				$("<option>").val('').text('CHOIX').appendTo(designeCommune);
 			$.each(responseJson, function(index, commune){				
 				$("<option>").val(commune.idCommune).text(commune.nomCommune).appendTo(designeCommune);
 			});
@@ -624,6 +650,12 @@ function listeActionByRole(){
 							}else if(cop[0]=='parametre'){
 								$("#paramBody")
 								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='administration'){
+								$("#adminBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='Statistique'){
+								$("#statBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input checked type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
 							}
 						}else if(reponse=="non"){
 							if(cop[0]=='CodeImportExport'){
@@ -637,6 +669,12 @@ function listeActionByRole(){
 								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
 							}else if(cop[0]=='parametre'){
 								$("#paramBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='administration'){
+								$("#adminBody")
+								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
+							}else if(cop[0]=='Statistique'){
+								$("#statBody")
 								.append("<div class='col-md-6'><div class='form-check mb-2'><input  type='checkbox' class='form-check-input' name='actionListe[]' value='"+actionListe.idActPro+"' id='exampleCheck'><label class='form-check-label' >"+actionListe.titreActPro+"</label></div></div>");
 							}
 						}

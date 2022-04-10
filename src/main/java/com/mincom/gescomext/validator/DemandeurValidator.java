@@ -38,23 +38,23 @@ public class DemandeurValidator {
 		}
 		
 		if(valideElement.getContribuableDem() == null || !StringUtils.hasLength(valideElement.getContribuableDem())) {
-			errors.add("Veuillez renseigner le N° CC");
+			//errors.add("Veuillez renseigner le N° CC");
 		}else {
 			if (valideElement.getContribuableDem().length() < 8) {
-				errors.add("Le nombre de caractère du CC est inferieur à 8 : " + valideElement.getContribuableDem());
+				errors.add("Format du Compte Contribuable non valide : " + valideElement.getContribuableDem());
 			} else if (valideElement.getContribuableDem().length() > 8) {
-				errors.add("Le nombre de caractère du CC est supérieur à 8 : " + valideElement.getContribuableDem());
+				errors.add("Format du Compte Contribuable non valide : " + valideElement.getContribuableDem());
 			} else {
 				try {
 					int results = Integer.parseInt(valideElement.getContribuableDem().substring(0, 7));
 				} catch (NumberFormatException e) {
 					// do something for the exception.
-					errors.add("Les 7 prémiers caracteres du CC doivent être des nombres: "
+					errors.add("Format du Compte Contribuable non valide : "
 							+ valideElement.getContribuableDem().substring(0, 7));
 				}
 				try {
 					int results = Integer.parseInt(valideElement.getContribuableDem().substring(7, 8));
-					errors.add("Le dernier caractère du CC doit être un caractère: "
+					errors.add("Format du Compte Contribuable non valide : "
 							+ valideElement.getContribuableDem().substring(7, 8));
 				} catch (NumberFormatException ex) {
 					

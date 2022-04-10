@@ -52,7 +52,7 @@ layout:decorator="template">
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Code Fiscal</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Type OP</th>
 	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Statut</th>
-	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending">Supprimer</th>
+	                                            	<th scope="col" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 197px;" aria-label="Category: activate to sort column ascending" sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')">Supprimer</th>
 	                                            </tr>
 	                                        </thead>
                                         	<tbody>
@@ -69,7 +69,7 @@ layout:decorator="template">
 		                                                <a href="#" class="btn btn-outline-danger mb-3" th:case="'annuler'">ANNULER</a>
 		                                                <a class="sm_btn" th:case="*">INACTIF</a>
 		                                            </td >
-	                                                <td><a th:href="@{'../../CodeImportExport/Suppression/Doublon/'+${elmt.codeImportation.entreprise.proprietaires.idProp}}" class="btn_2" onclick="return confirm('Etes-vous sûr ?')"><i class="ti-trash"></i></a></td>
+	                                                <td sec:authorize="hasAnyRole('ADMIN','SUPERADMIN')"><a th:href="@{'../../CodeImportExport/Suppression/Doublon/'+${elmt.codeImportation.entreprise.proprietaires.idProp}}" class="btn_2" onclick="return confirm('Etes-vous sûr ?')"><i class="ti-trash"></i></a></td >
 	                                            </tr>
                                            </tbody>
                                     	</table>

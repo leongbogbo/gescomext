@@ -44,4 +44,14 @@ public class DepartementServiceImpl implements DepartementService {
 		return departementRepository.findAll();
 	}
 
+	@Override
+	public Departement findByTitreDep(String titreDep) {
+		return departementRepository.findByTitreDep(titreDep);
+	}
+
+	@Override
+	public List<Departement> findBytitreDepContaining(String titreDep) {
+		return departementRepository.findBytitreDepContaining(titreDep);
+	}
+
 }

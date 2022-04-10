@@ -11,5 +11,6 @@ public interface DepartementService {
 	void deleteDepartementById(Long id);
 	Departement getDepartementById(Long id);
 	List<Departement> getAllDepartement();
-
+	Departement findByTitreDep(String titreDep);
+	List<Departement> findBytitreDepContaining(String titreDep);
 }
